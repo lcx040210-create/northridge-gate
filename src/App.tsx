@@ -12,6 +12,7 @@ import Verdict from './ui/Verdict'
 import ExecutionOverlay from './ui/ExecutionOverlay'
 import HUD from './ui/HUD'
 import Dawn from './ui/Dawn'
+import { startAmbient, playBlip } from './scene/audio'
 
 const ITEM_ICONS: Record<string, string> = {
   coffee: '☕',
@@ -55,7 +56,7 @@ export default function App() {
         </ul>
         <h3>目标</h3>
         <p>走到观察窗前按 F，检视来访者（眼 / 证 / 问一句），然后放行、处决或收容。</p>
-        <button data-testid="start" onClick={() => dispatch({ type: 'START' })} style={{ fontSize: 18, padding: '10px 28px', cursor: 'pointer' }}>开始值班</button>
+        <button data-testid="start" onClick={() => { startAmbient(); dispatch({ type: 'START' }) }} style={{ fontSize: 18, padding: '10px 28px', cursor: 'pointer' }}>开始值班</button>
       </div>
     )
   }
@@ -64,8 +65,14 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative', height: '100%' }}>
-      <RoomScene onInteract={setActiveHotspot} />
+      <RoomScene onInteract={(id) => { playBlip(); setActiveHotspot(id) }} />
       <HUD state={state} dispatch={dispatch} />
+
+      {activeHotspot === null && (
+        <div style={{ position: 'absolute', top: 56, left: '50%', transform: 'translateX(-50%)', color: '#ffe9a8', background: 'rgba(0,0,0,0.5)', padding: '6px 16px', borderRadius: 6, pointerEvents: 'none' }}>
+          {state.records.length === 0 ? '→ 目标：走到观察窗前，按 F 检视来访者' : '→ 目标：继续处理下一位来访者'}
+        </div>
+      )}
 
       {activeHotspot === null && (
         <div style={{ position: 'absolute', bottom: 28, left: '50%', transform: 'translateX(-50%)', color: '#c8c8c0', background: 'rgba(0,0,0,0.55)', padding: '6px 16px', borderRadius: 6, pointerEvents: 'none' }}>

@@ -52,4 +52,35 @@ describe('reducer', () => {
     s = reducer(s, { type: 'JUDGE', verdict: 'execute', tool: 'axe' })
     expect(s.san).toBe(68)
   })
+
+  it('TOGGLE_VENTILATION flips ventilationOn', () => {
+    const s0 = reducer(INITIAL_STATE, { type: 'START' })
+    expect(reducer(s0, { type: 'TOGGLE_VENTILATION' }).ventilationOn).toBe(true)
+    expect(reducer(reducer(s0, { type: 'TOGGLE_VENTILATION' }), { type: 'TOGGLE_VENTILATION' }).ventilationOn).toBe(false)
+  })
+
+  it('USE_SEDATIVE reduces reactionMax to 70 and clamps reaction', () => {
+    let s = reducer(INITIAL_STATE, { type: 'START' })
+    s = reducer(s, { type: 'USE_SEDATIVE' })
+    expect(s.reactionMax).toBe(70)
+    expect(s.reaction).toBe(70)
+  })
+
+  it('USE_SOFA claw branch reduces san by 10 without heal', () => {
+    const s0 = reducer(INITIAL_STATE, { type: 'START' })
+    const s1 = reducer(s0, { type: 'USE_SOFA', claw: true })
+    expect(s1.san).toBe(65)
+    expect(s1.sofaUsed).toBe(true)
+  })
+
+  it('USE_SOFA is one-shot', () => {
+    const s0 = reducer(INITIAL_STATE, { type: 'START' })
+    const s1 = reducer(s0, { type: 'USE_SOFA', claw: false })
+    expect(reducer(s1, { type: 'USE_SOFA', claw: false })).toEqual(s1)
+  })
+
+  it('INSPECT question slot costs 20 reaction', () => {
+    const s0 = reducer(INITIAL_STATE, { type: 'START' })
+    expect(reducer(s0, { type: 'INSPECT', slot: 'question' }).reaction).toBe(80)
+  })
 })

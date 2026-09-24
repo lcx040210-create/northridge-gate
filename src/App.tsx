@@ -50,6 +50,18 @@ export default function App() {
     toastTimer.current = window.setTimeout(() => setToast(null), ms)
   }, [])
 
+  // M 键静音
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.code === 'KeyM') {
+        const m = sfx.toggleMute()
+        say(m ? '已静音' : '已取消静音', 1500)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [say])
+
   useEffect(() => {
     if (activeHotspot !== null) document.exitPointerLock?.()
   }, [activeHotspot])

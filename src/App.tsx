@@ -265,8 +265,30 @@ export default function App() {
       <HUD state={state} />
       <WeaponHUD state={state} />
 
+      {/* 武器痕迹覆盖层 */}
+      {woundMarks.map((mark, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'fixed',
+            left: `${mark.x}%`,
+            top: `${mark.y}%`,
+            width: mark.tool === 'gun' ? 30 : mark.tool === 'axe' ? 80 : 120,
+            height: mark.tool === 'gun' ? 30 : mark.tool === 'axe' ? 80 : 120,
+            backgroundImage: `url(/assets/env/window_residue_${mark.tool}.svg)`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            transform: `translate(-50%, -50%) rotate(${mark.rotation}deg)`,
+            pointerEvents: 'none',
+            zIndex: 50,
+            opacity: 0.8,
+          }}
+        />
+      ))}
+
       {/* 烟雾报警器效果 */}
       {state.sprinklerTriggered && <SprinklerEffect />}
+      {showFlame && <FlameEffect active={showFlame} />}
 
       {activeHotspot === null && !execution && (
         <>
@@ -482,15 +504,10 @@ export default function App() {
       {/* Boss 战 */}
       {(state.phase === 'boss_intro' || state.phase === 'boss_fight' || state.phase === 'boss_door_trap') && (
         <BossFight
-          state={state}
-          onTransition={() => dispatch({ type: 'BOSS_TRANSITION' })}
+          equippedWeapon={state.equippedWeapon}
+          bossHealth={state.bossHealth}
           onDamage={() => dispatch({ type: 'BOSS_DAMAGE' })}
-          onDefeated={() => dispatch({ type: 'BOSS_DEFEATED' })}
-          onDoorOpened={() => {
-            // 门陷阱 - 玩家死亡
-            sfx.glassBreaking()
-            setTimeout(() => setDeath('door_trap'), 500)
-          }}
+          onDefeat={() => dispatch({ type: 'BOSS_DEFEATED' })}
         />
       )}
     </div>

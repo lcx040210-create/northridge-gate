@@ -4,7 +4,7 @@ export type Tool = 'axe' | 'gun' | 'fire'               // 处决工具
 export type Role = 'human' | 'skinfit' | 'coretick' | 'wetnest'
 export type VisitorState = 'clean' | 'infected'         // 感染者是状态，不是第 4 图鉴
 export type VoiceKind = 'human' | 'suspicious' | 'skinfit' | 'coretick' | 'wetnest'
-export type Surface = 'manual' | 'sticky' | 'radio' | 'lightbox' | 'drawer' | 'label'
+export type Surface = 'manual' | 'sticky' | 'radio' | 'lightbox' | 'drawer' | 'label' | 'poster1' | 'poster2' | 'notice' | 'shelf1' | 'shelf2' | 'shelf3' | 'desk' | 'doorsign' | 'windowmark' | 'bed' | 'sofa' | 'supply'
 
 // 判定结果（文案 + San 变动；对错由引擎推导，不写在数据里）
 export interface Outcome {

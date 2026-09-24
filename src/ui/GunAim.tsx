@@ -12,8 +12,6 @@ interface Props {
 
 export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmmo }: Props) {
   const [timeLeft, setTimeLeft] = useState(10000)
-  const [shakiness, setShakiness] = useState(0)
-  const [crosshairPos, setCrosshairPos] = useState({ x: 50, y: 50 })
   const targetRef = useRef<{ x: number; y: number } | null>(null)
 
   // 弱点坐标（百分比）
@@ -29,39 +27,17 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
 
   useEffect(() => {
     const start = Date.now()
-    let shakeAnim: number
-    const targetPos = targetRef.current
 
-    const updateShake = () => {
-      const elapsed = Date.now() - start
-      const remaining = 10000 - elapsed
+    const timer = setInterval(() => {
+      const remaining = 10000 - (Date.now() - start)
       setTimeLeft(remaining)
 
       if (remaining <= 0) {
         onFail()
-        return
       }
+    }, 100)
 
-      // 准星围绕弱点晃动
-      const intensity = Math.min(12, (elapsed / 10000) * 20)
-      setShakiness(intensity)
-
-      if (targetPos) {
-        const angle = (elapsed / 100) * Math.PI
-        const offsetX = Math.sin(angle) * intensity
-        const offsetY = Math.cos(angle) * intensity
-        setCrosshairPos({
-          x: targetPos.x + offsetX,
-          y: targetPos.y + offsetY,
-        })
-      }
-
-      shakeAnim = requestAnimationFrame(updateShake)
-    }
-
-    shakeAnim = requestAnimationFrame(updateShake)
-
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent) => {
       if (gunAmmo <= 0) {
         sfx.interact()
         onOutOfAmmo()
@@ -70,15 +46,18 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
 
       sfx.gunshot()
 
-      // 命中判定
-      if (targetPos) {
-        const dx = crosshairPos.x - targetPos.x
-        const dy = crosshairPos.y - targetPos.y
+      // 命中判定 - 使用鼠标实际位置
+      const target = (e.target as HTMLElement).getBoundingClientRect()
+      const clickX = ((e.clientX - target.left) / target.width) * 100
+      const clickY = ((e.clientY - target.top) / target.height) * 100
+
+      if (targetRef.current) {
+        const dx = clickX - targetRef.current.x
+        const dy = clickY - targetRef.current.y
         const distance = Math.sqrt(dx * dx + dy * dy)
 
         if (distance < 8) {
-          // 命中弱点
-          cancelAnimationFrame(shakeAnim)
+          clearInterval(timer)
           setTimeout(() => onSuccess(), 300)
         }
       }
@@ -87,13 +66,13 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
     document.addEventListener('click', handleClick)
 
     return () => {
-      cancelAnimationFrame(shakeAnim)
+      clearInterval(timer)
       document.removeEventListener('click', handleClick)
     }
   }, [gunAmmo, onSuccess, onFail, onOutOfAmmo])
 
   return (
-    <div className="overlay" style={{ background: 'rgba(0,0,0,0.9)', cursor: 'none' }}>
+    <div className="overlay" style={{ background: 'rgba(0,0,0,0.9)', cursor: 'crosshair' }}>
       <div style={{ position: 'relative', width: 600, height: 800, margin: '0 auto' }}>
         <img
           src={visitor.attackFrame ?? visitor.portrait}
@@ -101,37 +80,39 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
           style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }}
         />
 
-        {/* 弱点标记（半透明红圈） */}
+        {/* 弱点标记（开发用） */}
         {targetRef.current && (
-          <div style={{
-            position: 'absolute',
-            left: `${targetRef.current.x}%`,
-            top: `${targetRef.current.y}%`,
-            width: 60,
-            height: 60,
-            marginLeft: -30,
-            marginTop: -30,
-            border: '3px dashed rgba(208, 64, 48, 0.5)',
-            borderRadius: '50%',
-            pointerEvents: 'none',
-          }} />
+          <div
+            style={{
+              position: 'absolute',
+              left: `${targetRef.current.x}%`,
+              top: `${targetRef.current.y}%`,
+              width: 60,
+              height: 60,
+              border: '2px dashed rgba(255,68,68,0.5)',
+              borderRadius: '50%',
+              transform: 'translate(-50%, -50%)',
+              pointerEvents: 'none',
+            }}
+          />
         )}
 
-        {/* 晃动准星 */}
-        <div style={{
-          position: 'absolute',
-          left: `${crosshairPos.x}%`,
-          top: `${crosshairPos.y}%`,
-          width: 40,
-          height: 40,
-          marginLeft: -20,
-          marginTop: -20,
-          pointerEvents: 'none',
-        }}>
-          <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 2, background: '#e0b050' }} />
-          <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 2, background: '#e0b050' }} />
-          <div style={{ position: 'absolute', top: '50%', left: '50%', width: 8, height: 8, marginLeft: -4, marginTop: -4, border: '2px solid #e0b050', borderRadius: '50%' }} />
-        </div>
+        {/* 弱点标记（开发用） */}
+        {targetRef.current && (
+          <div
+            style={{
+              position: 'absolute',
+              left: `${targetRef.current.x}%`,
+              top: `${targetRef.current.y}%`,
+              width: 60,
+              height: 60,
+              border: '2px dashed rgba(255,68,68,0.5)',
+              borderRadius: '50%',
+              transform: 'translate(-50%, -50%)',
+              pointerEvents: 'none',
+            }}
+          />
+        )}
 
         {/* HUD */}
         <div style={{ position: 'absolute', top: 16, left: 16, color: '#e8e2cc', fontSize: 14 }}>

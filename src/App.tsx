@@ -35,7 +35,6 @@ export default function App() {
   const [death, setDeath] = useState<Visitor | null | false | 'door_trap'>(false)
   const [toast, setToast] = useState<string | null>(null)
   const [showFlame, setShowFlame] = useState(false)
-  const [woundMarks, setWoundMarks] = useState<Array<{ tool: 'axe' | 'gun' | 'fire'; x: number; y: number; rotation: number }>>([])
   const toastTimer = useRef(0)
 
   const visitor = currentVisitor(state)
@@ -83,15 +82,6 @@ export default function App() {
       say('未装备武器')
       return
     }
-
-    // 添加武器痕迹
-    const newMark = {
-      tool: state.equippedWeapon as 'axe' | 'gun' | 'fire',
-      x: 48 + (Math.random() - 0.5) * 8,
-      y: 48 + (Math.random() - 0.5) * 8,
-      rotation: Math.random() * 360,
-    }
-    setWoundMarks((prev) => [...prev, newMark])
 
     if (state.equippedWeapon === 'axe') {
       sfx.axeSwing()
@@ -247,27 +237,6 @@ export default function App() {
       <RoomScene onInteract={open} equippedWeapon={state.equippedWeapon} />
       <HUD state={state} />
       <WeaponHUD state={state} />
-
-      {/* 武器痕迹覆盖层 */}
-      {woundMarks.map((mark, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'fixed',
-            left: `${mark.x}%`,
-            top: `${mark.y}%`,
-            width: mark.tool === 'gun' ? 40 : mark.tool === 'axe' ? 100 : 140,
-            height: mark.tool === 'gun' ? 40 : mark.tool === 'axe' ? 100 : 140,
-            background: mark.tool === 'gun' ? 'radial-gradient(circle, rgba(20,20,20,0.6) 0%, transparent 70%)' :
-                       mark.tool === 'axe' ? 'radial-gradient(ellipse, rgba(80,20,20,0.4) 0%, transparent 70%)' :
-                       'radial-gradient(circle, rgba(40,20,10,0.5) 0%, transparent 70%)',
-            transform: `translate(-50%, -50%) rotate(${mark.rotation}deg)`,
-            pointerEvents: 'none',
-            zIndex: 50,
-            opacity: 0.7,
-          }}
-        />
-      ))}
 
       {/* 火焰特效 */}
       {showFlame && <FlameEffect active={showFlame} />}
@@ -477,16 +446,6 @@ export default function App() {
           onSuccess={onExecutionSuccess}
           onFail={onExecutionFail}
           onOverheat={onFlamethrowerOverheat}
-        />
-      )}
-
-      {/* Boss 战 */}
-      {(state.phase === 'boss_intro' || state.phase === 'boss_fight' || state.phase === 'boss_door_trap') && (
-        <BossFight
-          equippedWeapon={state.equippedWeapon}
-          bossHealth={state.bossHealth}
-          onDamage={() => dispatch({ type: 'BOSS_DAMAGE' })}
-          onDefeat={() => dispatch({ type: 'BOSS_DEFEATED' })}
         />
       )}
     </div>

@@ -107,7 +107,10 @@ export default function App() {
       {activeHotspot === 'window' && visitor && (
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.88)', display: 'flex', padding: 20, gap: 20 }}>
           <div style={{ flex: 1, background: '#050505', border: '1px solid #333', position: 'relative', overflow: 'hidden' }}>
-            <Portrait visitor={visitor} />
+            <img src={visitor.scene ?? '/assets/scenes/window.svg'} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(0.2) brightness(0.9)' }} />
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Portrait visitor={visitor} />
+            </div>
             {state.visitorIndex === 2 && !state.hallucinationTriggered && (
               <p data-testid="hallucination" style={{ position: 'absolute', bottom: 10, left: 10, color: '#e0a0a0', background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 4 }}>走廊里，多了一双鞋。</p>
             )}

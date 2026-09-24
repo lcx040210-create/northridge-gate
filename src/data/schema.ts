@@ -18,6 +18,7 @@ export interface Visitor {
   state: VisitorState
   portrait: string               // 立绘路径
   freezeFrames: string[]         // 伪人 3–5 帧定格；人类只 1 帧
+  scene?: string                 // 场景背景图层（可选，默认观察窗）
   glitchLine?: string            // 伪人卡帧句（错字/重复标点）；干净人类为空
   tells: {
     eye?: string                 // 眼检视结果（扣反应）

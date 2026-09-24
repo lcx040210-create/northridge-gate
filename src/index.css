@@ -82,6 +82,19 @@ button { font: inherit; }
 .manual::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: linear-gradient(#b8a888, #8a7a5a, #b8a888); }
 .manual h2 { font-family: Georgia, serif; letter-spacing: 1px; }
 .manual .pages { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 40px; max-height: 68vh; overflow: auto; margin-top: 14px; }
+.entry.locked {
+  opacity: 0.6;
+}
+
+.weapon-slot {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.weapon-slot:not(.locked):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
 .entry { display: flex; gap: 12px; }
 .entry img { width: 96px; height: 125px; flex: none; border: 1px solid #a89878; }
 .entry b { font-family: Georgia, serif; font-size: 16px; }

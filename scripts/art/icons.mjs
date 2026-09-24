@@ -45,9 +45,20 @@ export function manualArt(k) {
   } else if (k === 'wetnest') {
     b += `<path d="M78 112c6-2 14-2 18 0M104 112c6-2 14-2 18 0" ${ink()}/><path d="M86 160c8 2 20 2 28 0" ${ink()}/><path d="M92 170c-2 10 0 18 2 26M108 170c2 10 0 18-2 26" stroke="${INK}" stroke-width="1.6" stroke-dasharray="2 4"/>`
     b += `<path d="M150 200l10 30 8-26 8 26" ${ink(2.6)}/><path d="M156 212l4 2M164 210l4 2" stroke="${RED}" stroke-width="2"/>` + circle(162, 216, 22) + label(8, 30, 'WET · SINKS')
-  } else {
+  } else if (k === 'infected') {
     b += `<path d="M78 114c6-2 14-2 18 0M104 114c6-2 14-2 18 0" ${ink()}/><path d="M84 158c10-4 22-4 32 0" ${ink()}/><path d="M100 196v16" ${ink(3)}/><path d="M96 206l4-6 4 6M96 196l4 6 4-6" stroke="${RED}" stroke-width="2" fill="none"/>`
     b += circle(100, 204, 18) + label(8, 30, 'THROAT · REVERSED')
+  } else if (k === 'mirror') {
+    b += `<path d="M78 114c6-2 14-2 18 0M104 114c6-2 14-2 18 0" ${ink()}/><circle cx="86" cy="118" r="2" fill="${INK}"/><circle cx="114" cy="118" r="2" fill="${INK}"/>`
+    b += `<rect x="140" y="100" width="40" height="60" rx="4" ${ink(3)}/><text x="100" y="250" font-family="serif" font-size="36" font-weight="bold" fill="${RED}" opacity="0.3">???</text>`
+  } else if (k === 'hollow') {
+    b += `<path d="M78 114c6-2 14-2 18 0M104 114c6-2 14-2 18 0" ${ink()}/><circle cx="86" cy="118" r="8" fill="none" stroke="${INK}" stroke-width="2"/><circle cx="114" cy="118" r="8" fill="none" stroke="${INK}" stroke-width="2"/>`
+    b += `<text x="100" y="250" font-family="serif" font-size="36" font-weight="bold" fill="${RED}" opacity="0.3">???</text>`
+  } else if (k === 'crawler') {
+    b += `<path d="M78 114c6-2 14-2 18 0M104 114c6-2 14-2 18 0" ${ink()}/><circle cx="86" cy="118" r="2" fill="${INK}"/><circle cx="114" cy="118" r="2" fill="${INK}"/>`
+    b += `<path d="M40 240l20-20M160 240l-20-20" ${ink(3)}/><text x="100" y="250" font-family="serif" font-size="36" font-weight="bold" fill="${RED}" opacity="0.3">???</text>`
+  } else {
+    b += `<text x="100" y="150" font-family="serif" font-size="24" font-weight="bold" fill="${INK}" text-anchor="middle">REDACTED</text>`
   }
   return svg(200, 260, FILTERS, b)
 }

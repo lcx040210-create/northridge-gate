@@ -5,6 +5,8 @@ import type { ExecutionResult } from './engine/execution'
 import { resolveExecution } from './engine/execution'
 import { WORLD_TEXT } from './data/world'
 import { ITEMS } from './data/items'
+import { WEAPONS, CONSUMABLES } from './data/weapons'
+import { MANUAL_ENTRIES } from './data/manual'
 import RoomScene from './scene/RoomScene'
 import Window from './ui/Window'
 import Portrait from './ui/Portrait'
@@ -17,12 +19,6 @@ import Dawn from './ui/Dawn'
 import Death from './ui/Death'
 import * as sfx from './scene/audio'
 
-const PSEUDO_GUIDE = [
-  { key: 'skinfit', name: '贴皮型 Skin-fit', tells: '耳后到颈侧有一道接缝；两只眼睛眨眼不同步；证件上的牙齿数和本人对不上。', response: '冷兵器（消防斧），砍接缝。' },
-  { key: 'coretick', name: '核响型 Core-tick', tells: '锁骨下有金属嘀嗒声，太阳穴偶尔反光；瞳孔针尖大；问天气只会答「和昨天一样」。', response: '手枪，打核。' },
-  { key: 'wetnest', name: '湿巢型 Wet-nest', tells: '指缝反光、呼出的气往下沉；拒绝喝水；声音里带水声。', response: '焚化罐。' },
-  { key: 'infected', name: '感染者 Infected', tells: '还是人，但喉结滑动方向反了；会突然求你「快开门」。', response: '收容，不要杀。' },
-]
 
 const OBJECTIVE = (n: number) => (n === 0 ? '走到观察窗前（正前方），按 F 检视来访者' : '有人在敲窗。回到观察窗处理下一位来访者')
 
@@ -66,6 +62,7 @@ export default function App() {
     if (id === 'window') sfx.intercom(true)
     if (id === 'manual') sfx.pageFlip()
     if (id === 'weapons') sfx.cabinet()
+    if (id === 'supplies') sfx.interact()
     if (id === 'door') sfx.doorLocked()
     setActiveHotspot(id)
   }
@@ -182,13 +179,13 @@ export default function App() {
               <button className="btn" onClick={close}>合上</button>
             </div>
             <div className="pages">
-              {PSEUDO_GUIDE.map((p) => (
-                <div key={p.key} className="entry">
-                  <img src={`/assets/manual/${p.key}.svg`} alt="" />
+              {MANUAL_ENTRIES.map((p) => (
+                <div key={p.key} className={`entry ${p.locked ? 'locked' : ''}`}>
+                  <img src={`/assets/manual/${p.key}.svg`} alt="" style={p.locked ? { filter: 'brightness(0.3) blur(2px)' } : {}} />
                   <div>
-                    <b>{p.name}</b>
-                    <p>{p.tells}</p>
-                    <p className="resp">应对：{p.response}</p>
+                    <b>{p.name} {p.locked && <span style={{ color: '#8a6a4a', fontSize: 13 }}>🔒 未解锁</span>}</b>
+                    <p style={p.locked ? { color: '#6a6a60' } : {}}>{p.tells}</p>
+                    <p className="resp" style={p.locked ? { color: '#6a6a60' } : {}}>应对：{p.response}</p>
                   </div>
                 </div>
               ))}
@@ -204,24 +201,50 @@ export default function App() {
 
       {activeHotspot === 'weapons' && (
         <div className="overlay">
-          <div className="panel" style={{ width: 520 }}>
+          <div className="panel" style={{ width: 640 }}>
             <div className="panel-head">
               <h2><img src="/assets/icons/gun.svg" alt="" />武器柜 ARMORY</h2>
               <button className="btn" onClick={() => { sfx.cabinet(); close() }}>关上</button>
             </div>
-            {ITEMS.map((i) => (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, padding: '16px 0' }}>
+              {WEAPONS.map((w) => (
+                <div key={w.id} className={`weapon-slot ${w.locked ? 'locked' : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 16, background: w.locked ? '#2a2a24' : '#3a3a32', borderRadius: 6, border: w.locked ? '2px dashed #4a4a40' : '2px solid #5a5a50' }}>
+                  <img src={`/assets/icons/${w.id}.svg`} alt="" style={{ width: 72, height: 72, marginBottom: 8, filter: w.locked ? 'brightness(0.3)' : 'none' }} />
+                  <div style={{ fontWeight: 'bold', marginBottom: 4, color: w.locked ? '#6a6a60' : '#e8e2cc' }}>{w.name}</div>
+                  {w.locked && <div style={{ fontSize: 12, color: '#8a6a4a' }}>🔒 白班权限</div>}
+                  {!w.locked && <div className="desc" style={{ textAlign: 'center', fontSize: 12 }}>{w.desc}</div>}
+                </div>
+              ))}
+            </div>
+            <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 8 }}>
+              {WORLD_TEXT.find((w) => w.surface === 'label')?.text}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {activeHotspot === 'supplies' && (
+        <div className="overlay">
+          <div className="panel" style={{ width: 520 }}>
+            <div className="panel-head">
+              <h2><img src="/assets/icons/coffee.svg" alt="" />储物柜</h2>
+              <button className="btn" onClick={close}>关上</button>
+            </div>
+            {CONSUMABLES.map((i) => (
               <div key={i.id} className="item">
                 <img src={`/assets/icons/${i.id}.svg`} alt="" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 'bold', marginBottom: 2 }}>{i.name}</div>
                   <div className="desc">{i.desc}</div>
-                  {i.effect.constraint && <div className="warn">⚠ {i.effect.constraint}</div>}
+                  <div className="warn">⚠ {i.constraint}</div>
                 </div>
-                {i.id === 'coffee' && <button className="btn" disabled={state.coffeeUsed >= 2} onClick={() => { sfx.coffee(); dispatch({ type: 'DRINK_COFFEE' }) }}>{state.coffeeUsed >= 2 ? '已喝光' : '喝'}</button>}
-                {i.id === 'sedative' && <button className="btn" disabled={state.sedativeUsed} onClick={() => { sfx.chew(); dispatch({ type: 'USE_SEDATIVE' }) }}>{state.sedativeUsed ? '已用' : '嚼'}</button>}
+                {i.id === 'coffee' && <button className="btn" disabled={state.coffeeUsed >= 2} onClick={() => { sfx.coffee(); dispatch({ type: 'DRINK_COFFEE' }); say('温的苦味液体。心跳开始加快。') }}>{state.coffeeUsed >= 2 ? '已喝光' : '喝'}</button>}
+                {i.id === 'sedative' && <button className="btn" disabled={state.sedativeUsed} onClick={() => { sfx.chew(); dispatch({ type: 'USE_SEDATIVE' }); say('干草般的味道。呼吸逐渐平稳。') }}>{state.sedativeUsed ? '已用' : '嚼'}</button>}
               </div>
             ))}
-            <p className="desc" style={{ color: '#8a8a80', fontSize: 12 }}>{cabinetLabel}</p>
+            <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 16 }}>
+              {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}
+            </p>
           </div>
         </div>
       )}

@@ -146,19 +146,28 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
     scene.add(row)
   }
 
-  // 门（前墙）
-  const door = new THREE.Mesh(new THREE.BoxGeometry(1.1, 2.2, 0.15), metalMat)
-  door.position.set(0, 1.1, 2.9)
+  // 储物柜（右墙，桌台旁边）
+  const supplies = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1.2, 0.5), metalMat)
+  supplies.position.set(4.6, 0.6, -1.8)
+  scene.add(supplies)
+  const suppliesDoor = new THREE.Mesh(new THREE.PlaneGeometry(0.52, 1.1), new THREE.MeshStandardMaterial({ color: 0x4a5552, roughness: 0.6, metalness: 0.3 }))
+  suppliesDoor.rotation.y = -Math.PI / 2
+  suppliesDoor.position.set(4.29, 0.6, -1.8)
+  scene.add(suppliesDoor)
+
+  // 门（右墙，靠前）
+  const door = new THREE.Mesh(new THREE.BoxGeometry(0.15, 2.2, 1.1), metalMat)
+  door.position.set(4.9, 1.1, 1.5)
   scene.add(door)
   const doorFace = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 2.2), new THREE.MeshStandardMaterial({ map: doorTex, roughness: 0.6, metalness: 0.3 }))
-  doorFace.rotation.y = Math.PI
-  doorFace.position.set(0, 1.1, 2.82)
+  doorFace.rotation.y = -Math.PI / 2
+  doorFace.position.set(4.82, 1.1, 1.5)
   scene.add(doorFace)
   const doorHandle = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.28, 0.06), new THREE.MeshStandardMaterial({ color: 0xb0a080, roughness: 0.4, metalness: 0.5 }))
-  doorHandle.position.set(-0.35, 1.1, 2.8)
+  doorHandle.position.set(4.8, 1.1, 1.85)
   scene.add(doorHandle)
-  const doorLock = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.18, 0.04), new THREE.MeshStandardMaterial({ color: 0x9a1a1a, roughness: 0.4, emissive: 0x4a0a0a, emissiveIntensity: 0.6 }))
-  doorLock.position.set(-0.35, 1.3, 2.8)
+  const doorLock = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.18, 0.18), new THREE.MeshStandardMaterial({ color: 0x9a1a1a, roughness: 0.4, emissive: 0x4a0a0a, emissiveIntensity: 0.6 }))
+  doorLock.position.set(4.8, 1.3, 1.85)
   scene.add(doorLock)
 
   // 灯光

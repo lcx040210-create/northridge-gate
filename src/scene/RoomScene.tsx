@@ -5,7 +5,7 @@ import { HOTSPOTS } from './cameras'
 import { updatePlayer, applyMouseLook, STAND_HEIGHT, CROUCH_HEIGHT, type Bounds, type PlayerState, type MoveInput } from './controls'
 import { footstep, jump, land, crouch } from './audio'
 
-const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.85, maxZ: 2.85 }
+const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.85, maxZ: 2.95 }
 const INTERACT_RANGE = 2.5
 const AIM_ANGLE = 0.3 // ~17 度，需准星真正指向物品
 

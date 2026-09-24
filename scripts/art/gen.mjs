@@ -45,6 +45,6 @@ if (want('icons')) {
   const { ICONS, icon } = await import('./icons.mjs')
   for (const k of Object.keys(ICONS)) write(ROOT, `icons/${k}.svg`, icon(k))
   const { manualArt } = await import('./icons.mjs')
-  for (const k of ['skinfit', 'coretick', 'wetnest', 'infected']) write(ROOT, `manual/${k}.svg`, manualArt(k))
+  for (const k of ['skinfit', 'coretick', 'wetnest', 'infected', 'mirror', 'hollow', 'crawler']) write(ROOT, `manual/${k}.svg`, manualArt(k))
   console.log('icons done')
 }

@@ -72,7 +72,8 @@ export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: 
       if (document.pointerLockElement !== renderer.domElement) {
         renderer.domElement.requestPointerLock()
       } else {
-        interact()
+        // 鼠标左键：使用武器
+        onInteractRef.current('use_weapon')
       }
     }
 
@@ -89,13 +90,7 @@ export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: 
         case 'Space': keys.jump = true; e.preventDefault(); break
         case 'ControlLeft': case 'ControlRight': keys.crouch = true; break
         case 'KeyF':
-          const hotspot = aimedHotspot()
-          if (hotspot) {
-            interact()
-          } else {
-            // 对空使用武器
-            onInteractRef.current('use_weapon')
-          }
+          interact()
           break
       }
     }
@@ -139,7 +134,9 @@ export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: 
       camera.position.set(player.x, player.y + bob, player.z)
       camera.rotation.y = player.yaw
       camera.rotation.x = player.pitch
-      // 更新双手
+      // 更新双手状态
+      const handState: HandState = equippedWeapon === 'axe' ? 'axe' : equippedWeapon === 'gun' ? 'gun' : equippedWeapon === 'fire' ? 'flamethrower' : 'empty'
+      hands.setState(handState)
       hands.update(stride, grounded)
       renderer.render(scene, camera)
       const n = aimedHotspot()

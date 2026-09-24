@@ -25,6 +25,12 @@ export interface Bounds {
   maxZ: number
 }
 
+export interface Obstacle {
+  x: number
+  z: number
+  radius: number
+}
+
 export const MOVE_SPEED = 4
 export const CROUCH_SPEED = 2
 export const JUMP_VELOCITY = 5
@@ -36,6 +42,16 @@ export const MOUSE_SENSITIVITY = 0.002
 function clamp(v: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, v))
 }
+
+// 房间障碍物：武器柜、储物柜、桌椅、床
+const OBSTACLES: Obstacle[] = [
+  { x: -3.5, z: -2.3, radius: 0.6 }, // 左侧武器柜
+  { x: 3.5, z: -2.3, radius: 0.6 },  // 右侧储物柜
+  { x: 0, z: -2.5, radius: 0.8 },    // 桌子
+  { x: -2, z: 2, radius: 0.5 },      // 床左侧
+  { x: 2, z: 2, radius: 0.5 },       // 床右侧
+  { x: -1.5, z: -1, radius: 0.4 },   // 椅子
+]
 
 export function updatePlayer(state: PlayerState, input: MoveInput, dt: number, bounds: Bounds): PlayerState {
   const speed = state.crouching ? CROUCH_SPEED : MOVE_SPEED
@@ -57,6 +73,20 @@ export function updatePlayer(state: PlayerState, input: MoveInput, dt: number, b
   // 视角相对移动：yaw 绕 Y 轴旋转，W 始终朝镜头前方
   let x = state.x + (dx * cos + dz * sin) * speed * dt
   let z = state.z + (-dx * sin + dz * cos) * speed * dt
+
+  // 障碍物碰撞检测
+  const PLAYER_RADIUS = 0.3
+  for (const obs of OBSTACLES) {
+    const dist = Math.hypot(x - obs.x, z - obs.z)
+    if (dist < obs.radius + PLAYER_RADIUS) {
+      // 推出
+      const nx = (x - obs.x) / dist
+      const nz = (z - obs.z) / dist
+      x = obs.x + nx * (obs.radius + PLAYER_RADIUS)
+      z = obs.z + nz * (obs.radius + PLAYER_RADIUS)
+    }
+  }
+
   x = clamp(x, bounds.minX, bounds.maxX)
   z = clamp(z, bounds.minZ, bounds.maxZ)
 

@@ -78,8 +78,36 @@ export default function App() {
   }
 
   const [showFlame, setShowFlame] = useState(false)
+  const [woundMarks, setWoundMarks] = useState<Array<{ tool: 'axe' | 'gun' | 'fire'; x: number; y: number; rotation: number }>>([])
 
   const handleWeaponUse = () => {
+    // 添加痕迹到中心位置
+    const newMark = {
+      tool: state.equippedWeapon as 'axe' | 'gun' | 'fire',
+      x: 48 + (Math.random() - 0.5) * 8,
+      y: 48 + (Math.random() - 0.5) * 8,
+      rotation: Math.random() * 360,
+    }
+    setWoundMarks((prev) => [...prev, newMark])
+
+    if (state.equippedWeapon === 'gun') {
+      dispatch({ type: 'USE_WEAPON' })
+      if (Math.random() < 0.05) {
+        dispatch({ type: 'TRIGGER_SPRINKLER' })
+      }
+    } else if (state.equippedWeapon === 'fire') {
+      setShowFlame(true)
+      sfx.fireIgnite()
+      setTimeout(() => {
+        setShowFlame(false)
+      }, 1500)
+      if (Math.random() < 0.03) {
+        dispatch({ type: 'TRIGGER_SPRINKLER' })
+      }
+    } else if (state.equippedWeapon === 'axe') {
+      sfx.axeSwing()
+    }
+  }
     if (!state.equippedWeapon) {
       say('未装备武器')
       return

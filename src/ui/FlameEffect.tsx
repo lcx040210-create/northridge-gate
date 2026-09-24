@@ -34,6 +34,8 @@ export default function FlameEffect({ active }: { active: boolean }) {
     const centerY = canvas.height / 2
 
     const animate = () => {
+      if (!active) return
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       // 生成新粒子（喷火器从中心向前喷射）

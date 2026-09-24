@@ -26,7 +26,9 @@ import Death from './ui/Death'
 import * as sfx from './scene/audio'
 
 
-const OBJECTIVE = (n: number) => (n === 0 ? '走到观察窗前（正前方），按 F 检视来访者' : '有人在敲窗。回到观察窗处理下一位来访者')
+const OBJECTIVE = (n: number, unlocked: boolean) => unlocked
+  ? '所有访客已处理完毕。门已解锁，去开门离开。'
+  : (n === 0 ? '走到观察窗前（正前方），按 F 检视来访者' : '有人在敲窗。回到观察窗处理下一位来访者')
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
@@ -288,7 +290,7 @@ export default function App() {
 
       {activeHotspot === null && !execution && (
         <>
-          <div className="hint" style={{ top: 56 }}>→ {OBJECTIVE(state.records.length)}</div>
+          <div className="hint" style={{ top: 56 }}>→ {OBJECTIVE(state.records.length, state.doorUnlocked)}</div>
           <div className="hint" style={{ bottom: 28, color: '#c8c8c0' }}>准星对准物品，按 F 交互</div>
         </>
       )}

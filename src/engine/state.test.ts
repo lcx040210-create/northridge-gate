@@ -12,10 +12,16 @@ describe('reducer', () => {
     expect(s.visitorIndex).toBe(1)
   })
 
-  it('after all visitors, phase becomes boss_intro', () => {
+  it('after all visitors, door unlocks and stays in visitor phase', () => {
     let s = reducer(INITIAL_STATE, { type: 'START' })
-    for (let i = 0; i < 4; i++) s = reducer(s, { type: 'JUDGE', verdict: 'admit' })
-    expect(s.phase).toBe('boss_intro')
+    for (let i = 0; i < 3; i++) s = reducer(s, { type: 'JUDGE', verdict: 'admit' })
+    expect(s.doorUnlocked).toBe(false)
+    s = reducer(s, { type: 'JUDGE', verdict: 'admit' })
+    expect(s.doorUnlocked).toBe(true)
+    expect(s.phase).toBe('visitor')
+    // 开门进入结局
+    const d = reducer(s, { type: 'OPEN_DOOR' })
+    expect(d.phase).toBe('dawn')
   })
 
   it('INSPECT no longer costs reaction', () => {

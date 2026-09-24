@@ -13,10 +13,10 @@ export const HOTSPOTS: Hotspot[] = [
   { id: 'sofa', label: '沙发', position: [0, 1.2, 1.2], lookAt: [0, 1.2, 1.8] },
   { id: 'door', label: '门', position: [3.8, 1.6, -0.8], lookAt: [4.5, 1.6, -0.8] },
 
-  // 新增可阅读物品
-  { id: 'book', label: '桌上书籍', position: [0, 1.0, -2.2], lookAt: [0, 0.8, -2.5] },
-  { id: 'note', label: '纸条', position: [0.5, 1.0, -2.3], lookAt: [0.5, 0.8, -2.5] },
-  { id: 'poster1', label: '墙上海报', position: [-2, 1.6, -2.5], lookAt: [-2.5, 1.6, -2.8] },
-  { id: 'poster2', label: '警告海报', position: [2, 1.6, -2.5], lookAt: [2.5, 1.6, -2.8] },
-  { id: 'poster3', label: '失联公告', position: [-4, 1.6, 0], lookAt: [-4.8, 1.6, 0] },
+  // 新增可阅读物品（与 room.ts 中的 3D 模型位置一致）
+  { id: 'book', label: '桌上书籍', position: [0.45, 1.1, -2.25], lookAt: [0.45, 1.1, -2.25] },
+  { id: 'note', label: '纸条', position: [-0.55, 1.1, -2.3], lookAt: [-0.55, 1.1, -2.3] },
+  { id: 'poster1', label: '紧急应对守则', position: [-4.97, 2.1, 0.3], lookAt: [-4.97, 2.1, 0.3] },
+  { id: 'poster2', label: '感染者警告', position: [4.97, 2.1, 0.3], lookAt: [4.97, 2.1, 0.3] },
+  { id: 'poster3', label: '失联人员公告', position: [-4.97, 2.1, 1.9], lookAt: [-4.97, 2.1, 1.9] },
 ]

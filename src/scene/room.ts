@@ -14,7 +14,7 @@ function tex(t: THREE.Texture, repeat = 1): THREE.Texture {
 }
 
 export async function buildRoom(scene: THREE.Scene): Promise<void> {
-  const [wallTex, floorTex, sofaTex, metalTex, woodTex, doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex] = await Promise.all([
+  const [wallTex, floorTex, sofaTex, metalTex, woodTex, doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex, protocolTex, warningTex, missingTex] = await Promise.all([
     loadTexture('/assets/room/wall.svg'),
     loadTexture('/assets/room/floor.svg'),
     loadTexture('/assets/room/sofa.svg'),
@@ -26,8 +26,11 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
     loadTexture('/assets/room/books.svg'),
     loadTexture('/assets/scenes/window.svg'),
     loadTexture('/assets/scenes/window_glass.svg'),
+    loadTexture('/assets/room/posterProtocol.svg'),
+    loadTexture('/assets/room/posterWarning.svg'),
+    loadTexture('/assets/room/posterMissing.svg'),
   ])
-  for (const t of [doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex]) t.colorSpace = THREE.SRGBColorSpace
+  for (const t of [doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex, protocolTex, warningTex, missingTex]) t.colorSpace = THREE.SRGBColorSpace
   tex(wallTex, 1)
   wallTex.repeat.set(3, 1)
   tex(floorTex, 2)
@@ -74,6 +77,22 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
   poster.position.set(3.2, 2.4, -2.98)
   scene.add(poster)
 
+  // 可阅读海报：左墙（紧急应对守则 / 失联公告）
+  const posterProtocol = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.25), new THREE.MeshBasicMaterial({ map: protocolTex }))
+  posterProtocol.position.set(-4.97, 2.1, 0.3)
+  posterProtocol.rotation.y = Math.PI / 2
+  scene.add(posterProtocol)
+  const posterMissing = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.25), new THREE.MeshBasicMaterial({ map: missingTex }))
+  posterMissing.position.set(-4.97, 2.1, 1.9)
+  posterMissing.rotation.y = Math.PI / 2
+  scene.add(posterMissing)
+
+  // 可阅读海报：右墙（感染者警告）
+  const posterWarning = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 1.25), new THREE.MeshBasicMaterial({ map: warningTex }))
+  posterWarning.position.set(4.97, 2.1, 0.3)
+  posterWarning.rotation.y = -Math.PI / 2
+  scene.add(posterWarning)
+
   // 前墙 + 侧墙 + 天花板
   const wallMat = new THREE.MeshStandardMaterial({ color: 0x2e332e, roughness: 0.9 })
   const frontWall = new THREE.Mesh(new THREE.PlaneGeometry(10, 4), wallMat)
@@ -101,6 +120,30 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
   const deskTop = new THREE.Mesh(new THREE.BoxGeometry(3.3, 0.12, 1.0), metalMat)
   deskTop.position.set(0, 0.96, -2.4)
   scene.add(deskTop)
+
+  // 桌上的背景书籍（可阅读）
+  const bookCover = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.07, 0.3), new THREE.MeshStandardMaterial({ color: 0x5a1a14, roughness: 0.7 }))
+  bookCover.position.set(0.45, 1.05, -2.25)
+  bookCover.rotation.y = 0.2
+  scene.add(bookCover)
+  const bookPages = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.05, 0.26), new THREE.MeshStandardMaterial({ color: 0xd8d0b8, roughness: 0.9 }))
+  bookPages.position.set(0.45, 1.08, -2.25)
+  bookPages.rotation.y = 0.2
+  scene.add(bookPages)
+
+  // 桌上的纸条（前任安保留下）
+  const note = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 0.3), new THREE.MeshStandardMaterial({ color: 0xd8d0b0, roughness: 0.95 }))
+  note.position.set(-0.55, 1.075, -2.3)
+  note.rotation.x = -Math.PI / 2
+  note.rotation.z = 0.25
+  scene.add(note)
+  // 纸条上的字迹
+  const noteInk = new THREE.Mesh(new THREE.PlaneGeometry(0.18, 0.26), new THREE.MeshBasicMaterial({ color: 0x2a2a24 }))
+  noteInk.position.set(-0.55, 1.078, -2.3)
+  noteInk.rotation.x = -Math.PI / 2
+  noteInk.rotation.z = 0.25
+  noteInk.visible = false
+  scene.add(noteInk)
 
   // 沙发（前墙前，前移留出通道）
   const seat = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.5, 1.0), sofaMat)

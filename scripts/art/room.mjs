@@ -128,3 +128,63 @@ export function books() {
   }
   return svg(W, H, FILTERS, b)
 }
+
+// 可阅读海报：紧急应对守则
+export function posterProtocol() {
+  const W = 640, H = 800
+  const defs = FILTERS
+  let b = `<rect width="${W}" height="${H}" fill="#d8d0b8"/>`
+  b += `<rect x="24" y="24" width="592" height="752" fill="none" stroke="#5a1810" stroke-width="6"/>`
+  b += `<rect x="36" y="36" width="568" height="40" fill="#5a1810"/>`
+  b += `<text x="320" y="64" font-family="Impact,Arial Black,sans-serif" font-size="28" text-anchor="middle" fill="#e8dcc0" letter-spacing="4">紧急应对守则</text>`
+  const lines = ['· 识别失败率容忍度：0%', '· 可疑目标一律处决', '· 禁止与来访者交谈超过30秒', '· 每夜必须上报处理记录', '· 违反者立即调离岗位', '—— 北岭安全委员会']
+  lines.forEach((t, i) => {
+    b += `<text x="80" y="${160 + i * 70}" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="34" fill="#1a1410">${t}</text>`
+  })
+  // 撕裂与污渍
+  b += `<path d="M0 700 L120 690 L240 705 L360 688 L480 702 L640 692" stroke="none"/>`
+  for (let i = 0; i < 8; i++) b += `<circle cx="${40 + Math.random() * 560}" cy="${60 + Math.random() * 680}" r="${6 + Math.random() * 18}" fill="#4a3a20" opacity="${0.04 + Math.random() * 0.08}"/>`
+  b += `<rect x="600" y="0" width="40" height="120" fill="#b8b0a0" transform="rotate(8 600 0)" opacity="0.7"/>`
+  return svg(W, H, defs, b)
+}
+
+// 可阅读海报：感染者特征警告
+export function posterWarning() {
+  const W = 640, H = 800
+  const defs = FILTERS
+  let b = `<rect width="${W}" height="${H}" fill="#c8b8a8"/>`
+  b += `<rect x="24" y="24" width="592" height="752" fill="none" stroke="#8a1810" stroke-width="8"/>`
+  b += `<rect x="36" y="36" width="568" height="44" fill="#8a1810"/>`
+  b += `<text x="320" y="68" font-family="Impact,Arial Black,sans-serif" font-size="30" text-anchor="middle" fill="#f0e0c8" letter-spacing="6">⚠ 危险警告 ⚠</text>`
+  const lines = ['感染者识别特征：', '', '外观：', '· 皮肤灰白色', '· 瞳孔扩散', '· 体温低于28°C', '', '行为：', '· 声称需要帮助', '· 恳求放行治疗', '· 自述听到耳语', '', '应对：立即处决。', '感染无法逆转。']
+  let y = 140
+  for (const t of lines) {
+    if (t === '') { y += 20; continue }
+    const big = t === '感染者识别特征：' || t === '外观：' || t === '行为：' || t === '应对：立即处决。' || t === '感染无法逆转。'
+    b += `<text x="90" y="${y}" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="${big ? 34 : 30}" font-weight="${big ? 'bold' : 'normal'}" fill="${big ? '#5a1010' : '#1a1410'}">${t}</text>`
+    y += 52
+  }
+  b += `<circle cx="520" cy="180" r="40" fill="none" stroke="#8a1810" stroke-width="5"/><path d="M500 160 L540 200 M540 160 L500 200" stroke="#8a1810" stroke-width="5"/>`
+  return svg(W, H, defs, b)
+}
+
+// 可阅读海报：失联人员公告
+export function posterMissing() {
+  const W = 640, H = 800
+  const defs = FILTERS
+  let b = `<rect width="${W}" height="${H}" fill="#b8b0a0"/>`
+  b += `<rect x="24" y="24" width="592" height="752" fill="none" stroke="#2a2a24" stroke-width="6"/>`
+  b += `<rect x="36" y="36" width="568" height="44" fill="#2a2a24"/>`
+  b += `<text x="320" y="68" font-family="Impact,Arial Black,sans-serif" font-size="30" text-anchor="middle" fill="#e0d8c8" letter-spacing="6">失联人员通报</text>`
+  b += `<text x="320" y="130" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="28" fill="#1a1410" text-anchor="middle">第17夜起失联：</text>`
+  const people = ['3号闸口安保：张伟', '7号闸口安保：李明', '实验室技术员：王芳']
+  people.forEach((t, i) => {
+    b += `<text x="140" y="${200 + i * 70}" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="30" fill="#2a2018">${t}</text>`
+  })
+  b += `<text x="320" y="460" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="28" fill="#5a1010" text-anchor="middle">如发现其本人或伪装体，</text>`
+  b += `<text x="320" y="510" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="28" fill="#5a1010" text-anchor="middle">立即上报，切勿接触。</text>`
+  b += `<text x="320" y="600" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="24" fill="#4a4a40" text-anchor="middle">—— 北岭前哨管理处</text>`
+  // 旧化
+  for (let i = 0; i < 10; i++) b += `<ellipse cx="${60 + Math.random() * 520}" cy="${80 + Math.random() * 640}" rx="${20 + Math.random() * 50}" ry="${12 + Math.random() * 30}" fill="#6a5a3a" opacity="${0.05 + Math.random() * 0.08}" filter="url(#blur4)"/>`
+  return svg(W, H, defs, b)
+}

@@ -76,8 +76,9 @@ export function reducer(state: GameState, action: Action): GameState {
         san,
         records: [...state.records, record],
         visitorIndex,
-        phase: allDone ? 'dawn' : 'visitor',
-        doorUnlocked: allDone, // 四人检查完毕，解锁门
+        // 四人检查完毕 → 门解锁，玩家自行开门触发结局
+        phase: 'visitor',
+        doorUnlocked: state.doorUnlocked || allDone,
         sanTouchedBelow15: state.sanTouchedBelow15 || san < 15,
       }
     }
@@ -109,13 +110,15 @@ export function reducer(state: GameState, action: Action): GameState {
         ? applySanDelta(state.san, -10)
         : applySanDelta(state.san, 20)
       const visitorIndex = state.visitorIndex + 1
+      const allDone = visitorIndex >= VISITORS.length
       return {
         ...state,
         san,
         sofaUsed: true,
         autoReleased: visitor,
         visitorIndex,
-        phase: visitorIndex >= VISITORS.length ? 'dawn' : 'visitor',
+        phase: 'visitor',
+        doorUnlocked: state.doorUnlocked || allDone,
       }
     }
 

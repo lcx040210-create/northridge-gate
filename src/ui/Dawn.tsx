@@ -27,6 +27,7 @@ function beatsOf(endingLines: string[]): Beat[] {
     { img: '/assets/ui/dawn.svg', lines: ['天亮了。', ...endingLines], dur: 4800 },
     {
       teaser: true,
+      img: '/assets/ui/teaser.svg',
       title: '北岭闸口 Ⅱ · 闸门之外',
       lines: ['北岭闸口，从来不止一道。', '你守住的，只是七道之一。', '第二班，很快会叫到你的名字。'],
       dur: 6500,

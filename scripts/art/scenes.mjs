@@ -180,8 +180,6 @@ export function dawnArt() {
   b += grainOverlay(W, H, 0.25) + vignette(W, H, 0.8)
   return svg(W, H, d, b)
 }
-
-// Boss 巨型伪人脸（1400×1000）
 export function bossface(hits = 0) {
   const defs = FILTERS + `<radialGradient id="glow"><stop offset="0%" stop-color="#60c0ff"/><stop offset="100%" stop-color="#204060"/></radialGradient>`
   let b = `<rect width="1400" height="1000" fill="#0a0a0a"/>`
@@ -221,4 +219,26 @@ export function bossface(hits = 0) {
     b += `<path d="M 440 ${eyeY + 15} Q 442 ${eyeY + 40} 444 ${eyeY + 60}" stroke="#1a1210" stroke-width="4" fill="none"/>`
   }
   return svg(1400, 1000, defs, b)
+}
+
+// 续作预告：黑暗隧道里七道闸门，尽头有光
+export function teaserArt() {
+  const W = 1600, H = 900
+  const d = FILTERS + linear('tsky', [[0, '#0a0c10'], [1, '#000']]) + radial('tend', [[0, '#ff7a4a', 0.9], [0.35, '#a02a10', 0.4], [1, '#000', 0]])
+  let b = `<rect width="${W}" height="${H}" fill="#000"/>`
+  b += `<rect width="${W}" height="${H}" fill="url(#tsky)"/>`
+  // 隧道：七道渐远渐小的门框
+  for (let i = 0; i < 7; i++) {
+    const cx = 800, cy = 520
+    const halfW = 340 - i * 42, halfH = 260 - i * 34
+    b += `<rect x="${cx - halfW}" y="${cy - halfH}" width="${halfW * 2}" height="${halfH * 2}" fill="none" stroke="#2a2f35" stroke-width="${Math.max(2, 10 - i)}" opacity="${0.5 + i * 0.08}"/>`
+  }
+  // 尽头的光与远处人影
+  b += `<circle cx="800" cy="520" r="60" fill="url(#tend)"/>`
+  b += `<g opacity="0.85"><ellipse cx="800" cy="524" rx="9" ry="16" fill="#050505"/><path d="M795 540 L790 570 L810 570 L805 540Z" fill="#050505"/></g>`
+  // 地面反光
+  b += `<path d="M470 900 L700 570 L900 570 L1130 900Z" fill="#160a06" opacity="0.6"/>`
+  b += rain(W, H, 260, 4, { opacity: [0.05, 0.22] })
+  b += grainOverlay(W, H, 0.3) + vignette(W, H, 0.85)
+  return svg(W, H, d, b)
 }

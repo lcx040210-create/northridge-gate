@@ -40,7 +40,7 @@ export default function BossFight({ state, onTransition, onDamage, onDefeated, o
   // Boss 撞击动画
   useEffect(() => {
     if (phase === 'boss_fight') {
-      let impactInterval: NodeJS.Timeout
+      let impactInterval: ReturnType<typeof setInterval>
 
       const doImpact = () => {
         sfx.glassBreaking()

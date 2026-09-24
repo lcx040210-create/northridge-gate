@@ -4,7 +4,6 @@ import type { Verdict as VerdictType, Tool, Visitor } from './data/schema'
 import type { ExecutionResult } from './engine/execution'
 import { resolveExecution } from './engine/execution'
 import { WORLD_TEXT } from './data/world'
-import { ITEMS } from './data/items'
 import { WEAPONS, CONSUMABLES } from './data/weapons'
 import { MANUAL_ENTRIES } from './data/manual'
 import RoomScene from './scene/RoomScene'
@@ -13,9 +12,12 @@ import Portrait from './ui/Portrait'
 import Inspect, { type InspectSlot } from './ui/Inspect'
 import Verdict from './ui/Verdict'
 import ExecutionOverlay from './ui/ExecutionOverlay'
-import ExecutionAim from './ui/ExecutionAim'
+import AxeQTE from './ui/AxeQTE'
+import GunAim from './ui/GunAim'
+import FlamethrowerCharge from './ui/FlamethrowerCharge'
 import HUD from './ui/HUD'
 import WeaponHUD from './ui/WeaponHUD'
+import BossFight from './ui/BossFight'
 import Dawn from './ui/Dawn'
 import Death from './ui/Death'
 import * as sfx from './scene/audio'
@@ -26,7 +28,7 @@ const OBJECTIVE = (n: number) => (n === 0 ? '走到观察窗前（正前方）�
 export default function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null)
-  const [aiming, setAiming] = useState<{ tool: Tool; visitor: Visitor } | null>(null)
+  const [executionGame, setExecutionGame] = useState<{ tool: Tool; visitor: Visitor } | null>(null)
   const [execution, setExecution] = useState<{ result: ExecutionResult; tool: Tool; visitor: Visitor } | null>(null)
   const [death, setDeath] = useState<Visitor | null | false>(false)
   const [toast, setToast] = useState<string | null>(null)
@@ -76,7 +78,8 @@ export default function App() {
   const handleJudge = (verdict: VerdictType, tool?: Tool) => {
     if (!visitor) return
     if (verdict === 'execute' && tool) {
-      setAiming({ tool, visitor })
+      // 进入处决小游戏
+      setExecutionGame({ tool, visitor })
       return
     }
     if (verdict === 'admit') sfx.admit()
@@ -87,21 +90,46 @@ export default function App() {
     setActiveHotspot(null)
   }
 
-  const onAimSuccess = () => {
-    if (!aiming) return
-    const result = resolveExecution(aiming.visitor, aiming.tool)
-    setExecution({ result, tool: aiming.tool, visitor: aiming.visitor })
-    dispatch({ type: 'JUDGE', verdict: 'execute', tool: aiming.tool })
-    setAiming(null)
+  // 小游戏成功
+  const onExecutionSuccess = () => {
+    if (!executionGame) return
+    const result = resolveExecution(executionGame.visitor, executionGame.tool)
+    setExecution({ result, tool: executionGame.tool, visitor: executionGame.visitor })
+    dispatch({ type: 'JUDGE', verdict: 'execute', tool: executionGame.tool })
+    setExecutionGame(null)
     setActiveHotspot(null)
   }
-  const onAimCancel = () => {
-    setAiming(null)
-    say('你放下了武器。他还站在窗外，发着抖。')
+
+  // 小游戏失败
+  const onExecutionFail = () => {
+    if (!executionGame) return
+    sfx.scream()
+    say(`它没死！${executionGame.visitor.role !== 'human' ? '它逃进了夜里。' : '他惊恐地逃走了。'}`, 5000)
+    // 记录为失败的处决
+    dispatch({ type: 'JUDGE', verdict: 'execute', tool: executionGame.tool })
+    setExecutionGame(null)
+    setActiveHotspot(null)
   }
-  const onAimFail = () => {
-    setDeath(aiming?.visitor ?? null)
-    setAiming(null)
+
+  // 斧头/焚化罐失败（玩家被攻击）
+  const onExecutionDeath = () => {
+    setDeath(executionGame?.visitor ?? null)
+    setExecutionGame(null)
+  }
+
+  // 焚化罐过热
+  const onFlamethrowerOverheat = () => {
+    sfx.fireWhoosh()
+    dispatch({ type: 'JUDGE', verdict: 'execute', tool: 'fire' })
+    say('罐体过热爆炸！你被烧伤了。', 4000)
+    // San -20
+    setExecutionGame(null)
+  }
+
+  // 手枪弹药耗尽
+  const onOutOfAmmo = () => {
+    say('弹药耗尽！', 3000)
+    onExecutionDeath()
   }
   const execRef = useRef(execution)
   execRef.current = execution
@@ -210,16 +238,37 @@ export default function App() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, padding: '16px 0' }}>
               {WEAPONS.map((w) => (
-                <div key={w.id} className={`weapon-slot ${w.locked ? 'locked' : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 16, background: w.locked ? '#2a2a24' : '#3a3a32', borderRadius: 6, border: w.locked ? '2px dashed #4a4a40' : '2px solid #5a5a50' }}>
+                <div
+                  key={w.id}
+                  className={`weapon-slot ${w.locked ? 'locked' : ''}`}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: 16,
+                    background: w.locked ? '#2a2a24' : state.equippedWeapon === w.id ? '#4a5548' : '#3a3a32',
+                    borderRadius: 6,
+                    border: w.locked ? '2px dashed #4a4a40' : state.equippedWeapon === w.id ? '2px solid #60b060' : '2px solid #5a5a50',
+                    cursor: w.locked ? 'not-allowed' : 'pointer',
+                  }}
+                  onClick={() => {
+                    if (!w.locked) {
+                      dispatch({ type: 'EQUIP_WEAPON', weapon: w.id })
+                      sfx.interact()
+                      say(`已装备 ${w.name}`)
+                    }
+                  }}
+                >
                   <img src={`/assets/icons/${w.id}.svg`} alt="" style={{ width: 72, height: 72, marginBottom: 8, filter: w.locked ? 'brightness(0.3)' : 'none' }} />
                   <div style={{ fontWeight: 'bold', marginBottom: 4, color: w.locked ? '#6a6a60' : '#e8e2cc' }}>{w.name}</div>
                   {w.locked && <div style={{ fontSize: 12, color: '#8a6a4a' }}>🔒 白班权限</div>}
                   {!w.locked && <div className="desc" style={{ textAlign: 'center', fontSize: 12 }}>{w.desc}</div>}
+                  {state.equippedWeapon === w.id && <div style={{ marginTop: 8, color: '#60b060', fontSize: 11 }}>✓ 已装备</div>}
                 </div>
               ))}
             </div>
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 8 }}>
-              {WORLD_TEXT.find((w) => w.surface === 'label')?.text}
+              点击武器装备，按 F 键使用
             </p>
           </div>
         </div>
@@ -285,9 +334,44 @@ export default function App() {
         </div>
       )}
 
-      {aiming && <ExecutionAim visitor={aiming.visitor} tool={aiming.tool} onSuccess={onAimSuccess} onFail={onAimFail} onCancel={onAimCancel} />}
       {execution && <ExecutionOverlay result={execution.result} tool={execution.tool} visitor={execution.visitor} onDone={onExecDone} />}
       {death !== false && <Death visitor={death} />}
+
+      {/* 处决小游戏 */}
+      {executionGame && executionGame.tool === 'axe' && (
+        <AxeQTE visitor={executionGame.visitor} onSuccess={onExecutionSuccess} onFail={onExecutionDeath} />
+      )}
+      {executionGame && executionGame.tool === 'gun' && (
+        <GunAim
+          visitor={executionGame.visitor}
+          gunAmmo={state.gunAmmo}
+          onSuccess={onExecutionSuccess}
+          onFail={onExecutionDeath}
+          onOutOfAmmo={onOutOfAmmo}
+        />
+      )}
+      {executionGame && executionGame.tool === 'fire' && (
+        <FlamethrowerCharge
+          visitor={executionGame.visitor}
+          onSuccess={onExecutionSuccess}
+          onFail={onExecutionFail}
+          onOverheat={onFlamethrowerOverheat}
+        />
+      )}
+
+      {/* Boss 战 */}
+      {(state.phase === 'boss_intro' || state.phase === 'boss_fight' || state.phase === 'boss_door_trap') && (
+        <BossFight
+          state={state}
+          onTransition={() => dispatch({ type: 'BOSS_TRANSITION' })}
+          onDamage={() => dispatch({ type: 'BOSS_DAMAGE' })}
+          onDefeated={() => dispatch({ type: 'BOSS_DEFEATED' })}
+          onDoorOpened={() => {
+            // 门陷阱 - 玩家死亡
+            setDeath(null)
+          }}
+        />
+      )}
     </div>
   )
 }

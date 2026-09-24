@@ -19,6 +19,7 @@ import FlamethrowerCharge from './ui/FlamethrowerCharge'
 import HUD from './ui/HUD'
 import WeaponHUD from './ui/WeaponHUD'
 import SprinklerEffect from './ui/SprinklerEffect'
+import FlameEffect from './ui/FlameEffect'
 import BossFight from './ui/BossFight'
 import Dawn from './ui/Dawn'
 import Death from './ui/Death'
@@ -75,6 +76,8 @@ export default function App() {
     if (id === 'door') sfx.doorLocked()
     setActiveHotspot(id)
   }
+
+  const [showFlame, setShowFlame] = useState(false)
 
   const handleWeaponUse = () => {
     if (!state.equippedWeapon) {

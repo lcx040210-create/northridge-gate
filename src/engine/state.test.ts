@@ -14,7 +14,7 @@ describe('reducer', () => {
 
   it('after all visitors, phase becomes dawn', () => {
     let s = reducer(INITIAL_STATE, { type: 'START' })
-    for (let i = 0; i < 3; i++) s = reducer(s, { type: 'JUDGE', verdict: 'admit' })
+    for (let i = 0; i < 4; i++) s = reducer(s, { type: 'JUDGE', verdict: 'admit' })
     expect(s.phase).toBe('dawn')
   })
 

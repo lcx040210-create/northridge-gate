@@ -15,21 +15,21 @@ function tex(t: THREE.Texture, repeat = 1): THREE.Texture {
 
 export async function buildRoom(scene: THREE.Scene): Promise<void> {
   const [wallTex, floorTex, sofaTex, metalTex, woodTex, doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex, protocolTex, warningTex, missingTex, bannerTex] = await Promise.all([
-    loadTexture('/assets/room/wall.svg'),
-    loadTexture('/assets/room/floor.svg'),
-    loadTexture('/assets/room/sofa.svg'),
-    loadTexture('/assets/room/metal.svg'),
-    loadTexture('/assets/room/wood.svg'),
-    loadTexture('/assets/room/door.svg'),
-    loadTexture('/assets/room/cabinet.svg'),
-    loadTexture('/assets/room/poster.svg'),
-    loadTexture('/assets/room/books.svg'),
-    loadTexture('/assets/scenes/window.svg'),
-    loadTexture('/assets/scenes/window_glass.svg'),
-    loadTexture('/assets/room/posterProtocol.svg'),
-    loadTexture('/assets/room/posterWarning.svg'),
-    loadTexture('/assets/room/posterMissing.svg'),
-    loadTexture('/assets/room/banner.svg'),
+    loadTexture('./assets/room/wall.svg'),
+    loadTexture('./assets/room/floor.svg'),
+    loadTexture('./assets/room/sofa.svg'),
+    loadTexture('./assets/room/metal.svg'),
+    loadTexture('./assets/room/wood.svg'),
+    loadTexture('./assets/room/door.svg'),
+    loadTexture('./assets/room/cabinet.svg'),
+    loadTexture('./assets/room/poster.svg'),
+    loadTexture('./assets/room/books.svg'),
+    loadTexture('./assets/scenes/window.svg'),
+    loadTexture('./assets/scenes/window_glass.svg'),
+    loadTexture('./assets/room/posterProtocol.svg'),
+    loadTexture('./assets/room/posterWarning.svg'),
+    loadTexture('./assets/room/posterMissing.svg'),
+    loadTexture('./assets/room/banner.svg'),
   ])
   for (const t of [doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex, protocolTex, warningTex, missingTex, bannerTex]) t.colorSpace = THREE.SRGBColorSpace
   tex(wallTex, 1)

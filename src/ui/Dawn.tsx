@@ -20,14 +20,14 @@ function beatsOf(endingLines: string[]): Beat[] {
   return [
     { lines: ['You push the door open.', 'The night shift is over.'], dur: 3800 },
     {
-      img: '/assets/env/corridor_silhouette.svg',
+      img: './assets/env/corridor_silhouette.svg',
       lines: ['The corridor is dark, but you know the way.', 'Behind you, the door closes by itself the moment you step out.'],
       dur: 5200,
     },
-    { img: '/assets/ui/dawn.svg', lines: ['Dawn breaks.', ...endingLines], dur: 4800 },
+    { img: './assets/ui/dawn.svg', lines: ['Dawn breaks.', ...endingLines], dur: 4800 },
     {
       teaser: true,
-      img: '/assets/ui/teaser.svg',
+      img: './assets/ui/teaser.svg',
       title: 'NORTHRIDGE GATE Ⅱ · BEYOND THE CHECKPOINT',
       lines: ['Northridge Gate was never just one gate.', 'You held only one of seven.', 'The next shift will call your name soon.'],
       dur: 6500,

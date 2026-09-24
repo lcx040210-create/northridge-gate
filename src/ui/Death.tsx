@@ -9,8 +9,8 @@ export default function Death({ visitor }: { visitor: Visitor | null }) {
   return (
     <div data-testid="death" className="death">
       {visitor && <div className="portrait"><img src={visitor.attackFrame ?? visitor.portrait} alt="" draggable={false} /></div>}
-      <img className="fx" src="/assets/env/glass_shatter.svg" alt="" />
-      <img className="fx" src="/assets/env/blood_vignette.svg" alt="" />
+      <img className="fx" src="./assets/env/glass_shatter.svg" alt="" />
+      <img className="fx" src="./assets/env/blood_vignette.svg" alt="" />
       <div className="black" />
       <div className="msg">
         <h1>YOU DIED</h1>

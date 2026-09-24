@@ -3,9 +3,9 @@ import type { Verdict as V, Tool } from '../data/schema'
 import { uiClick } from '../scene/audio'
 
 const VERDICTS: { v: V; label: string; icon: string; hint: string }[] = [
-  { v: 'admit', label: 'ADMIT', icon: '/assets/icons/admit.svg', hint: 'OPEN GATE' },
-  { v: 'execute', label: 'EXECUTE', icon: '/assets/icons/execute.svg', hint: 'PICK WEAPON' },
-  { v: 'contain', label: 'CONTAIN', icon: '/assets/icons/contain.svg', hint: 'SEAL POD' },
+  { v: 'admit', label: 'ADMIT', icon: './assets/icons/admit.svg', hint: 'OPEN GATE' },
+  { v: 'execute', label: 'EXECUTE', icon: './assets/icons/execute.svg', hint: 'PICK WEAPON' },
+  { v: 'contain', label: 'CONTAIN', icon: './assets/icons/contain.svg', hint: 'SEAL POD' },
 ]
 const TOOLS: { t: Tool; name: string }[] = [
   { t: 'axe', name: 'Fire Axe' },
@@ -26,7 +26,7 @@ export default function Verdict({ disabled, onJudge }: {
         <div className="row">
           {TOOLS.map(({ t, name }) => (
             <button key={t} className="btn danger" onClick={() => { uiClick(); onJudge('execute', t) }}>
-              <img src={`/assets/icons/${t}.svg`} alt="" /><span>{name}</span><small>{t}</small>
+              <img src={`./assets/icons/${t}.svg`} alt="" /><span>{name}</span><small>{t}</small>
             </button>
           ))}
           <button className="btn" onClick={() => { uiClick(); setPickingTool(false) }}>CANCEL</button>

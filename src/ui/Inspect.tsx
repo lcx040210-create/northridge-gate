@@ -6,9 +6,9 @@ import { inspect } from '../scene/audio'
 export type InspectSlot = 'eye' | 'id' | 'question'
 
 const SLOTS: { id: InspectSlot; label: string; icon: string }[] = [
-  { id: 'eye', label: 'EYES', icon: '/assets/icons/eye.svg' },
-  { id: 'id', label: 'ID', icon: '/assets/icons/id.svg' },
-  { id: 'question', label: 'ASK', icon: '/assets/icons/question.svg' },
+  { id: 'eye', label: 'EYES', icon: './assets/icons/eye.svg' },
+  { id: 'id', label: 'ID', icon: './assets/icons/id.svg' },
+  { id: 'question', label: 'ASK', icon: './assets/icons/question.svg' },
 ]
 
 export default function Inspect({ visitor, onInspect }: {
@@ -38,11 +38,11 @@ export default function Inspect({ visitor, onInspect }: {
           </button>
         ))}
       </div>
-      {shown.eye && <div className="finding"><img src="/assets/icons/eye.svg" alt="" /><span>{visitor.tells.eye}</span></div>}
-      {shown.id && <div className="finding"><img src="/assets/icons/id.svg" alt="" /><span>{visitor.tells.id}</span></div>}
+      {shown.eye && <div className="finding"><img src="./assets/icons/eye.svg" alt="" /><span>{visitor.tells.eye}</span></div>}
+      {shown.id && <div className="finding"><img src="./assets/icons/id.svg" alt="" /><span>{visitor.tells.id}</span></div>}
       {shown.question && qs[qi] && (
         <div className="finding">
-          <img src="/assets/icons/question.svg" alt="" />
+          <img src="./assets/icons/question.svg" alt="" />
           <div>
             <div className="q">You: {qs[qi].q}</div>
             <Typewriter key={qi} text={qs[qi].a} voice={visitor.voice} glitch={pseudo} />

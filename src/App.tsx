@@ -339,10 +339,10 @@ export default function App() {
       {activeHotspot === 'window' && visitor && (
         <div className="window-view">
           <div className="pane">
-            <img src={visitor.scene ?? '/assets/scenes/window.svg'} alt="" />
-            {showShoes && <img className="shoes" src="/assets/env/shoes_hallucination.svg" alt="" />}
+            <img src={visitor.scene ?? './assets/scenes/window.svg'} alt="" />
+            {showShoes && <img className="shoes" src="./assets/env/shoes_hallucination.svg" alt="" />}
             <Portrait visitor={visitor} />
-            <img src="/assets/scenes/window_glass.svg" alt="" />
+            <img src="./assets/scenes/window_glass.svg" alt="" />
             <div className="rim" />
             {showShoes && (
               <p data-testid="hallucination" style={{ position: 'absolute', bottom: 14, left: 14, color: '#e0a0a0', background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 3 }}>In the corridor, there is an extra pair of shoes.</p>
@@ -364,13 +364,13 @@ export default function App() {
         <div className="overlay">
           <div className="manual">
             <div className="panel-head">
-              <h2><img src="/assets/icons/manual.svg" alt="" style={{ filter: 'invert(0.85)' }} />IDENTIFICATION MANUAL v0.4</h2>
+              <h2><img src="./assets/icons/manual.svg" alt="" style={{ filter: 'invert(0.85)' }} />IDENTIFICATION MANUAL v0.4</h2>
               <button className="btn" onClick={close}>CLOSE</button>
             </div>
             <div className="pages">
               {MANUAL_ENTRIES.map((p) => (
                 <div key={p.key} className={`entry ${p.locked ? 'locked' : ''}`}>
-                  <img src={`/assets/manual/${p.key}.svg`} alt="" style={p.locked ? { filter: 'brightness(0.3) blur(2px)' } : {}} />
+                  <img src={`./assets/manual/${p.key}.svg`} alt="" style={p.locked ? { filter: 'brightness(0.3) blur(2px)' } : {}} />
                   <div>
                     <b>{p.name} {p.locked && <span style={{ color: '#8a6a4a', fontSize: 13 }}>🔒 LOCKED</span>}</b>
                     <p style={p.locked ? { color: '#6a6a60' } : {}}>{p.tells}</p>
@@ -396,7 +396,7 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 640 }}>
             <div className="panel-head">
-              <h2><img src="/assets/icons/gun.svg" alt="" />ARMORY</h2>
+              <h2><img src="./assets/icons/gun.svg" alt="" />ARMORY</h2>
               <button className="btn" onClick={() => { sfx.cabinet(); close() }}>CLOSE</button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, padding: '16px 0' }}>
@@ -422,7 +422,7 @@ export default function App() {
                     }
                   }}
                 >
-                  <img src={`/assets/icons/${w.id}.svg`} alt="" style={{ width: 72, height: 72, marginBottom: 8, filter: w.locked ? 'brightness(0.3)' : 'none' }} />
+                  <img src={`./assets/icons/${w.id}.svg`} alt="" style={{ width: 72, height: 72, marginBottom: 8, filter: w.locked ? 'brightness(0.3)' : 'none' }} />
                   <div style={{ fontWeight: 'bold', marginBottom: 4, color: w.locked ? '#6a6a60' : '#e8e2cc' }}>{w.name}</div>
                   {w.locked && <div style={{ fontSize: 12, color: '#8a6a4a' }}>🔒 DAY SHIFT ONLY</div>}
                   {!w.locked && <div className="desc" style={{ textAlign: 'center', fontSize: 12 }}>{w.desc}</div>}
@@ -442,12 +442,12 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 520 }}>
             <div className="panel-head">
-              <h2><img src="/assets/icons/coffee.svg" alt="" />SUPPLY LOCKER</h2>
+              <h2><img src="./assets/icons/coffee.svg" alt="" />SUPPLY LOCKER</h2>
               <button className="btn" onClick={close}>CLOSE</button>
             </div>
             {CONSUMABLES.map((i) => (
               <div key={i.id} className="item">
-                <img src={`/assets/icons/${i.id}.svg`} alt="" />
+                <img src={`./assets/icons/${i.id}.svg`} alt="" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 'bold', marginBottom: 2 }}>{i.name}</div>
                   <div className="desc">{i.desc}</div>
@@ -471,7 +471,7 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 440 }}>
             <div className="panel-head">
-              <h2><img src="/assets/icons/sofa.svg" alt="" />SOFA</h2>
+              <h2><img src="./assets/icons/sofa.svg" alt="" />SOFA</h2>
               <button className="btn" onClick={close}>LEAVE</button>
             </div>
             <p style={{ lineHeight: 1.7, marginBottom: 16 }}>
@@ -496,7 +496,7 @@ export default function App() {
       {activeHotspot === 'door' && (
         <div className="overlay">
           <div className="panel" style={{ width: 360, textAlign: 'center' }}>
-            <img src="/assets/icons/lock.svg" alt="" style={{ width: 56, height: 56, marginBottom: 8 }} />
+            <img src="./assets/icons/lock.svg" alt="" style={{ width: 56, height: 56, marginBottom: 8 }} />
             <h2 style={{ margin: '0 0 12px' }}>{state.doorUnlocked ? 'DOOR UNLOCKED' : 'DOOR LOCKED'}</h2>
             {!state.doorUnlocked && (
               <p style={{ color: '#9a9a90', margin: '0 0 16px' }}>The door reads: NO EXIT · UNTIL DAWN. You must complete all inspections before you may leave.</p>

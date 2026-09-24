@@ -50,13 +50,13 @@ export default function ExecutionOverlay({ result, onDone, tool, visitor }: {
       {frame === -1 && <div data-testid="blackout" style={{ position: 'absolute', inset: 0, background: '#000' }} />}
       {frame >= 0 && (
         <div className={`stage${frame === 2 ? ' shaking' : ''}`}>
-          <img className="fx" src={visitor?.scene ?? '/assets/scenes/window.svg'} alt="" style={{ filter: 'brightness(0.55)' }} />
+          <img className="fx" src={visitor?.scene ?? './assets/scenes/window.svg'} alt="" style={{ filter: 'brightness(0.55)' }} />
           {portrait && (
             <div className="portrait" style={{ transform: `translateX(-50%) ${pose}`, filter: FILTER[t][frame], opacity: !result.success && frame === 3 ? 0 : 1 }}>
               <img src={portrait} alt="" draggable={false} />
             </div>
           )}
-          <img className="fx" src="/assets/scenes/window_glass.svg" alt="" />
+          <img className="fx" src="./assets/scenes/window_glass.svg" alt="" />
           {frame === 3 && result.success && <img className="fx" src={result.residue} alt="Residue" />}
           <img className="fx" src={result.frames[frame]} alt={`Frame ${frame}`} />
           <div className={`flash${frame === 1 || frame === 2 ? ' on' : ''}`} key={frame} />

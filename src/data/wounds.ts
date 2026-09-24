@@ -1,8 +1,8 @@
 // 武器痕迹 SVG 资源路径
 export const WOUND_MARKS = {
-  axe: '/assets/env/window_residue_axe.svg',
-  gun: '/assets/env/window_residue_gun.svg',
-  fire: '/assets/env/window_residue_fire.svg',
+  axe: './assets/env/window_residue_axe.svg',
+  gun: './assets/env/window_residue_gun.svg',
+  fire: './assets/env/window_residue_fire.svg',
 }
 
 export interface WoundMark {

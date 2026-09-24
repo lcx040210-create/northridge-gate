@@ -188,3 +188,21 @@ export function posterMissing() {
   for (let i = 0; i < 10; i++) b += `<ellipse cx="${60 + Math.random() * 520}" cy="${80 + Math.random() * 640}" rx="${20 + Math.random() * 50}" ry="${12 + Math.random() * 30}" fill="#6a5a3a" opacity="${0.05 + Math.random() * 0.08}" filter="url(#blur4)"/>`
   return svg(W, H, defs, b)
 }
+
+// 前墙横幅：北岭防线·七道闸口（可阅读）
+export function banner() {
+  const W = 960, H = 240
+  const r = rng(703)
+  const defs = FILTERS
+  let b = `<rect width="${W}" height="${H}" fill="#3a0e0a"/>`
+  b += `<rect x="16" y="16" width="928" height="208" fill="none" stroke="#e0c878" stroke-width="3" opacity="0.7"/>`
+  b += `<rect x="24" y="24" width="912" height="192" fill="#4a120c"/>`
+  // 布纹褶皱
+  for (let i = 0; i < 7; i++) b += `<path d="M${40 + i * 140} 24 Q${70 + i * 140} 120 ${40 + i * 140} 216" stroke="#1a0604" stroke-width="10" fill="none" opacity="0.4"/>`
+  b += `<text x="480" y="105" font-family="Impact,Arial Black,sans-serif" font-size="72" text-anchor="middle" fill="#f0dca8" letter-spacing="14">北岭防线 · 七道闸口</text>`
+  b += `<text x="480" y="170" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="30" text-anchor="middle" fill="#c8b890" letter-spacing="6">守住你的门 · 别问后面的门</text>`
+  // 陈旧污渍与掉色
+  b += stains(r, 10, W, H, '#2a0c06', 70)
+  for (let i = 0; i < 5; i++) b += `<rect x="${r() * W}" y="${r() * H}" width="${20 + r() * 50}" height="${4 + r() * 8}" fill="#d8ccb0" opacity="${0.06 + r() * 0.08}" transform="rotate(${r() * 360} ${r() * W} ${r() * H})"/>`
+  return svg(W, H, defs, b)
+}

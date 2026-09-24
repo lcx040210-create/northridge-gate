@@ -42,7 +42,7 @@ if (want('exec')) {
 
 if (want('room')) {
   const r = await import('./room.mjs')
-  for (const k of ['wall', 'floor', 'sofa', 'metal', 'wood', 'door', 'cabinet', 'poster', 'books', 'posterProtocol', 'posterWarning', 'posterMissing']) write(ROOT, `room/${k}.svg`, r[k]())
+  for (const k of ['wall', 'floor', 'sofa', 'metal', 'wood', 'door', 'cabinet', 'poster', 'books', 'posterProtocol', 'posterWarning', 'posterMissing', 'banner']) write(ROOT, `room/${k}.svg`, r[k]())
   console.log('room done')
 }
 

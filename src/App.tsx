@@ -6,7 +6,7 @@ import { resolveExecution } from './engine/execution'
 import { WORLD_TEXT } from './data/world'
 import { WEAPONS, CONSUMABLES } from './data/weapons'
 import { MANUAL_ENTRIES } from './data/manual'
-import { READABLE_BOOK, READABLE_NOTE, READABLE_POSTERS, type ReadableItem } from './data/readable'
+import { READABLE_BOOK, READABLE_NOTE, READABLE_POSTERS, READABLE_BANNER, type ReadableItem } from './data/readable'
 import RoomScene from './scene/RoomScene'
 import Window from './ui/Window'
 import Portrait from './ui/Portrait'
@@ -110,6 +110,11 @@ export default function App() {
     if (id === 'poster3') {
       sfx.interact()
       setReadableItem(READABLE_POSTERS[2])
+      return
+    }
+    if (id === 'banner') {
+      sfx.interact()
+      setReadableItem(READABLE_BANNER)
       return
     }
 

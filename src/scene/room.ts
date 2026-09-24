@@ -14,7 +14,7 @@ function tex(t: THREE.Texture, repeat = 1): THREE.Texture {
 }
 
 export async function buildRoom(scene: THREE.Scene): Promise<void> {
-  const [wallTex, floorTex, sofaTex, metalTex, woodTex, doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex, protocolTex, warningTex, missingTex] = await Promise.all([
+  const [wallTex, floorTex, sofaTex, metalTex, woodTex, doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex, protocolTex, warningTex, missingTex, bannerTex] = await Promise.all([
     loadTexture('/assets/room/wall.svg'),
     loadTexture('/assets/room/floor.svg'),
     loadTexture('/assets/room/sofa.svg'),
@@ -29,8 +29,9 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
     loadTexture('/assets/room/posterProtocol.svg'),
     loadTexture('/assets/room/posterWarning.svg'),
     loadTexture('/assets/room/posterMissing.svg'),
+    loadTexture('/assets/room/banner.svg'),
   ])
-  for (const t of [doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex, protocolTex, warningTex, missingTex]) t.colorSpace = THREE.SRGBColorSpace
+  for (const t of [doorTex, cabinetTex, posterTex, booksTex, windowTex, glassTex, protocolTex, warningTex, missingTex, bannerTex]) t.colorSpace = THREE.SRGBColorSpace
   tex(wallTex, 1)
   wallTex.repeat.set(3, 1)
   tex(floorTex, 2)
@@ -92,6 +93,12 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
   posterWarning.position.set(4.97, 2.1, 0.3)
   posterWarning.rotation.y = -Math.PI / 2
   scene.add(posterWarning)
+
+  // 前墙横幅：北岭防线·七道闸口（可阅读，挂在沙发上方偏左）
+  const banner = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 0.7), new THREE.MeshBasicMaterial({ map: bannerTex }))
+  banner.position.set(-2.5, 3.3, 2.97)
+  banner.rotation.y = Math.PI
+  scene.add(banner)
 
   // 前墙 + 侧墙 + 天花板
   const wallMat = new THREE.MeshStandardMaterial({ color: 0x2e332e, roughness: 0.9 })

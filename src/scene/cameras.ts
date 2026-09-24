@@ -19,4 +19,5 @@ export const HOTSPOTS: Hotspot[] = [
   { id: 'poster1', label: '紧急应对守则', position: [-4.97, 2.1, 0.3], lookAt: [-4.97, 2.1, 0.3] },
   { id: 'poster2', label: '感染者警告', position: [4.97, 2.1, 0.3], lookAt: [4.97, 2.1, 0.3] },
   { id: 'poster3', label: '失联人员公告', position: [-4.97, 2.1, 1.9], lookAt: [-4.97, 2.1, 1.9] },
+  { id: 'banner', label: '横幅', position: [-2.5, 1.6, 2.7], lookAt: [-2.5, 3.3, 3] },
 ]

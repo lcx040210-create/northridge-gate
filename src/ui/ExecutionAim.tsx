@@ -1,58 +1,94 @@
-import { useEffect, useState } from 'react'
-import type { Visitor } from '../data/schema'
-import Portrait from './Portrait'
+import { useEffect, useRef, useState } from 'react'
+import type { Visitor, Tool } from '../data/schema'
+import { startAimTension, stopAimTension, aimTick, screech, heartbeat } from '../scene/audio'
 
-const WEAK_POINTS: Record<string, { left: string; top: string; label: string }> = {
-  skinfit: { left: '71%', top: '26%', label: '耳后接缝' },
-  coretick: { left: '58%', top: '24%', label: '太阳穴核' },
-  wetnest: { left: '50%', top: '48%', label: '核心' },
-  human: { left: '50%', top: '38%', label: '身体' },
+// 弱点位置（相对扑击立绘 600×800 的百分比）
+const WEAK_POINTS: Record<string, { left: string; top: string; label: string }[]> = {
+  skinfit: [{ left: '71%', top: '51%', label: '耳后接缝' }],
+  coretick: [{ left: '44%', top: '64%', label: '锁骨下的核' }, { left: '35%', top: '28%', label: '太阳穴核' }],
+  wetnest: [{ left: '50%', top: '72%', label: '核心' }],
+  human: [{ left: '50%', top: '72%', label: '胸口' }],
 }
 
-export default function ExecutionAim({ visitor, onSuccess, onFail }: {
+export default function ExecutionAim({ visitor, onSuccess, onFail, onCancel }: {
   visitor: Visitor
+  tool?: Tool
   onSuccess: () => void
   onFail: () => void
+  onCancel?: () => void
 }) {
+  const human = visitor.role === 'human'
   const [timeLeft, setTimeLeft] = useState(10)
   const [lunge, setLunge] = useState(false)
-  const wp = WEAK_POINTS[visitor.role] ?? WEAK_POINTS.human
+  const [shake, setShake] = useState(false)
+  const [cursor, setCursor] = useState({ x: -100, y: -100 })
+  const done = useRef(false)
+  const wps = WEAK_POINTS[visitor.role] ?? WEAK_POINTS.human
 
   useEffect(() => {
+    startAimTension()
+    if (!human) screech()
     const t = setInterval(() => setTimeLeft((x) => x - 1), 1000)
-    return () => clearInterval(t)
-  }, [])
+    return () => { clearInterval(t); stopAimTension() }
+  }, [human])
 
   useEffect(() => {
-    if (timeLeft <= 0) onFail()
-  }, [timeLeft, onFail])
+    if (done.current) return
+    if (timeLeft <= 0) {
+      done.current = true
+      stopAimTension()
+      // 人类不会扑你：时间到就放下武器
+      if (human) (onCancel ?? onFail)()
+      else onFail()
+    } else if (timeLeft < 10) aimTick(timeLeft <= 3)
+  }, [timeLeft, human, onFail, onCancel])
 
-  // 攻击动作：周期性扑击
+  // 伪人周期性扑向玻璃
   useEffect(() => {
-    const t = setInterval(() => { setLunge(true); setTimeout(() => setLunge(false), 380) }, 1500)
+    if (human) return
+    const t = setInterval(() => {
+      setLunge(true)
+      if (Math.random() < 0.35) screech()
+      setTimeout(() => setLunge(false), 380)
+    }, 1500)
     return () => clearInterval(t)
-  }, [])
+  }, [human])
+
+  const hit = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (done.current) return
+    done.current = true
+    stopAimTension()
+    onSuccess()
+  }
+  const miss = () => {
+    if (done.current) return
+    heartbeat(0.6)
+    setShake(true)
+    setTimeout(() => setShake(false), 300)
+  }
+
+  const frames = visitor.attackFrame ? [visitor.attackFrame] : visitor.freezeFrames
 
   return (
-    <div data-testid="exec-aim" style={{ position: 'absolute', inset: 0, background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 20 }}>
-      <div style={{ color: '#e0a0a0', fontSize: 22, fontWeight: 'bold', marginBottom: 14 }}>
-        它扑过来了！点击{wp.label}处决 —— <span style={{ color: timeLeft <= 3 ? '#ff4040' : '#ffe9a8', fontSize: 28 }}>{Math.max(0, timeLeft)}</span> 秒
-      </div>
-      <div style={{ position: 'relative', width: '38vw', height: '66vh', overflow: 'hidden', border: '2px solid #4a3030', boxShadow: '0 0 40px rgba(120,20,20,0.5)' }}>
-        <div style={{ transform: lunge ? 'scale(1.1) translateY(-10px)' : 'none', transition: 'transform 0.13s', width: '100%', height: '100%' }}>
-          <Portrait visitor={visitor} />
+    <div data-testid="exec-aim" className="aim" onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })} onClick={miss}>
+      <div className={`stage${shake ? ' shaking' : ''}`}>
+        <img className="fx" src={visitor.scene ?? '/assets/scenes/window.svg'} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.6) saturate(0.7)' }} />
+        <div className={`portrait${lunge ? ' lunge' : ''}`}>
+          <img src={frames[0]} alt={visitor.claimedName} draggable={false} />
+          {wps.map((wp) => (
+            <div key={wp.label} className="weak" title={wp.label} style={{ left: wp.left, top: wp.top }} onClick={hit} />
+          ))}
         </div>
-        <div
-          onClick={onSuccess}
-          title={wp.label}
-          style={{
-            position: 'absolute', left: wp.left, top: wp.top, width: 52, height: 52,
-            margin: '-26px 0 0 -26px', borderRadius: '50%',
-            border: '2px dashed #e0a0a0', background: 'rgba(224,0,0,0.18)', cursor: 'crosshair',
-          }}
-        />
+        <img src="/assets/scenes/window_glass.svg" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
       </div>
-      <div style={{ color: '#8a8a80', marginTop: 12, fontSize: 13 }}>准星对准弱点，点击左键处决</div>
+      {!human && <div className="red" />}
+      <div className="timer">
+        {human ? '他举起双手，一步步往后退……' : `它扑过来了！瞄准${wps.map((w) => w.label).join(' / ')}`}
+        <span style={{ color: timeLeft <= 3 ? '#ff4040' : '#ffe9a8' }}>{Math.max(0, timeLeft)}</span>
+        <div style={{ fontSize: 13, color: '#aaa', fontWeight: 'normal' }}>{human ? '不开火，时间到自动放下武器' : '点击弱点处决 · 超时它会冲破玻璃'}</div>
+      </div>
+      <img className="cross" src="/assets/icons/execute.svg" alt="" style={{ left: cursor.x, top: cursor.y, position: 'fixed' }} />
     </div>
   )
 }

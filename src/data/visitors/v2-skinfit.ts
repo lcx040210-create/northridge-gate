@@ -13,6 +13,9 @@ export const v2Skinfit: Visitor = {
     '/assets/portraits/v2_skinfit_frame4.svg',
     '/assets/portraits/v2_skinfit_frame5.svg',
   ],
+  attackFrame: '/assets/portraits/v2_skinfit_attack.svg',
+  voice: 'skinfit',
+  greeting: '晚上好。我是来修灯的。灯。你们的灯，坏了。',
   glitchLine: '我是来修灯的。。灯的线路出了问题',
   tells: {
     eye: '他眨眼，但两只眼睛的节奏不一样。',

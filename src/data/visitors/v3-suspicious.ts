@@ -13,6 +13,9 @@ export const v3Suspicious: Visitor = {
     '/assets/portraits/v3_suspicious_frame4.svg',
     '/assets/portraits/v3_suspicious_frame5.svg',
   ],
+  attackFrame: '/assets/portraits/v3_suspicious_attack.svg',
+  voice: 'suspicious',
+  greeting: '拜托——拜托快点，外面有东西在跟着我，我一路跑过来的！',
   tells: {
     eye: '他眨眼节奏有点乱，但可能只是紧张。',
     id: '证件是真的，只是照片磨得很旧。',

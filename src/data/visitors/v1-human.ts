@@ -5,8 +5,15 @@ export const v1Human: Visitor = {
   claimedName: 'Dispatcher · Daniel Cole',
   role: 'human',
   state: 'clean',
-  portrait: '/assets/characters/v1_human.jpg',
-  freezeFrames: ['/assets/characters/v1_human.jpg'],
+  portrait: '/assets/portraits/v1_human_frame1.svg',
+  freezeFrames: [
+    '/assets/portraits/v1_human_frame1.svg',
+    '/assets/portraits/v1_human_frame2.svg',
+    '/assets/portraits/v1_human_frame3.svg',
+  ],
+  attackFrame: '/assets/portraits/v1_human_attack.svg',
+  voice: 'human',
+  greeting: '……嘿。能开一下门吗？雨太大了，我是来接后半夜的班的。',
   tells: {
     eye: '眼神正常，只是被雨淋得有点烦。',
     id: '证件照片和本人一致，牙齿数对得上。',

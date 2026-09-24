@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { buildRoom } from './room'
 import { HOTSPOTS } from './cameras'
-import { updatePlayer, applyMouseLook, STAND_HEIGHT, type Bounds, type PlayerState, type MoveInput } from './controls'
+import { updatePlayer, applyMouseLook, STAND_HEIGHT, CROUCH_HEIGHT, type Bounds, type PlayerState, type MoveInput } from './controls'
+import { footstep, jump, land, crouch } from './audio'
 
 const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.85, maxZ: 2.85 }
 const INTERACT_RANGE = 2.5
@@ -29,6 +30,7 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
     let player: PlayerState = { x: 0, y: STAND_HEIGHT, z: 2, vy: 0, yaw: 0, pitch: 0, crouching: false }
     const keys: MoveInput = { forward: false, back: false, left: false, right: false, jump: false, crouch: false }
     let lastTime = performance.now()
+    let stride = 0
 
     function aimedHotspot(): string | null {
       const fx = -Math.sin(player.yaw)
@@ -107,8 +109,21 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
       const now = performance.now()
       const dt = Math.min(0.05, (now - lastTime) / 1000)
       lastTime = now
+      const prev = player
       player = updatePlayer(player, keys, dt, BOUNDS)
-      camera.position.set(player.x, player.y, player.z)
+      // 脚步 / 跳 / 落地 / 蹲 音效
+      const ground = player.crouching ? CROUCH_HEIGHT : STAND_HEIGHT
+      const grounded = player.y <= ground + 0.01
+      if (grounded) {
+        stride += Math.hypot(player.x - prev.x, player.z - prev.z)
+        if (stride > (player.crouching ? 0.9 : 1.5)) { stride = 0; footstep(player.crouching) }
+      }
+      if (prev.vy <= 0 && player.vy > 0) jump()
+      if (prev.vy < -2 && player.vy === 0) land()
+      if (!prev.crouching && player.crouching) crouch()
+      // 走路轻微晃动
+      const bob = grounded ? Math.sin(stride * Math.PI * 1.33) * 0.03 : 0
+      camera.position.set(player.x, player.y + bob, player.z)
       camera.rotation.y = player.yaw
       camera.rotation.x = player.pitch
       renderer.render(scene, camera)

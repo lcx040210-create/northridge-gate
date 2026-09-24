@@ -1,141 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 768" width="512" height="768">
-  <defs>
-    <linearGradient id="ceil" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0a110e"/>
-      <stop offset="1" stop-color="#1b2621"/>
-    </linearGradient>
-    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1f2b25"/>
-      <stop offset="1" stop-color="#0b120f"/>
-    </linearGradient>
-    <linearGradient id="wallL" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#0c1411"/>
-      <stop offset="1" stop-color="#26342d"/>
-    </linearGradient>
-    <linearGradient id="wallR" x1="1" y1="0" x2="0" y2="0">
-      <stop offset="0" stop-color="#0c1411"/>
-      <stop offset="1" stop-color="#25332c"/>
-    </linearGradient>
-    <radialGradient id="endGlow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#7f9c86" stop-opacity="0.55"/>
-      <stop offset="0.5" stop-color="#4a6152" stop-opacity="0.25"/>
-      <stop offset="1" stop-color="#1b2621" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="lamp" cx="0.5" cy="0" r="1">
-      <stop offset="0" stop-color="#b8d2b8" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#b8d2b8" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="vignette" cx="0.5" cy="0.48" r="0.72">
-      <stop offset="0.45" stop-color="#000" stop-opacity="0"/>
-      <stop offset="0.8" stop-color="#000" stop-opacity="0.6"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0.95"/>
-    </radialGradient>
-    <radialGradient id="shoeShadow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#000" stop-opacity="0.7"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" result="n"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.6  0 0 0 0 0.75  0 0 0 0 0.65  0 0 0 0.55 0"/>
-    </filter>
-    <filter id="stain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="4" seed="3"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.03  0 0 0 0 0.06  0 0 0 0 0.04  0 0 0 -1.2 1.1"/>
-    </filter>
-    <filter id="soft"><feGaussianBlur stdDeviation="2"/></filter>
-    <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
-  </defs>
-
-  <!-- base -->
-  <rect width="512" height="768" fill="#0d1512"/>
-
-  <!-- ceiling -->
-  <polygon points="0,0 512,0 296,300 216,300" fill="url(#ceil)"/>
-  <!-- walls -->
-  <polygon points="0,0 216,300 216,420 0,768" fill="url(#wallL)"/>
-  <polygon points="512,0 296,300 296,420 512,768" fill="url(#wallR)"/>
-  <!-- floor -->
-  <polygon points="0,768 216,420 296,420 512,768" fill="url(#floor)"/>
-
-  <!-- far end -->
-  <rect x="216" y="300" width="80" height="120" fill="#2c3b33"/>
-  <rect x="238" y="322" width="36" height="98" fill="#0a100d"/>
-  <ellipse cx="256" cy="360" rx="120" ry="110" fill="url(#endGlow)"/>
-
-  <!-- wall panel seams (perspective) -->
-  <g stroke="#08100c" stroke-width="2" opacity="0.8">
-    <line x1="60" y1="86" x2="60" y2="672"/>
-    <line x1="130" y1="182" x2="130" y2="558"/>
-    <line x1="178" y1="248" x2="178" y2="482"/>
-    <line x1="203" y1="282" x2="203" y2="441"/>
-    <line x1="452" y1="86" x2="452" y2="672"/>
-    <line x1="382" y1="182" x2="382" y2="558"/>
-    <line x1="334" y1="248" x2="334" y2="482"/>
-    <line x1="309" y1="282" x2="309" y2="441"/>
-  </g>
-  <!-- skirting stripe -->
-  <polygon points="0,700 216,408 216,420 0,768" fill="#050907" opacity="0.7"/>
-  <polygon points="512,700 296,408 296,420 512,768" fill="#050907" opacity="0.7"/>
-  <!-- wall stripe paint -->
-  <polygon points="0,420 216,370 216,376 0,450" fill="#3d5345" opacity="0.35"/>
-  <polygon points="512,420 296,370 296,376 512,450" fill="#3d5345" opacity="0.35"/>
-
-  <!-- floor joints -->
-  <g stroke="#070d0a" stroke-width="1.5" opacity="0.7">
-    <line x1="256" y1="420" x2="256" y2="768"/>
-    <line x1="236" y1="420" x2="128" y2="768"/>
-    <line x1="276" y1="420" x2="384" y2="768"/>
-    <line x1="176" y1="470" x2="336" y2="470"/>
-    <line x1="140" y1="530" x2="372" y2="530"/>
-    <line x1="88" y1="620" x2="424" y2="620"/>
-  </g>
-
-  <!-- ceiling lamps -->
-  <g>
-    <rect x="236" y="140" width="40" height="6" fill="#9fb8a2" opacity="0.8"/>
-    <rect x="248" y="250" width="16" height="3" fill="#6f8a76" opacity="0.6"/>
-    <rect x="200" y="30" width="112" height="10" fill="#1a2420"/>
-    <polygon points="236,146 276,146 360,560 152,560" fill="url(#lamp)" filter="url(#blur6)"/>
-  </g>
-
-  <!-- stains -->
-  <rect width="512" height="768" filter="url(#stain)" opacity="0.55"/>
-
-  <!-- the shoes: slightly apart, toes toward viewer, as if someone stands there -->
-  <g transform="translate(256,560)">
-    <ellipse cx="0" cy="18" rx="62" ry="12" fill="url(#shoeShadow)"/>
-    <!-- faint pressure shadow where legs would be -->
-    <ellipse cx="-20" cy="-4" rx="12" ry="4" fill="#000" opacity="0.35" filter="url(#soft)"/>
-    <ellipse cx="22" cy="-6" rx="12" ry="4" fill="#000" opacity="0.35" filter="url(#soft)"/>
-
-    <!-- left shoe (slightly turned out) -->
-    <g transform="translate(-22,0) rotate(-7)">
-      <path d="M-15,-10 Q-17,6 -14,16 Q-8,24 0,24 Q9,24 14,16 Q17,4 14,-10 Q10,-16 0,-16 Q-10,-16 -15,-10 Z" fill="#241e18"/>
-      <path d="M-14,14 Q0,26 14,14 L14,18 Q0,30 -14,18 Z" fill="#141010"/>
-      <ellipse cx="0" cy="-6" rx="9" ry="6" fill="#060504"/>
-      <path d="M-6,2 L6,2 M-6,6 L6,6 M-5,10 L5,10" stroke="#5b5248" stroke-width="1" opacity="0.7"/>
-      <path d="M-11,16 Q0,21 11,16" stroke="#4a4035" stroke-width="1" fill="none" opacity="0.6"/>
-      <path d="M6,6 q8,4 5,12" stroke="#5b5248" stroke-width="0.8" fill="none" opacity="0.6"/>
-    </g>
-    <!-- right shoe (a touch forward, weight shifted) -->
-    <g transform="translate(22,-3) rotate(6)">
-      <path d="M-14,-10 Q-17,4 -14,16 Q-9,24 0,24 Q8,24 14,16 Q17,6 15,-10 Q10,-16 0,-16 Q-10,-16 -14,-10 Z" fill="#221c17"/>
-      <path d="M-14,14 Q0,26 14,14 L14,18 Q0,30 -14,18 Z" fill="#130f0e"/>
-      <ellipse cx="0" cy="-6" rx="9" ry="6" fill="#060504"/>
-      <path d="M-6,2 L6,2 M-6,6 L6,6 M-5,10 L5,10" stroke="#5b5248" stroke-width="1" opacity="0.7"/>
-      <path d="M-11,16 Q0,21 11,16" stroke="#4a4035" stroke-width="1" fill="none" opacity="0.6"/>
-    </g>
-    <!-- dim rim light from lamp -->
-    <path d="M-36,-12 Q-22,-20 -8,-12" stroke="#8fae98" stroke-width="1" fill="none" opacity="0.35"/>
-    <path d="M8,-15 Q22,-22 36,-14" stroke="#8fae98" stroke-width="1" fill="none" opacity="0.35"/>
-  </g>
-
-  <!-- cold green overall tint -->
-  <rect width="512" height="768" fill="#2f5a44" opacity="0.12" style="mix-blend-mode:color"/>
-
-  <!-- grain -->
-  <rect width="512" height="768" filter="url(#grain)" opacity="0.18"/>
-
-  <!-- vignette -->
-  <rect width="512" height="768" fill="url(#vignette)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000" ><defs>
+<filter id="blur2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2"/></filter>
+<filter id="blur4" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
+<filter id="blur8" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="blur16" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>
+<filter id="blur30" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="30"/></filter>
+<filter id="skin" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n"/>
+  <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.25  0 0 0 0 0.14  0 0 0 0 0.1  1.6 0 0 0 -0.62" result="d"/>
+  <feComposite in="d" in2="SourceGraphic" operator="in" result="dots"/>
+  <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="dots"/></feMerge>
+</filter>
+<filter id="grain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" seed="7" stitchTiles="stitch"/>
+  <feColorMatrix type="matrix" values="0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.55 -0.1"/>
+</filter>
+<filter id="rough" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="4" seed="11"/>
+  <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.2 0.9"/>
+</filter>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs><ellipse cx="200" cy="930" rx="120" ry="16" fill="#000" opacity="0.6" filter="url(#blur8)"/><path d="M110 925 C108 900 130 890 150 892 C160 880 190 880 194 900 L196 926 Z" fill="#141010"/><path d="M110 925 L196 926 L196 932 L110 932Z" fill="#050303"/><path d="M140 892 C155 886 170 886 184 892" stroke="#3a3030" stroke-width="2" fill="none"/><ellipse cx="160" cy="890" rx="18" ry="4" fill="#fff" opacity="0.08"/><path d="M200 925 C198 900 220 890 240 892 C250 880 280 880 284 900 L286 926 Z" fill="#141010"/><path d="M200 925 L286 926 L286 932 L200 932Z" fill="#050303"/><path d="M230 892 C245 886 260 886 274 892" stroke="#3a3030" stroke-width="2" fill="none"/><ellipse cx="250" cy="890" rx="18" ry="4" fill="#fff" opacity="0.08"/><path d="M120 880 L150 520 L180 520 L200 880Z M210 880 L230 520 L262 520 L280 880Z" fill="#000" opacity="0.18" filter="url(#blur16)"/></svg>

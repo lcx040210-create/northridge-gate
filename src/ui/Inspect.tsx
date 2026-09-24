@@ -1,7 +1,15 @@
 import { useState } from 'react'
 import type { Visitor } from '../data/schema'
+import Typewriter from './Typewriter'
+import { inspect } from '../scene/audio'
 
 export type InspectSlot = 'eye' | 'id' | 'question'
+
+const SLOTS: { id: InspectSlot; label: string; icon: string }[] = [
+  { id: 'eye', label: '看眼睛', icon: '/assets/icons/eye.svg' },
+  { id: 'id', label: '查证件', icon: '/assets/icons/id.svg' },
+  { id: 'question', label: '问一句', icon: '/assets/icons/question.svg' },
+]
 
 export default function Inspect({ visitor, onInspect }: {
   visitor: Visitor
@@ -9,26 +17,36 @@ export default function Inspect({ visitor, onInspect }: {
 }) {
   const [shown, setShown] = useState<Partial<Record<InspectSlot, boolean>>>({})
   const [qi, setQi] = useState(0)
+  const qs = visitor.tells.questions
+  const pseudo = visitor.role !== 'human'
 
-  const slot = (id: InspectSlot, label: string) => (
-    <button
-      key={id}
-      onClick={() => { setShown((s) => ({ ...s, [id]: true })); onInspect(id) }}
-      style={{ marginRight: 8, padding: '6px 14px' }}
-    >
-      {label}
-    </button>
-  )
+  const open = (id: InspectSlot) => {
+    inspect(id)
+    if (id === 'question' && shown.question) {
+      if (qi < qs.length - 1) setQi((i) => i + 1)
+    } else setShown((s) => ({ ...s, [id]: true }))
+    onInspect(id)
+  }
 
   return (
-    <div data-testid="inspect" style={{ background: '#121612', padding: 14, borderRadius: 8, border: '1px solid #2a302a', color: '#d8d8d0' }}>
-      <div style={{ marginBottom: 8 }}>{slot('eye', '眼')}{slot('id', '证')}{slot('question', '问一句')}</div>
-      {shown.eye && <p style={{ margin: '4px 0' }}>👁 {visitor.tells.eye}</p>}
-      {shown.id && <p style={{ margin: '4px 0' }}>🪪 {visitor.tells.id}</p>}
-      {shown.question && (
-        <div style={{ margin: '4px 0' }}>
-          <p>💬 {visitor.tells.questions[qi]?.a}</p>
-          <button disabled={qi >= visitor.tells.questions.length - 1} onClick={() => setQi((i) => i + 1)}>换一问</button>
+    <div data-testid="inspect" className="card">
+      <h4>INSPECT · 检视</h4>
+      <div className="row">
+        {SLOTS.map((s) => (
+          <button key={s.id} className="btn" onClick={() => open(s.id)} disabled={s.id === 'question' && shown.question && qi >= qs.length - 1}>
+            <img src={s.icon} alt="" /><span>{s.id === 'question' && shown.question ? '再问一句' : s.label}</span>
+          </button>
+        ))}
+      </div>
+      {shown.eye && <div className="finding"><img src="/assets/icons/eye.svg" alt="" /><span>{visitor.tells.eye}</span></div>}
+      {shown.id && <div className="finding"><img src="/assets/icons/id.svg" alt="" /><span>{visitor.tells.id}</span></div>}
+      {shown.question && qs[qi] && (
+        <div className="finding">
+          <img src="/assets/icons/question.svg" alt="" />
+          <div>
+            <div className="q">你：{qs[qi].q}</div>
+            <Typewriter key={qi} text={qs[qi].a} voice={visitor.voice} glitch={pseudo} />
+          </div>
         </div>
       )}
     </div>

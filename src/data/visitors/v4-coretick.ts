@@ -13,6 +13,9 @@ export const v4Coretick: Visitor = {
     '/assets/portraits/v4_coretick_frame4.svg',
     '/assets/portraits/v4_coretick_frame5.svg',
   ],
+  attackFrame: '/assets/portraits/v4_coretick_attack.svg',
+  voice: 'coretick',
+  greeting: '你好。我是来替班的。天气和昨天一样。请开门。',
   glitchLine: '我来替班，你们，快开门',
   tells: {
     eye: '锁骨下方，有极轻的金属嘀嗒声。',

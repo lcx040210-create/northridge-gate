@@ -1,7 +1,14 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
+import { vi } from 'vitest'
 import App from './App'
 
-it('renders the title', () => {
+vi.mock('./scene/RoomScene', () => ({
+  default: () => <div data-testid="room" />,
+}))
+
+it('starts at opening and proceeds to visitor loop', () => {
   render(<App />)
-  expect(screen.getByTestId('app')).toHaveTextContent('北岭闸口')
+  expect(screen.getByTestId('start')).toBeInTheDocument()
+  fireEvent.click(screen.getByTestId('start'))
+  expect(screen.getByTestId('hud')).toBeInTheDocument()
 })

@@ -136,10 +136,10 @@ export function posterProtocol() {
   let b = `<rect width="${W}" height="${H}" fill="#d8d0b8"/>`
   b += `<rect x="24" y="24" width="592" height="752" fill="none" stroke="#5a1810" stroke-width="6"/>`
   b += `<rect x="36" y="36" width="568" height="40" fill="#5a1810"/>`
-  b += `<text x="320" y="64" font-family="Impact,Arial Black,sans-serif" font-size="28" text-anchor="middle" fill="#e8dcc0" letter-spacing="4">紧急应对守则</text>`
-  const lines = ['· 识别失败率容忍度：0%', '· 可疑目标一律处决', '· 禁止与来访者交谈超过30秒', '· 每夜必须上报处理记录', '· 违反者立即调离岗位', '—— 北岭安全委员会']
+  b += `<text x="320" y="64" font-family="Impact,Arial Black,sans-serif" font-size="28" text-anchor="middle" fill="#e8dcc0" letter-spacing="4">EMERGENCY PROTOCOL</text>`
+  const lines = ['· IDENTIFICATION FAILURE TOLERANCE: 0%', '· SUSPECTS ARE EXECUTED ON SIGHT', '· NO TALKING TO VISITORS PAST 30 SECONDS', '· FILE YOUR SHIFT RECORD EVERY NIGHT', '· VIOLATORS WILL BE ▓▓▓▓▓▓▓▓', '—— Northridge Security Council']
   lines.forEach((t, i) => {
-    b += `<text x="80" y="${160 + i * 70}" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="34" fill="#1a1410">${t}</text>`
+    b += `<text x="80" y="${160 + i * 70}" font-family="Courier New,monospace" font-size="30" fill="#1a1410">${t}</text>`
   })
   // 撕裂与污渍
   b += `<path d="M0 700 L120 690 L240 705 L360 688 L480 702 L640 692" stroke="none"/>`
@@ -155,13 +155,13 @@ export function posterWarning() {
   let b = `<rect width="${W}" height="${H}" fill="#c8b8a8"/>`
   b += `<rect x="24" y="24" width="592" height="752" fill="none" stroke="#8a1810" stroke-width="8"/>`
   b += `<rect x="36" y="36" width="568" height="44" fill="#8a1810"/>`
-  b += `<text x="320" y="68" font-family="Impact,Arial Black,sans-serif" font-size="30" text-anchor="middle" fill="#f0e0c8" letter-spacing="6">⚠ 危险警告 ⚠</text>`
-  const lines = ['感染者识别特征：', '', '外观：', '· 皮肤灰白色', '· 瞳孔扩散', '· 体温低于28°C', '', '行为：', '· 声称需要帮助', '· 恳求放行治疗', '· 自述听到耳语', '', '应对：立即处决。', '感染无法逆转。']
+  b += `<text x="320" y="68" font-family="Impact,Arial Black,sans-serif" font-size="30" text-anchor="middle" fill="#f0e0c8" letter-spacing="6">⚠ HAZARD NOTICE ⚠</text>`
+  const lines = ['INFECTED — TRAITS TO IDENTIFY:', '', 'APPEARANCE:', '· Greyish skin', '· Dilated pupils', '· Body temperature below 28°C', '', 'BEHAVIOR:', '· Claims to need help', '· Begs to be released for treatment', '· Reports hearing whispers', '', 'RESPONSE: Execute on sight.', 'The infection cannot be reversed。']
   let y = 140
   for (const t of lines) {
     if (t === '') { y += 20; continue }
-    const big = t === '感染者识别特征：' || t === '外观：' || t === '行为：' || t === '应对：立即处决。' || t === '感染无法逆转。'
-    b += `<text x="90" y="${y}" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="${big ? 34 : 30}" font-weight="${big ? 'bold' : 'normal'}" fill="${big ? '#5a1010' : '#1a1410'}">${t}</text>`
+    const big = t === 'INFECTED — TRAITS TO IDENTIFY:' || t === 'APPEARANCE:' || t === 'BEHAVIOR:' || t === 'RESPONSE: Execute on sight.' || t === 'The infection cannot be reversed。'
+    b += `<text x="90" y="${y}" font-family="Arial,Helvetica,sans-serif" font-size="${big ? 32 : 28}" font-weight="${big ? 'bold' : 'normal'}" fill="${big ? '#5a1010' : '#1a1410'}">${t}</text>`
     y += 52
   }
   b += `<circle cx="520" cy="180" r="40" fill="none" stroke="#8a1810" stroke-width="5"/><path d="M500 160 L540 200 M540 160 L500 200" stroke="#8a1810" stroke-width="5"/>`
@@ -175,15 +175,16 @@ export function posterMissing() {
   let b = `<rect width="${W}" height="${H}" fill="#b8b0a0"/>`
   b += `<rect x="24" y="24" width="592" height="752" fill="none" stroke="#2a2a24" stroke-width="6"/>`
   b += `<rect x="36" y="36" width="568" height="44" fill="#2a2a24"/>`
-  b += `<text x="320" y="68" font-family="Impact,Arial Black,sans-serif" font-size="30" text-anchor="middle" fill="#e0d8c8" letter-spacing="6">失联人员通报</text>`
-  b += `<text x="320" y="130" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="28" fill="#1a1410" text-anchor="middle">第17夜起失联：</text>`
-  const people = ['3号闸口安保：张伟', '7号闸口安保：李明', '实验室技术员：王芳']
+  b += `<text x="320" y="68" font-family="Impact,Arial Black,sans-serif" font-size="30" text-anchor="middle" fill="#e0d8c8" letter-spacing="6">MISSING PERSONNEL</text>`
+  b += `<text x="320" y="130" font-family="Arial,Helvetica,sans-serif" font-size="28" fill="#1a1410" text-anchor="middle">Missing since Night 17:</text>`
+  const people = ['Checkpoint 3 guard: Daniel Mathers', 'Checkpoint 7 guard: Leo Marsh', 'Lab technician: Nora Vane']
   people.forEach((t, i) => {
-    b += `<text x="140" y="${200 + i * 70}" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="30" fill="#2a2018">${t}</text>`
+    b += `<text x="140" y="${200 + i * 70}" font-family="Arial,Helvetica,sans-serif" font-size="28" fill="#2a2018">${t}</text>`
   })
-  b += `<text x="320" y="460" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="28" fill="#5a1010" text-anchor="middle">如发现其本人或伪装体，</text>`
-  b += `<text x="320" y="510" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="28" fill="#5a1010" text-anchor="middle">立即上报，切勿接触。</text>`
-  b += `<text x="320" y="600" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="24" fill="#4a4a40" text-anchor="middle">—— 北岭前哨管理处</text>`
+  b += `<text x="320" y="450" font-family="Arial,Helvetica,sans-serif" font-size="24" fill="#5a1010" text-anchor="middle">Mathers' final shift log: Night 20.</text>`
+  b += `<text x="320" y="510" font-family="Arial,Helvetica,sans-serif" font-size="26" fill="#5a1010" text-anchor="middle">If you see any of them — or a body double —</text>`
+  b += `<text x="320" y="560" font-family="Arial,Helvetica,sans-serif" font-size="26" fill="#5a1010" text-anchor="middle">report at once. Do not make contact.</text>`
+  b += `<text x="320" y="620" font-family="Arial,Helvetica,sans-serif" font-size="24" fill="#4a4a40" text-anchor="middle">—— Northridge Outpost Administration</text>`
   // 旧化
   for (let i = 0; i < 10; i++) b += `<ellipse cx="${60 + Math.random() * 520}" cy="${80 + Math.random() * 640}" rx="${20 + Math.random() * 50}" ry="${12 + Math.random() * 30}" fill="#6a5a3a" opacity="${0.05 + Math.random() * 0.08}" filter="url(#blur4)"/>`
   return svg(W, H, defs, b)
@@ -199,8 +200,8 @@ export function banner() {
   b += `<rect x="24" y="24" width="912" height="192" fill="#4a120c"/>`
   // 布纹褶皱
   for (let i = 0; i < 7; i++) b += `<path d="M${40 + i * 140} 24 Q${70 + i * 140} 120 ${40 + i * 140} 216" stroke="#1a0604" stroke-width="10" fill="none" opacity="0.4"/>`
-  b += `<text x="480" y="105" font-family="Impact,Arial Black,sans-serif" font-size="72" text-anchor="middle" fill="#f0dca8" letter-spacing="14">北岭防线 · 七道闸口</text>`
-  b += `<text x="480" y="170" font-family="SimHei,Microsoft YaHei,sans-serif" font-size="30" text-anchor="middle" fill="#c8b890" letter-spacing="6">守住你的门 · 别问后面的门</text>`
+  b += `<text x="480" y="105" font-family="Impact,Arial Black,sans-serif" font-size="64" text-anchor="middle" fill="#f0dca8" letter-spacing="10">NORTHRIDGE PERIMETER · 7 CHECKPOINTS</text>`
+  b += `<text x="480" y="170" font-family="Courier New,monospace" font-size="30" text-anchor="middle" fill="#c8b890" letter-spacing="4">HOLD YOUR GATE · DON'T ASK ABOUT THE OTHERS</text>`
   // 陈旧污渍与掉色
   b += stains(r, 10, W, H, '#2a0c06', 70)
   for (let i = 0; i < 5; i++) b += `<rect x="${r() * W}" y="${r() * H}" width="${20 + r() * 50}" height="${4 + r() * 8}" fill="#d8ccb0" opacity="${0.06 + r() * 0.08}" transform="rotate(${r() * 360} ${r() * W} ${r() * H})"/>`

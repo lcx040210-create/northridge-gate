@@ -4,5 +4,5 @@ import { INITIAL_STATE } from '../engine/state'
 
 it('renders san level', () => {
   render(<HUD state={INITIAL_STATE} />)
-  expect(screen.getByTestId('hud')).toHaveTextContent('San：75')
+  expect(screen.getByTestId('hud')).toHaveTextContent('San: 75')
 })

@@ -82,7 +82,7 @@ export default function ReadableViewer({ item, onClose }: Props) {
             disabled={currentPage === 0}
             style={{ opacity: currentPage === 0 ? 0.3 : 1 }}
           >
-            ← 上一页
+            ‹ PREV
           </button>
 
           <span style={{ color: '#a89888', fontSize: 14 }}>
@@ -95,7 +95,7 @@ export default function ReadableViewer({ item, onClose }: Props) {
             disabled={currentPage === item.pages.length - 1}
             style={{ opacity: currentPage === item.pages.length - 1 ? 0.3 : 1 }}
           >
-            下一页 →
+            NEXT ›
           </button>
         </div>
 
@@ -110,7 +110,7 @@ export default function ReadableViewer({ item, onClose }: Props) {
             minWidth: 80,
           }}
         >
-          关闭
+          CLOSE
         </button>
       </div>
     </div>

@@ -6,9 +6,9 @@ import { inspect } from '../scene/audio'
 export type InspectSlot = 'eye' | 'id' | 'question'
 
 const SLOTS: { id: InspectSlot; label: string; icon: string }[] = [
-  { id: 'eye', label: '看眼睛', icon: '/assets/icons/eye.svg' },
-  { id: 'id', label: '查证件', icon: '/assets/icons/id.svg' },
-  { id: 'question', label: '问一句', icon: '/assets/icons/question.svg' },
+  { id: 'eye', label: 'EYES', icon: '/assets/icons/eye.svg' },
+  { id: 'id', label: 'ID', icon: '/assets/icons/id.svg' },
+  { id: 'question', label: 'ASK', icon: '/assets/icons/question.svg' },
 ]
 
 export default function Inspect({ visitor, onInspect }: {
@@ -30,11 +30,11 @@ export default function Inspect({ visitor, onInspect }: {
 
   return (
     <div data-testid="inspect" className="card">
-      <h4>INSPECT · 检视</h4>
+      <h4>INSPECT</h4>
       <div className="row">
         {SLOTS.map((s) => (
           <button key={s.id} className="btn" onClick={() => open(s.id)} disabled={s.id === 'question' && shown.question && qi >= qs.length - 1}>
-            <img src={s.icon} alt="" /><span>{s.id === 'question' && shown.question ? '再问一句' : s.label}</span>
+            <img src={s.icon} alt="" /><span>{s.id === 'question' && shown.question ? 'ASK AGAIN' : s.label}</span>
           </button>
         ))}
       </div>
@@ -44,7 +44,7 @@ export default function Inspect({ visitor, onInspect }: {
         <div className="finding">
           <img src="/assets/icons/question.svg" alt="" />
           <div>
-            <div className="q">你：{qs[qi].q}</div>
+            <div className="q">You: {qs[qi].q}</div>
             <Typewriter key={qi} text={qs[qi].a} voice={visitor.voice} glitch={pseudo} />
           </div>
         </div>

@@ -96,7 +96,7 @@ export default function FlamethrowerCharge({ visitor, onSuccess, onFail, onOverh
       <div className="pane" style={{ maxWidth: 800, textAlign: 'center' }}>
         <img src={visitor.attackFrame ?? visitor.portrait} alt="" style={{ width: 300, height: 400, objectFit: 'cover', borderRadius: 8, marginBottom: 24 }} />
 
-        <h2 style={{ fontSize: 28, marginBottom: 16, color: '#d0b050' }}>按住 F 键蓄力</h2>
+        <h2 style={{ fontSize: 28, marginBottom: 16, color: '#d0b050' }}>HOLD F TO CHARGE</h2>
 
         <div style={{ position: 'relative', width: '100%', height: 50, background: '#2a2a24', borderRadius: 8, marginBottom: 16, overflow: 'hidden', border: '2px solid #3a3a32' }}>
           {/* 成功区间标记 */}
@@ -119,16 +119,16 @@ export default function FlamethrowerCharge({ visitor, onSuccess, onFail, onOverh
         </div>
 
         <div style={{ fontSize: 15, color: '#9a9a90', marginBottom: 12 }}>
-          蓄力至 80-100% 后松开释放
+          CHARGE TO 80-100%, THEN RELEASE
         </div>
 
         <div style={{ fontSize: 16, color: timeLeft < 3000 ? '#d04030' : '#e0b050' }}>
-          剩余时间: {(timeLeft / 1000).toFixed(1)}s
+          TIME LEFT: {(timeLeft / 1000).toFixed(1)}s
         </div>
 
         {charge > 100 && (
           <div style={{ marginTop: 16, color: '#d04030', fontSize: 18, fontWeight: 'bold' }}>
-            ⚠ 过热！罐体即将爆炸
+            ⚠ OVERHEAT! THE CANISTER IS ABOUT TO BURST
           </div>
         )}
       </div>

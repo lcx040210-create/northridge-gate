@@ -52,7 +52,7 @@ export default function AxeQTE({ visitor, onSuccess, onFail }: Props) {
       <div className="pane" style={{ maxWidth: 800, textAlign: 'center' }}>
         <img src={visitor.attackFrame ?? visitor.portrait} alt="" style={{ width: 300, height: 400, objectFit: 'cover', borderRadius: 8, marginBottom: 24 }} />
 
-        <h2 style={{ fontSize: 28, marginBottom: 16, color: '#d04030' }}>连续按 F 键！</h2>
+        <h2 style={{ fontSize: 28, marginBottom: 16, color: '#d04030' }}>SPAM F!</h2>
 
         <div style={{ position: 'relative', width: '100%', height: 40, background: '#2a2a24', borderRadius: 8, marginBottom: 16, overflow: 'hidden' }}>
           <div style={{
@@ -70,7 +70,7 @@ export default function AxeQTE({ visitor, onSuccess, onFail }: Props) {
         </div>
 
         <div style={{ fontSize: 16, color: timeLeft < 1000 ? '#d04030' : '#e0b050' }}>
-          剩余时间: {(timeLeft / 1000).toFixed(1)}s
+          TIME LEFT: {(timeLeft / 1000).toFixed(1)}s
         </div>
       </div>
     </div>

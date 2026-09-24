@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import type { Visitor } from '../data/schema'
 import { death } from '../scene/audio'
 
-// 死亡：它撞碎玻璃扑到脸上 → 血色暗角 → 黑屏
+// Death: it smashes through the glass and lunges at your face → red vignette → black screen
 export default function Death({ visitor }: { visitor: Visitor | null }) {
   useEffect(() => { death() }, [])
 
@@ -13,9 +13,9 @@ export default function Death({ visitor }: { visitor: Visitor | null }) {
       <img className="fx" src="/assets/env/blood_vignette.svg" alt="" />
       <div className="black" />
       <div className="msg">
-        <h1>你死了</h1>
-        <p>它冲进来的时候，你没来得及扣动扳机。</p>
-        <button className="btn big" onClick={() => location.reload()}>重新开始</button>
+        <h1>YOU DIED</h1>
+        <p>When it came through the glass, you never got to pull the trigger.</p>
+        <button className="btn big" onClick={() => location.reload()}>RESTART</button>
       </div>
     </div>
   )

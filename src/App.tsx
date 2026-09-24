@@ -28,8 +28,8 @@ import * as sfx from './scene/audio'
 
 
 const OBJECTIVE = (n: number, unlocked: boolean) => unlocked
-  ? '所有访客已处理完毕。门已解锁，去开门离开。'
-  : (n === 0 ? '走到观察窗前（正前方），按 F 检视来访者' : '有人在敲窗。回到观察窗处理下一位来访者')
+  ? 'All visitors processed. The door is unlocked — go open it and leave.'
+  : (n === 0 ? 'Walk to the observation window (straight ahead) and press F to inspect the visitor' : 'Someone is knocking on the window. Return to the observation window to process the next visitor')
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
@@ -55,7 +55,7 @@ export default function App() {
     const onKey = (e: KeyboardEvent) => {
       if (e.code === 'KeyM') {
         const m = sfx.toggleMute()
-        say(m ? '已静音' : '已取消静音', 1500)
+        say(m ? 'MUTED' : 'UNMUTED', 1500)
       }
     }
     document.addEventListener('keydown', onKey)
@@ -102,7 +102,7 @@ export default function App() {
         sfx.interact()
       } else {
         sfx.doorLocked()
-        say('门锁死了。必须完成所有检查才能离开。')
+        say('The door is locked. You must finish all inspections to leave.')
       }
       setActiveHotspot('door')
       return
@@ -159,22 +159,22 @@ export default function App() {
 
   const handleWeaponUse = () => {
     if (!state.equippedWeapon) {
-      say('未装备武器')
+      say('NO WEAPON EQUIPPED')
       return
     }
 
     if (state.equippedWeapon === 'axe') {
       sfx.axeSwing()
-      say('你对着空气挥了一斧。')
+      say('You swing the axe at empty air.')
     } else if (state.equippedWeapon === 'gun') {
       if (state.gunAmmo <= 0) {
         sfx.interact()
-        say('弹匣空了。')
+        say('The magazine is empty.')
         return
       }
       sfx.gunshot()
       dispatch({ type: 'USE_WEAPON' })
-      say('枪声在房间里回荡。')
+      say('The gunshot echoes through the room.')
 
       // 5% 概率触发烟雾报警器
       if (Math.random() < 0.05 && !state.sprinklerTriggered) {
@@ -182,7 +182,7 @@ export default function App() {
           dispatch({ type: 'TRIGGER_SPRINKLER' })
           sfx.alarmBeep()
           setTimeout(() => sfx.sprinkler(), 500)
-          say('烟雾报警器被触发了！天花板开始喷水。', 5000)
+          say('THE SMOKE ALARM IS TRIGGERED! The ceiling starts spraying water.', 5000)
         }, 800)
       }
     } else if (state.equippedWeapon === 'fire') {
@@ -192,12 +192,12 @@ export default function App() {
         sfx.fireWhoosh()
         setShowFlame(false)
       }, 1500)
-      say('火焰从罐口喷出。')
+      say('Flame bursts from the canister.')
 
       // 30% 自燃
       if (Math.random() < 0.3) {
         setTimeout(() => {
-          say('你被火焰反噬烧伤了！', 4000)
+          say('The flame backfires — you are burned!', 4000)
         }, 1000)
       }
 
@@ -207,7 +207,7 @@ export default function App() {
           dispatch({ type: 'TRIGGER_SPRINKLER' })
           sfx.alarmBeep()
           setTimeout(() => sfx.sprinkler(), 500)
-          say('烟雾报警器被触发了！天花板开始喷水。', 5000)
+          say('THE SMOKE ALARM IS TRIGGERED! The ceiling starts spraying water.', 5000)
         }, 1500)
       }
     }
@@ -253,7 +253,7 @@ export default function App() {
   const onExecutionFail = () => {
     if (!executionGame) return
     sfx.scream()
-    say(`它没死！${executionGame.visitor.role !== 'human' ? '它逃进了夜里。' : '他惊恐地逃走了。'}`, 5000)
+    say(`IT'S STILL ALIVE! ${executionGame.visitor.role !== 'human' ? 'It escaped into the night.' : 'He fled in terror.'}`, 5000)
     // 记录为失败的处决
     dispatch({ type: 'JUDGE', verdict: 'execute', tool: executionGame.tool })
     setExecutionGame(null)
@@ -270,14 +270,14 @@ export default function App() {
   const onFlamethrowerOverheat = () => {
     sfx.fireWhoosh()
     dispatch({ type: 'JUDGE', verdict: 'execute', tool: 'fire' })
-    say('罐体过热爆炸！你被烧伤了。', 4000)
+    say('THE CANISTER OVERHEATS AND EXPLODES! You are burned.', 4000)
     // San -20
     setExecutionGame(null)
   }
 
   // 手枪弹药耗尽
   const onOutOfAmmo = () => {
-    say('弹药耗尽！', 3000)
+    say('OUT OF AMMO!', 3000)
     onExecutionDeath()
   }
   const execRef = useRef(execution)
@@ -285,7 +285,7 @@ export default function App() {
   const onExecDone = useCallback(() => {
     const e = execRef.current
     if (e) {
-      const text = e.result.success ? e.visitor.outcomes.execute?.text : '不对——它没死。玻璃上只剩一道拖痕，它跑进了夜里。'
+      const text = e.result.success ? e.visitor.outcomes.execute?.text : 'No — it survived. Only a smear is left on the glass. It fled into the night.'
       if (text) say(text, 5200)
     }
     setExecution(null)
@@ -295,17 +295,17 @@ export default function App() {
     return (
       <div className="title">
         <div className="title-card">
-          <p>替换事件后第 19 夜。你是北岭前哨 3 号闸口的夜班安保。透过观察窗判断来者是<b style={{ color: '#e8e2cc' }}>人</b>、<b style={{ color: '#e8e2cc' }}>伪人</b>还是<b style={{ color: '#e8e2cc' }}>感染者</b>——放行、处决、收容。对错，天亮才见分晓。</p>
+          <p>Night 19 after the Replacement Event. You are the night guard at Checkpoint 3, Northridge Outpost. Through the observation window, judge every visitor — <b style={{ color: '#e8e2cc' }}>HUMAN</b>, <b style={{ color: '#e8e2cc' }}>IMPOSTOR</b>, or <b style={{ color: '#e8e2cc' }}>INFECTED</b> — then ADMIT, EXECUTE, or CONTAIN. Right or wrong, you will only know at dawn.</p>
           <div className="keys">
-            <kbd>W A S D</kbd><span>移动</span>
-            <kbd>鼠标</kbd><span>视角（点击画面锁定鼠标）</span>
-            <kbd>空格 / Ctrl</kbd><span>跳跃 / 蹲下</span>
-            <kbd>F</kbd><span>与准星对准的物品交互</span>
-            <kbd>左键</kbd><span>使用武器（对准观察窗会留痕）</span>
-            <kbd>M</kbd><span>静音</span>
+            <kbd>W A S D</kbd><span>MOVE</span>
+            <kbd>MOUSE</kbd><span>LOOK (CLICK SCREEN TO LOCK MOUSE)</span>
+            <kbd>SPACE / CTRL</kbd><span>JUMP / CROUCH</span>
+            <kbd>F</kbd><span>INTERACT WITH TARGETED OBJECT</span>
+            <kbd>LMB</kbd><span>USE WEAPON (AIM AT THE WINDOW TO LEAVE MARKS)</span>
+            <kbd>M</kbd><span>MUTE</span>
           </div>
-          <p style={{ fontSize: 13 }}>观察窗在你正前方。手册柜在左，武器柜在右，沙发和门在身后。建议戴耳机。</p>
-          <button data-testid="start" className="btn big" onClick={() => { sfx.startAmbient(); dispatch({ type: 'START' }) }}>开始值班</button>
+          <p style={{ fontSize: 13 }}>The observation window is straight ahead. Manual shelf on the left, armory on the right, sofa and door behind you. Headphones recommended.</p>
+          <button data-testid="start" className="btn big" onClick={() => { sfx.startAmbient(); dispatch({ type: 'START' }) }}>BEGIN SHIFT</button>
         </div>
       </div>
     )
@@ -330,7 +330,7 @@ export default function App() {
       {activeHotspot === null && !execution && (
         <>
           <div className="hint" style={{ top: 56 }}>→ {OBJECTIVE(state.records.length, state.doorUnlocked)}</div>
-          <div className="hint" style={{ bottom: 28, color: '#c8c8c0' }}>准星对准物品，按 F 交互</div>
+          <div className="hint" style={{ bottom: 28, color: '#c8c8c0' }}>AIM AT AN OBJECT, PRESS F TO INTERACT</div>
         </>
       )}
 
@@ -345,7 +345,7 @@ export default function App() {
             <img src="/assets/scenes/window_glass.svg" alt="" />
             <div className="rim" />
             {showShoes && (
-              <p data-testid="hallucination" style={{ position: 'absolute', bottom: 14, left: 14, color: '#e0a0a0', background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 3 }}>走廊里，多了一双鞋。</p>
+              <p data-testid="hallucination" style={{ position: 'absolute', bottom: 14, left: 14, color: '#e0a0a0', background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 3 }}>In the corridor, there is an extra pair of shoes.</p>
             )}
             <p style={{ position: 'absolute', bottom: 14, right: 14, color: '#8a8a80', background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 3, fontSize: 12 }}>
               {WORLD_TEXT.find((w) => w.surface === 'windowmark')?.text}
@@ -355,7 +355,7 @@ export default function App() {
             <Window visitor={visitor} />
             <Inspect key={visitor.id} visitor={visitor} onInspect={(s: InspectSlot) => dispatch({ type: 'INSPECT', slot: s })} />
             <Verdict key={`v-${visitor.id}`} disabled={false} onJudge={handleJudge} />
-            <button className="btn" onClick={close} style={{ alignSelf: 'flex-start' }}>离开窗口</button>
+            <button className="btn" onClick={close} style={{ alignSelf: 'flex-start' }}>LEAVE WINDOW</button>
           </div>
         </div>
       )}
@@ -364,25 +364,25 @@ export default function App() {
         <div className="overlay">
           <div className="manual">
             <div className="panel-head">
-              <h2><img src="/assets/icons/manual.svg" alt="" style={{ filter: 'invert(0.85)' }} />识别手册 v0.4</h2>
-              <button className="btn" onClick={close}>合上</button>
+              <h2><img src="/assets/icons/manual.svg" alt="" style={{ filter: 'invert(0.85)' }} />IDENTIFICATION MANUAL v0.4</h2>
+              <button className="btn" onClick={close}>CLOSE</button>
             </div>
             <div className="pages">
               {MANUAL_ENTRIES.map((p) => (
                 <div key={p.key} className={`entry ${p.locked ? 'locked' : ''}`}>
                   <img src={`/assets/manual/${p.key}.svg`} alt="" style={p.locked ? { filter: 'brightness(0.3) blur(2px)' } : {}} />
                   <div>
-                    <b>{p.name} {p.locked && <span style={{ color: '#8a6a4a', fontSize: 13 }}>🔒 未解锁</span>}</b>
+                    <b>{p.name} {p.locked && <span style={{ color: '#8a6a4a', fontSize: 13 }}>🔒 LOCKED</span>}</b>
                     <p style={p.locked ? { color: '#6a6a60' } : {}}>{p.tells}</p>
-                    <p className="resp" style={p.locked ? { color: '#6a6a60' } : {}}>应对：{p.response}</p>
+                    <p className="resp" style={p.locked ? { color: '#6a6a60' } : {}}>RESPONSE: {p.response}</p>
                   </div>
                 </div>
               ))}
               <p className="note">
-                规则：先检视再判定。证件免费，看眼睛和问话会消耗反应时间。<br />
-                处决时要亲手瞄准弱点，10 秒内不动手，它会冲破玻璃。用错武器，它会逃走。<br />
+                Rules: inspect before you judge. ID checks are free; examining eyes and asking questions cost reaction time.<br />
+                Executions must be aimed at the weak spot by hand — wait longer than 10 seconds and it breaks through the glass. Use the wrong weapon and it escapes.<br />
                 {WORLD_TEXT.find((w) => w.surface === 'manual')?.text} {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}
-                <br />书架上还夹着几份资料：
+                <br />A few documents are tucked into the shelf:
                 <br />· {WORLD_TEXT.find((w) => w.surface === 'shelf1')?.text}
                 <br />· {WORLD_TEXT.find((w) => w.surface === 'shelf2')?.text}
                 <br />· {WORLD_TEXT.find((w) => w.surface === 'shelf3')?.text}
@@ -396,8 +396,8 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 640 }}>
             <div className="panel-head">
-              <h2><img src="/assets/icons/gun.svg" alt="" />武器柜 ARMORY</h2>
-              <button className="btn" onClick={() => { sfx.cabinet(); close() }}>关上</button>
+              <h2><img src="/assets/icons/gun.svg" alt="" />ARMORY</h2>
+              <button className="btn" onClick={() => { sfx.cabinet(); close() }}>CLOSE</button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, padding: '16px 0' }}>
               {WEAPONS.map((w) => (
@@ -418,20 +418,20 @@ export default function App() {
                     if (!w.locked) {
                       dispatch({ type: 'EQUIP_WEAPON', weapon: w.id })
                       sfx.interact()
-                      say(`已装备 ${w.name}`)
+                      say(`EQUIPPED ${w.name}`)
                     }
                   }}
                 >
                   <img src={`/assets/icons/${w.id}.svg`} alt="" style={{ width: 72, height: 72, marginBottom: 8, filter: w.locked ? 'brightness(0.3)' : 'none' }} />
                   <div style={{ fontWeight: 'bold', marginBottom: 4, color: w.locked ? '#6a6a60' : '#e8e2cc' }}>{w.name}</div>
-                  {w.locked && <div style={{ fontSize: 12, color: '#8a6a4a' }}>🔒 白班权限</div>}
+                  {w.locked && <div style={{ fontSize: 12, color: '#8a6a4a' }}>🔒 DAY SHIFT ONLY</div>}
                   {!w.locked && <div className="desc" style={{ textAlign: 'center', fontSize: 12 }}>{w.desc}</div>}
-                  {state.equippedWeapon === w.id && <div style={{ marginTop: 8, color: '#60b060', fontSize: 11 }}>✓ 已装备</div>}
+                  {state.equippedWeapon === w.id && <div style={{ marginTop: 8, color: '#60b060', fontSize: 11 }}>✓ EQUIPPED</div>}
                 </div>
               ))}
             </div>
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 8 }}>
-              点击武器装备，按 F 键使用
+              CLICK TO EQUIP. PRESS F TO USE.
             </p>
             <p className="desc" style={{ color: '#6a6a60', fontSize: 12, marginTop: 8 }}>{cabinetLabel}</p>
           </div>
@@ -442,8 +442,8 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 520 }}>
             <div className="panel-head">
-              <h2><img src="/assets/icons/coffee.svg" alt="" />储物柜</h2>
-              <button className="btn" onClick={close}>关上</button>
+              <h2><img src="/assets/icons/coffee.svg" alt="" />SUPPLY LOCKER</h2>
+              <button className="btn" onClick={close}>CLOSE</button>
             </div>
             {CONSUMABLES.map((i) => (
               <div key={i.id} className="item">
@@ -453,8 +453,8 @@ export default function App() {
                   <div className="desc">{i.desc}</div>
                   <div className="warn">⚠ {i.constraint}</div>
                 </div>
-                {i.id === 'coffee' && <button className="btn" disabled={state.coffeeUsed >= 2} onClick={() => { sfx.coffee(); dispatch({ type: 'DRINK_COFFEE' }); say('温的苦味液体。心跳开始加快。') }}>{state.coffeeUsed >= 2 ? '已喝光' : '喝'}</button>}
-                {i.id === 'sedative' && <button className="btn" disabled={state.sedativeUsed} onClick={() => { sfx.chew(); dispatch({ type: 'USE_SEDATIVE' }); say('干草般的味道。呼吸逐渐平稳。') }}>{state.sedativeUsed ? '已用' : '嚼'}</button>}
+                {i.id === 'coffee' && <button className="btn" disabled={state.coffeeUsed >= 2} onClick={() => { sfx.coffee(); dispatch({ type: 'DRINK_COFFEE' }); say('Warm bitter liquid. Your heartbeat quickens.') }}>{state.coffeeUsed >= 2 ? 'EMPTY' : 'DRINK'}</button>}
+                {i.id === 'sedative' && <button className="btn" disabled={state.sedativeUsed} onClick={() => { sfx.chew(); dispatch({ type: 'USE_SEDATIVE' }); say('Tastes like dry hay. Your breathing steadies.') }}>{state.sedativeUsed ? 'USED' : 'CHEW'}</button>}
               </div>
             ))}
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 16 }}>
@@ -471,13 +471,13 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 440 }}>
             <div className="panel-head">
-              <h2><img src="/assets/icons/sofa.svg" alt="" />沙发</h2>
-              <button className="btn" onClick={close}>离开</button>
+              <h2><img src="/assets/icons/sofa.svg" alt="" />SOFA</h2>
+              <button className="btn" onClick={close}>LEAVE</button>
             </div>
             <p style={{ lineHeight: 1.7, marginBottom: 16 }}>
-              闭眼休息约 40 秒，San +20。<br />
-              <span style={{ color: '#e0a0a0' }}>但闭眼期间若有排队者，会必定自动放行 1 人。</span><br />
-              <span style={{ color: '#8a8a80' }}>全关仅一次。</span>
+              Close your eyes and rest for about 40 seconds. San +20.<br />
+              <span style={{ color: '#e0a0a0' }}>But if anyone is waiting in line while your eyes are closed, one of them will be auto-released.</span><br />
+              <span style={{ color: '#8a8a80' }}>Once per shift only.</span>
             </p>
             <p className="desc" style={{ color: '#6a6a60', fontSize: 12, marginBottom: 12 }}>
               {WORLD_TEXT.find((w) => w.surface === 'sofa')?.text}
@@ -485,9 +485,9 @@ export default function App() {
             <button
               className="btn big"
               disabled={state.sofaUsed}
-              onClick={() => { sfx.sofaRest(); dispatch({ type: 'USE_SOFA', claw: Math.random() < 0.15 }); close(); say('你闭上眼。雨声，心跳，远处好像有人开了门。') }}
+              onClick={() => { sfx.sofaRest(); dispatch({ type: 'USE_SOFA', claw: Math.random() < 0.15 }); close(); say('You close your eyes. Rain, heartbeat — and somewhere far away, a door opens.') }}
             >
-              {state.sofaUsed ? '已经休息过了' : '闭眼休息'}
+              {state.sofaUsed ? 'ALREADY RESTED' : 'REST'}
             </button>
           </div>
         </div>
@@ -497,16 +497,16 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 360, textAlign: 'center' }}>
             <img src="/assets/icons/lock.svg" alt="" style={{ width: 56, height: 56, marginBottom: 8 }} />
-            <h2 style={{ margin: '0 0 12px' }}>{state.doorUnlocked ? '门解锁了' : '门被锁住了'}</h2>
+            <h2 style={{ margin: '0 0 12px' }}>{state.doorUnlocked ? 'DOOR UNLOCKED' : 'DOOR LOCKED'}</h2>
             {!state.doorUnlocked && (
-              <p style={{ color: '#9a9a90', margin: '0 0 16px' }}>门上写着 NO EXIT · UNTIL DAWN。必须完成所有检查才能离开。</p>
+              <p style={{ color: '#9a9a90', margin: '0 0 16px' }}>The door reads: NO EXIT · UNTIL DAWN. You must complete all inspections before you may leave.</p>
             )}
             <p className="desc" style={{ color: '#6a6a60', fontSize: 12, margin: '0 0 16px' }}>
               {WORLD_TEXT.find((w) => w.surface === 'doorsign')?.text}
             </p>
             {state.doorUnlocked && (
               <div>
-                <p style={{ color: '#e0a050', margin: '0 0 16px' }}>所有访客已检查完毕。你可以结束值班了。</p>
+                <p style={{ color: '#e0a050', margin: '0 0 16px' }}>All visitors inspected. You may end your shift.</p>
                 <button
                   className="btn big"
                   style={{ background: '#4a8a4a', borderColor: '#4a8a4a', marginBottom: 12 }}
@@ -516,11 +516,11 @@ export default function App() {
                     close()
                   }}
                 >
-                  推开门离开
+                  PUSH THE DOOR OPEN
                 </button>
               </div>
             )}
-            <button className="btn" onClick={close}>返回</button>
+            <button className="btn" onClick={close}>BACK</button>
           </div>
         </div>
       )}

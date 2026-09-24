@@ -1,9 +1,9 @@
 import type { Item } from './schema'
 
 export const ITEMS: Item[] = [
-  { id: 'coffee', name: '咖啡', desc: '温的。机子里的咖啡能让你清醒一点。', effect: { san: 8, reaction: 20, constraint: '手抖 20 秒；机只出两杯' } },
-  { id: 'sedative', name: '镇静叶', desc: '嚼起来像干草。', effect: { san: 0, constraint: 'San 下降变慢；反应上限 -30%；一次性' } },
-  { id: 'axe', name: '消防斧', desc: '本班配发的冷兵器。', effect: {} },
-  { id: 'gun', name: '手枪', desc: '对付核响型，打头核。', effect: {} },
-  { id: 'fire', name: '焚化罐', desc: '对付湿巢型。', effect: {} },
+  { id: 'coffee', name: 'Coffee', desc: 'Warm. The machine\'s coffee keeps you awake a little longer.', effect: { san: 8, reaction: 20, constraint: 'Hands shake for 20s; the machine only pours two cups' } },
+  { id: 'sedative', name: 'Sedative Leaf', desc: 'Chews like dry hay.', effect: { san: 0, constraint: 'San drains slower; reaction cap -30%; single use' } },
+  { id: 'axe', name: 'Fire Axe', desc: 'Standard-issue blade.', effect: {} },
+  { id: 'gun', name: 'Handgun', desc: 'For Core-ticks. Aim for the core under the collarbone.', effect: {} },
+  { id: 'fire', name: 'Incinerator', desc: 'For Wet-nests.', effect: {} },
 ]

@@ -57,8 +57,8 @@ export default function ExecutionOverlay({ result, onDone, tool, visitor }: {
             </div>
           )}
           <img className="fx" src="/assets/scenes/window_glass.svg" alt="" />
-          {frame === 3 && result.success && <img className="fx" src={result.residue} alt="残渣" />}
-          <img className="fx" src={result.frames[frame]} alt={`帧${frame}`} />
+          {frame === 3 && result.success && <img className="fx" src={result.residue} alt="Residue" />}
+          <img className="fx" src={result.frames[frame]} alt={`Frame ${frame}`} />
           <div className={`flash${frame === 1 || frame === 2 ? ' on' : ''}`} key={frame} />
         </div>
       )}

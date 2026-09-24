@@ -207,12 +207,12 @@ export default function RoomScene({ onInteract, equippedWeapon, windowMarks }: {
       )}
       {!locked && (
         <div style={{ position: 'absolute', top: '58%', left: '50%', transform: 'translateX(-50%)', color: '#e8e8e0', background: 'rgba(0,0,0,0.65)', padding: '8px 18px', borderRadius: 6, pointerEvents: 'none' }}>
-          点击画面锁定鼠标
+          CLICK SCREEN TO LOCK MOUSE
         </div>
       )}
       {locked && nearby && (
         <div style={{ position: 'absolute', top: '54%', left: '50%', transform: 'translateX(-50%)', color: '#ffe9a8', background: 'rgba(0,0,0,0.65)', padding: '6px 16px', borderRadius: 6, pointerEvents: 'none' }}>
-          按 F 交互：{nearbyLabel}
+          F TO INTERACT: {nearbyLabel}
         </div>
       )}
     </div>

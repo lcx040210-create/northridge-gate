@@ -100,12 +100,12 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
 
         {/* HUD */}
         <div style={{ position: 'absolute', top: 16, left: 16, color: '#e8e2cc', fontSize: 14 }}>
-          <div style={{ marginBottom: 8 }}>时间: {(timeLeft / 1000).toFixed(1)}s</div>
-          <div style={{ color: gunAmmo === 0 ? '#d04030' : '#e0b050' }}>弹药: {gunAmmo}</div>
+          <div style={{ marginBottom: 8 }}>TIME: {(timeLeft / 1000).toFixed(1)}s</div>
+          <div style={{ color: gunAmmo === 0 ? '#d04030' : '#e0b050' }}>AMMO: {gunAmmo}</div>
         </div>
 
         <div style={{ position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)', background: 'rgba(0,0,0,0.7)', padding: '8px 16px', borderRadius: 6, color: '#e8e2cc', fontSize: 13 }}>
-          瞄准弱点并点击射击
+          AIM AT THE WEAK SPOT AND CLICK TO FIRE
         </div>
       </div>
     </div>

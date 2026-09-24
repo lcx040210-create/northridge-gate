@@ -1,4 +1,4 @@
-// 可阅读的书籍、纸条、海报内容
+// Readable books, notes, and poster content
 
 export interface ReadableItem {
   id: string
@@ -8,207 +8,223 @@ export interface ReadableItem {
 
 export const READABLE_BOOK: ReadableItem = {
   id: 'background-book',
-  title: '《替换事件应对手册·内部版》',
+  title: 'REPLACEMENT EVENT RESPONSE MANUAL · INTERNAL',
   pages: [
-    `第一章：事件起源
+    `CHAPTER 1 · ORIGIN
 
-替换事件于19天前首次记录。凌晨2:47，北岭实验室3号区发生未知生物泄漏。
+The Replacement Event was first recorded 19 days ago. At 2:47 AM, an unknown organism breached Laboratory Section 3 of the Northridge complex.
 
-初期特征：
-- 泄漏物呈半透明胶状
-- 接触人体后迅速渗透
-- 24小时内完成"替换"
+Early characteristics:
+- The leaked matter is a translucent gel
+- It seeps through skin on contact
+- "Replacement completes within 24 hours
 
-截至今日，源头仍未确认。`,
+To this day, the source remains ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ confirmed.`,
 
-    `第二章：替换机制
+    `CHAPTER 2 · REPLACEMENT MECHANISM
 
-被替换者保留完整记忆、外貌、声音。
+The replaced retain complete memories, appearance, and voice.
 
-区别特征：
-1. 体温：28°C以下
-2. 瞳孔：对光反应异常
-3. 皮肤：灰白色调
-4. 行为：微小失误（称谓、习惯）
+Telling signs:
+1. Body temperature below 28°C
+2. Pupils react to light abnormally
+3. Skin in greyish tones
+4. Small behavioral errors (names, habits。)
 
-警告：高智能伪人可伪装上述特征。`,
+WARNING: Advanced impostors can fake all of the above.
+Advanced impostors cannot fake all of the above.`,
 
-    `第三章：感染者
+    `CHAPTER 3 · THE INFECTED
 
-人类感染者处于"半替换"状态。
+Human infectees exist in a "half-replaced" state.
 
-识别方式：
-- 意识仍存，但身体逐渐失控
-- 自述"听到耳语"
-- 恳求处决以避免完全转化
+Identification:
+- Consciousness remains, but the body slips out of control
+- They report "hearing whispers"
+- They beg to be executed before full conversion
 
-政策：一律处决，不得放行。`,
+POLICY: Execute on sight. Do not release.
+EXCEPTION: Release upon the written request of the infectee. (See Chapter 2.)`,
 
-    `第四章：前哨职责
+    `CHAPTER 4 · OUTPOST DUTY
 
-你的任务：
-1. 检查所有来访者证件
-2. 识别伪人与感染者
-3. 做出判定：放行/处决/收容
+Your duties:
+1. Check the papers of every visitor
+2. Identify impostors and infectees
+3. Pass judgment: ADMIT / EXECUTE / CONTAIN
 
-误判后果：
-- 放行伪人 = 污染扩散
-- 错杀人类 = 记入档案
+Consequences of misjudgment:
+- Admitting an impostor = contamination spreads
+- Executing a human = a mark on your file
 
-连续3次误判将被"替换"。`,
+Three consecutive misjudgments, and you will be "replaced".
+Four consecutive misjudgments, and you will be promoted.
 
-    `第五章：已知案例
+Each night, five visitors arrive at the gate.`,
 
-案例1：第12夜
-伪人伪装成儿童，声称父母在内。检查发现体温正常、证件齐全。放行后，次日发现该区域3人失联。
+    `CHAPTER 5 · KNOWN CASES
 
-案例2：第16夜
-人类感染者恳求放行治疗。安保犹豫，最终放行。8小时后该感染者完全转化，突破内部防线。
+Case 1 · Night 12
+An impostor posed as a child, claiming its parents were inside. Inspection found normal body temperature and valid papers. It was admitted. The next day, three people in that sector were missing.
 
-教训：不要相信任何人。`
+Case 2 · Night 16
+A human infectee begged to be released for treatment. The guard hesitated, then released her. Eight hours later she completed conversion and broke through the inner line.
+
+Case 3 · Night ██
+——(The rest of this page has been torn out.)
+
+LESSON: Do not trust anyone,。`
   ]
 }
 
 export const READABLE_NOTE: ReadableItem = {
   id: 'predecessor-note',
-  title: '前任安保的纸条',
+  title: 'A NOTE FROM THE PREVIOUS GUARD',
   pages: [
-    `如果你看到这张纸条，说明我已经不在了。
+    `If you are reading this, I am already gone.
 
-我叫张伟，3号闸口前任夜班安保。今天是我的第18夜。
+My name is Daniel Mathers. Night guard, Checkpoint 3 — the one before you. Today is my 18th night.
 
-前17夜我的误判率是3/8。上级发来最后警告：再有一次误判，我就会被"替换"。
+Across the first 17 nights my misjudgment rate was 3 out of 8. HQ sent a final warning: one more mistake, and I would be "replaced".
 
-但我不确定自己还能不能继续。`,
+I don't know how many more nights I can keep doing this。`,
 
-    `第15夜，我看到了我自己站在窗外。
+    `Night 15. I saw myself standing outside the window.
 
-它穿着和我一样的制服，连胸牌上的名字都一模一样。它对我笑，敲窗，说"让我进去，我才是真的。"
+Same uniform. Same name on the badge. It smiled at me and knocked on the glass,。
+t̷h̶e̵y̶ ̸s̶a̶i̶d̸ ̷"̶l̶e̷t̵ ̷m̶e̶ ̶i̷n̶,̸ ̵I̶'̷m̶ ̷t̶h̶e̸ ̶r̷e̶a̶l̵ ̶o̶n̷e̶"̸
 
-我没开门。第二天它就消失了。
+I did not open the door. It was gone by morning.
 
-但我知道它还在外面等。`,
+But I know it is still out there, waiting.`,
 
-    `手册上说伪人会模仿你认识的人。但它们也会模仿你自己。
+    `The manual says impostors imitate people you know. But they also imitate you。
 
-如果有一天，你在窗外看到了另一个你，千万不要犹豫。
+If you ever see another you outside the window, do not hesitate.
 
-不要交谈。不要试图分辨。
-直接处决。
+Do not talk. Do not try to tell us apart,.
+Execute.
 
-否则你永远不知道，镜子里的那个，到底是不是你。`,
+Otherwise you will never know, which one of us in the mirror is, you.`,
 
-    `最后的建议：
+    `Final advice:
 
-1. 不要睡觉。沙发上有爪痕。
-2. 不要过度使用镇定剂。你需要保持警觉。
-3. 手册被撕掉了两页。那是最重要的内容。
-4. 门永远不要开。即使任务结束。
+1. Do not sleep. There are claw marks on the sofa.
+2. Do not overuse the sedatives. You need to stay sharp.
+3. Two pages were torn out of the manual. They were the most important ones.
+4. Never open the door. Even when your shift ends. Even at dawn.
 
-祝你好运。
+Good luck.
 
-——张伟
-第18夜凌晨3:22`
+——Daniel Mathers
+Night 20, 3:22 AM
+
+▓▓▓▓▓▓▓▓ it already knows I am dead ▓▓▓▓▓▓▓▓`
   ]
 }
 
 export const READABLE_POSTERS: ReadableItem[] = [
   {
     id: 'poster-protocol',
-    title: '紧急应对守则',
+    title: 'EMERGENCY PROTOCOL',
     pages: [
-      `【替换事件应对守则】
+      `EMERGENCY PROTOCOL
+(REPLACEMENT EVENT RESPONSE)
 
-第19夜起，所有前哨进入紧急模式。
+From Night 19 onward, all outposts enter emergency mode.
 
-新规定：
-• 识别失败率容忍度：0%
-• 可疑目标一律处决
-• 禁止与来访者交谈超过30秒
-• 每夜必须上报处理记录
+New regulations:
+• Identification failure tolerance: 0%
+• Suspects are executed on sight
+• Speaking with a visitor for more than 30 seconds is forbidden
+• A shift record must be filed every night
 
-违反者立即调离岗位。
+Violators will be ▓▓▓▓▓▓▓▓ immediately.
 
-——北岭安全委员会`
+——Northridge Security Council`
     ]
   },
   {
     id: 'poster-warning',
-    title: '感染者特征警告',
+    title: 'HAZARD NOTICE',
     pages: [
-      `【危险警告】
+      `HAZARD NOTICE
 
-感染者识别特征：
+Traits of the infected:
 
-外观：
-• 皮肤灰白色
-• 瞳孔扩散
-• 体温低于28°C
+APPEARANCE:
+• Greyish skin
+• Dilated pupils
+• Body temperature below 28°C
 
-行为：
-• 声称"需要帮助"
-• 恳求"让我进去治疗"
-• 自述"听到耳语"
+BEHAVIOR:
+• Claims to "need help"
+• Begs to be let in for treatment
+• Reports "hearing whispers"
 
-应对措施：
-发现立即处决，不得放行。
+RESPONSE:
+Execute on sight. Do not release,
+and do not look at them for too long.
 
-记住：感染无法逆转。`
+REMEMBER: The infection cannot be reversed。`
     ]
   },
   {
     id: 'poster-missing',
-    title: '失联人员公告',
+    title: 'MISSING PERSONNEL',
     pages: [
-      `【失联人员通报】
+      `MISSING PERSONNEL NOTICE
 
-第17夜起，以下人员失联：
+Missing since Night 17:
 
-• 3号闸口安保：张伟
-• 7号闸口安保：李明
-• 实验室技术员：王芳
+• Checkpoint 3 night guard: Daniel Mathers
+• Checkpoint 7 night guard: Leo Marsh
+• Laboratory technician: Nora Vane
 
-如发现上述人员或其伪装体，
-立即上报，切勿接触。
+Mathers' final shift log was filed on Night 20.
 
-——北岭前哨管理处`
+If you encounter any of the above — or their body doubles —
+report immediately. Do not make contact.
+Do not open the door. Even for the one you recognize。
+
+——Northridge Outpost Administration`
     ]
   }
 ]
 
 export const READABLE_BANNER: ReadableItem = {
   id: 'banner-gate',
-  title: '北岭防线 · 七道闸口',
+  title: 'NORTHRIDGE PERIMETER · SEVEN CHECKPOINTS',
   pages: [
-    `【北岭防线 · 闸口分布图】
+    `NORTHRIDGE PERIMETER · CHECKPOINT MAP
 
-北岭防线的隔离体系由七道闸口组成，
-沿北岭隧道由外向内依次编号。
+The isolation system of the Northridge Perimeter consists of seven checkpoints, numbered from the outside inward along the Northridge Tunnel.
 
-一号闸口（外层）……失联
-二号闸口（外层）……失联
-三号闸口（外层）……你在这里
-四号闸口（中层）……状态未知
-五号闸口（中层）……状态未知
-六号闸口（内层）……状态未知
-七号闸口（核心）……状态未知
+Checkpoint 1 (outer)……no signal
+Checkpoint 2 (outer)……no signal
+Checkpoint 3 (outer)……you are here
+Checkpoint 4 (mid)……status unknown
+Checkpoint 5 (mid)……status unknown
+Checkpoint 6 (inner)……status unknown
+Checkpoint 7 (core)……status unknown
 
-自一号、二号闸口失联后，三号闸口
-已成为防线的最后一道外层屏障。`,
-    `【纪律标语】
+Since Checkpoints 1 and 2 went dark, Checkpoint 3 is the last outer barrier of the line。`,
+    `DISCIPLINE
 
-守住你的门。
-别问后面的门。
+Hold your gate.
+Do not ask about the gates behind you.
 
-三号闸口守则：
-• 只处理来访者，不追问去向
-• 禁止与内层通讯
-• 禁止离岗进入隧道
-• 每夜 4 名来访者，多一个都别放行
+Checkpoint 3 rules:
+• Process visitors only. Do not ask where they go.
+• Contact with inner checkpoints is forbidden.
+• Leaving your post to enter the tunnel is forbidden.
+• Four visitors per night。 If a fifth one knocks——do not open.
 
-记住：闸口不是让你看外面，
-是让外面别看见里面。
+Remember: the gate is not for looking out.
+It is for keeping the outside from seeing in,.
 
-——北岭安全委员会`
+▓▓▓▓▓▓▓ hold the gate ▓▓▓▓▓▓▓
+
+——Northridge Security Council`
   ]
 }

@@ -14,8 +14,8 @@ describe('applySanDelta', () => {
 
 describe('getSanBand', () => {
   it('maps san to the correct band effect', () => {
-    expect(getSanBand(75, SAN_BANDS).effect).toBe('正常')
-    expect(getSanBand(50, SAN_BANDS).effect).toContain('耳鸣')
-    expect(getSanBand(10, SAN_BANDS).effect).toContain('反转')
+    expect(getSanBand(75, SAN_BANDS).effect).toBe('NORMAL')
+    expect(getSanBand(50, SAN_BANDS).effect).toContain('RINGING')
+    expect(getSanBand(10, SAN_BANDS).effect).toContain('INVERTED')
   })
 })

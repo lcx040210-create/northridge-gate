@@ -30,6 +30,7 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
   useEffect(() => {
     const start = Date.now()
     let shakeAnim: number
+    const targetPos = targetRef.current
 
     const updateShake = () => {
       const elapsed = Date.now() - start
@@ -41,16 +42,19 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
         return
       }
 
-      // 晃动幅度随时间增大
-      const intensity = Math.min(8, (elapsed / 10000) * 15)
+      // 准星围绕弱点晃动
+      const intensity = Math.min(12, (elapsed / 10000) * 20)
       setShakiness(intensity)
 
-      const offsetX = (Math.random() - 0.5) * intensity
-      const offsetY = (Math.random() - 0.5) * intensity
-      setCrosshairPos({
-        x: 50 + offsetX,
-        y: 50 + offsetY,
-      })
+      if (targetPos) {
+        const angle = (elapsed / 100) * Math.PI
+        const offsetX = Math.sin(angle) * intensity
+        const offsetY = Math.cos(angle) * intensity
+        setCrosshairPos({
+          x: targetPos.x + offsetX,
+          y: targetPos.y + offsetY,
+        })
+      }
 
       shakeAnim = requestAnimationFrame(updateShake)
     }
@@ -59,7 +63,7 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
 
     const handleClick = () => {
       if (gunAmmo <= 0) {
-        sfx.interact() // 空击音
+        sfx.interact()
         onOutOfAmmo()
         return
       }
@@ -67,17 +71,16 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
       sfx.gunshot()
 
       // 命中判定
-      if (targetRef.current) {
-        const dx = crosshairPos.x - targetRef.current.x
-        const dy = crosshairPos.y - targetRef.current.y
+      if (targetPos) {
+        const dx = crosshairPos.x - targetPos.x
+        const dy = crosshairPos.y - targetPos.y
         const distance = Math.sqrt(dx * dx + dy * dy)
 
-        if (distance < 5) {
+        if (distance < 8) {
           // 命中弱点
           cancelAnimationFrame(shakeAnim)
           setTimeout(() => onSuccess(), 300)
         }
-        // 未命中弱点继续游戏，但消耗弹药
       }
     }
 
@@ -87,7 +90,7 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
       cancelAnimationFrame(shakeAnim)
       document.removeEventListener('click', handleClick)
     }
-  }, [crosshairPos, gunAmmo, onSuccess, onFail, onOutOfAmmo])
+  }, [gunAmmo, onSuccess, onFail, onOutOfAmmo])
 
   return (
     <div className="overlay" style={{ background: 'rgba(0,0,0,0.9)', cursor: 'none' }}>

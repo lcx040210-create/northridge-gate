@@ -43,14 +43,14 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, v))
 }
 
-// 房间障碍物：武器柜、储物柜、桌椅、床
+// 房间障碍物：武器柜、储物柜、桌椅、床、沙发
 const OBSTACLES: Obstacle[] = [
-  { x: -3.5, z: -2.3, radius: 0.6 }, // 左侧武器柜
-  { x: 3.5, z: -2.3, radius: 0.6 },  // 右侧储物柜
-  { x: 0, z: -2.5, radius: 0.8 },    // 桌子
-  { x: -2, z: 2, radius: 0.5 },      // 床左侧
-  { x: 2, z: 2, radius: 0.5 },       // 床右侧
-  { x: -1.5, z: -1, radius: 0.4 },   // 椅子
+  { x: -3.5, z: -2.3, radius: 0.8 }, // 左侧武器柜
+  { x: 3.5, z: -2.3, radius: 0.8 },  // 右侧储物柜
+  { x: 0, z: -2.5, radius: 0.9 },    // 桌子
+  { x: -2, z: 2.2, radius: 0.7 },    // 床左侧
+  { x: 2, z: 2.2, radius: 0.7 },     // 床右侧
+  { x: 0, z: 2.2, radius: 1.2 },     // 沙发（后方中央）
 ]
 
 export function updatePlayer(state: PlayerState, input: MoveInput, dt: number, bounds: Bounds): PlayerState {

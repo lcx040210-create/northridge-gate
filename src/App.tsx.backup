@@ -4,6 +4,7 @@ import type { Verdict as VerdictType, Tool, Visitor } from './data/schema'
 import type { ExecutionResult } from './engine/execution'
 import { resolveExecution } from './engine/execution'
 import { WORLD_TEXT } from './data/world'
+import { LORE_TEXTS } from './data/lore'
 import { WEAPONS, CONSUMABLES } from './data/weapons'
 import { MANUAL_ENTRIES } from './data/manual'
 import RoomScene from './scene/RoomScene'
@@ -34,8 +35,6 @@ export default function App() {
   const [execution, setExecution] = useState<{ result: ExecutionResult; tool: Tool; visitor: Visitor } | null>(null)
   const [death, setDeath] = useState<Visitor | null | false | 'door_trap'>(false)
   const [toast, setToast] = useState<string | null>(null)
-  const [showFlame, setShowFlame] = useState(false)
-  const [woundMarks, setWoundMarks] = useState<Array<{ tool: 'axe' | 'gun' | 'fire'; x: number; y: number; rotation: number }>>([])
   const toastTimer = useRef(0)
 
   const visitor = currentVisitor(state)
@@ -78,13 +77,11 @@ export default function App() {
     setActiveHotspot(id)
   }
 
-  const handleWeaponUse = () => {
-    if (!state.equippedWeapon) {
-      say('未装备武器')
-      return
-    }
+  const [showFlame, setShowFlame] = useState(false)
+  const [woundMarks, setWoundMarks] = useState<Array<{ tool: 'axe' | 'gun' | 'fire'; x: number; y: number; rotation: number }>>([])
 
-    // 添加武器痕迹
+  const handleWeaponUse = () => {
+    // 添加痕迹到中心位置
     const newMark = {
       tool: state.equippedWeapon as 'axe' | 'gun' | 'fire',
       x: 48 + (Math.random() - 0.5) * 8,
@@ -92,6 +89,29 @@ export default function App() {
       rotation: Math.random() * 360,
     }
     setWoundMarks((prev) => [...prev, newMark])
+
+    if (state.equippedWeapon === 'gun') {
+      dispatch({ type: 'USE_WEAPON' })
+      if (Math.random() < 0.05) {
+        dispatch({ type: 'TRIGGER_SPRINKLER' })
+      }
+    } else if (state.equippedWeapon === 'fire') {
+      setShowFlame(true)
+      sfx.fireIgnite()
+      setTimeout(() => {
+        setShowFlame(false)
+      }, 1500)
+      if (Math.random() < 0.03) {
+        dispatch({ type: 'TRIGGER_SPRINKLER' })
+      }
+    } else if (state.equippedWeapon === 'axe') {
+      sfx.axeSwing()
+    }
+  }
+    if (!state.equippedWeapon) {
+      say('未装备武器')
+      return
+    }
 
     if (state.equippedWeapon === 'axe') {
       sfx.axeSwing()
@@ -116,18 +136,15 @@ export default function App() {
         }, 800)
       }
     } else if (state.equippedWeapon === 'fire') {
-      setShowFlame(true)
       sfx.fireIgnite()
-      setTimeout(() => {
-        sfx.fireWhoosh()
-        setShowFlame(false)
-      }, 1500)
+      setTimeout(() => sfx.fireWhoosh(), 200)
       say('火焰从罐口喷出。')
 
       // 30% 自燃
       if (Math.random() < 0.3) {
         setTimeout(() => {
           say('你被火焰反噬烧伤了！', 4000)
+          // San -15 通过 reducer 处理
         }, 1000)
       }
 
@@ -256,24 +273,22 @@ export default function App() {
             position: 'fixed',
             left: `${mark.x}%`,
             top: `${mark.y}%`,
-            width: mark.tool === 'gun' ? 40 : mark.tool === 'axe' ? 100 : 140,
-            height: mark.tool === 'gun' ? 40 : mark.tool === 'axe' ? 100 : 140,
-            background: mark.tool === 'gun' ? 'radial-gradient(circle, rgba(20,20,20,0.6) 0%, transparent 70%)' :
-                       mark.tool === 'axe' ? 'radial-gradient(ellipse, rgba(80,20,20,0.4) 0%, transparent 70%)' :
-                       'radial-gradient(circle, rgba(40,20,10,0.5) 0%, transparent 70%)',
+            width: mark.tool === 'gun' ? 30 : mark.tool === 'axe' ? 80 : 120,
+            height: mark.tool === 'gun' ? 30 : mark.tool === 'axe' ? 80 : 120,
+            backgroundImage: `url(/assets/env/window_residue_${mark.tool}.svg)`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
             transform: `translate(-50%, -50%) rotate(${mark.rotation}deg)`,
             pointerEvents: 'none',
             zIndex: 50,
-            opacity: 0.7,
+            opacity: 0.8,
           }}
         />
       ))}
 
-      {/* 火焰特效 */}
-      {showFlame && <FlameEffect active={showFlame} />}
-
       {/* 烟雾报警器效果 */}
       {state.sprinklerTriggered && <SprinklerEffect />}
+      {showFlame && <FlameEffect active={showFlame} />}
 
       {activeHotspot === null && !execution && (
         <>
@@ -372,7 +387,10 @@ export default function App() {
               ))}
             </div>
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 8 }}>
-              点击武器装备，按 F 键使用
+              点击武器装备，按 F 键使用<br />
+              <span style={{ color: '#d08030', fontSize: 11, marginTop: 4, display: 'block' }}>
+                {LORE_TEXTS.find((l) => l.surface === 'label')?.text}
+              </span>
             </p>
           </div>
         </div>
@@ -398,7 +416,10 @@ export default function App() {
               </div>
             ))}
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 16 }}>
-              {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}
+              {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}<br />
+              <span style={{ color: '#9a7a60', fontSize: 11, marginTop: 6, display: 'block', fontStyle: 'italic' }}>
+                {LORE_TEXTS.find((l) => l.id === 'sticky-note')?.text}
+              </span>
             </p>
           </div>
         </div>

@@ -96,21 +96,21 @@ export class Hands {
   private createAxe(): THREE.Group {
     const axe = new THREE.Group()
 
-    // 木柄
+    // 木柄 - 更粗更明显
     const handle = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.015, 0.015, 0.5, 8),
+      new THREE.CylinderGeometry(0.025, 0.025, 0.6, 8),
       new THREE.MeshStandardMaterial({ color: 0x5a4a3a, roughness: 0.9 })
     )
     handle.position.set(0.1, -0.3, 0)
     handle.rotation.set(0.5, 0, -0.3)
     axe.add(handle)
 
-    // 斧刃
+    // 斧刃 - 更大更明显
     const blade = new THREE.Mesh(
-      new THREE.BoxGeometry(0.12, 0.08, 0.02),
-      new THREE.MeshStandardMaterial({ color: 0xc04030, roughness: 0.4, metalness: 0.6 })
+      new THREE.BoxGeometry(0.18, 0.12, 0.03),
+      new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.3, metalness: 0.8 })
     )
-    blade.position.set(0.08, -0.05, 0)
+    blade.position.set(0.08, 0, 0)
     blade.rotation.set(0.5, 0, -0.3)
     axe.add(blade)
 
@@ -120,10 +120,10 @@ export class Hands {
   private createGun(): THREE.Group {
     const gun = new THREE.Group()
 
-    // 枪身
+    // 枪身 - 更大更明显
     const body = new THREE.Mesh(
-      new THREE.BoxGeometry(0.04, 0.12, 0.18),
-      new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.6, metalness: 0.5 })
+      new THREE.BoxGeometry(0.05, 0.15, 0.22),
+      new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.5, metalness: 0.6 })
     )
     body.position.set(0, -0.25, -0.12)
     gun.add(body)

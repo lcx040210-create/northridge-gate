@@ -18,12 +18,10 @@ describe('reducer', () => {
     expect(s.phase).toBe('dawn')
   })
 
-  it('INSPECT eye costs reaction, id is free', () => {
+  it('INSPECT no longer costs reaction', () => {
     const s0 = reducer(INITIAL_STATE, { type: 'START' })
-    const s1 = reducer(s0, { type: 'INSPECT', slot: 'eye' })
-    expect(s1.reaction).toBe(80)
-    const s2 = reducer(s1, { type: 'INSPECT', slot: 'id' })
-    expect(s2.reaction).toBe(80)
+    expect(reducer(s0, { type: 'INSPECT', slot: 'eye' }).reaction).toBe(100)
+    expect(reducer(s0, { type: 'INSPECT', slot: 'id' }).reaction).toBe(100)
   })
 
   it('DRINK_COFFEE heals san and is limited to two cups', () => {
@@ -79,8 +77,8 @@ describe('reducer', () => {
     expect(reducer(s1, { type: 'USE_SOFA', claw: false })).toEqual(s1)
   })
 
-  it('INSPECT question slot costs 20 reaction', () => {
+  it('INSPECT question slot is free', () => {
     const s0 = reducer(INITIAL_STATE, { type: 'START' })
-    expect(reducer(s0, { type: 'INSPECT', slot: 'question' }).reaction).toBe(80)
+    expect(reducer(s0, { type: 'INSPECT', slot: 'question' }).reaction).toBe(100)
   })
 })

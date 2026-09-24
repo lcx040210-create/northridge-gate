@@ -4,8 +4,9 @@ import { buildRoom } from './room'
 import { HOTSPOTS } from './cameras'
 import { updatePlayer, applyMouseLook, STAND_HEIGHT, type Bounds, type PlayerState, type MoveInput } from './controls'
 
-const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.5, maxZ: 2.5 }
-const INTERACT_RANGE = 2.2
+const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.85, maxZ: 2.85 }
+const INTERACT_RANGE = 2.5
+const AIM_ANGLE = 0.3 // ~17 度，需准星真正指向物品
 
 export default function RoomScene({ onInteract }: { onInteract: (hotspotId: string) => void }) {
   const mountRef = useRef<HTMLDivElement>(null)
@@ -29,19 +30,28 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
     const keys: MoveInput = { forward: false, back: false, left: false, right: false, jump: false, crouch: false }
     let lastTime = performance.now()
 
-    function nearestHotspot(): string | null {
+    function aimedHotspot(): string | null {
+      const fx = -Math.sin(player.yaw)
+      const fz = -Math.cos(player.yaw)
+      let best: string | null = null
+      let bestDist = Infinity
       for (const h of HOTSPOTS) {
-        const dx = player.x - h.position[0]
-        const dz = player.z - h.position[2]
-        if (Math.hypot(dx, dz) < INTERACT_RANGE) {
-          return h.id
+        const dx = h.position[0] - player.x
+        const dz = h.position[2] - player.z
+        const dist = Math.hypot(dx, dz)
+        if (dist > INTERACT_RANGE) continue
+        const dot = fx * dx + fz * dz
+        const angle = Math.acos(Math.max(-1, Math.min(1, dot / dist)))
+        if (angle < AIM_ANGLE && dist < bestDist) {
+          best = h.id
+          bestDist = dist
         }
       }
-      return null
+      return best
     }
 
     function interact() {
-      const id = nearestHotspot()
+      const id = aimedHotspot()
       if (id) onInteractRef.current(id)
     }
 
@@ -102,7 +112,7 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
       camera.rotation.y = player.yaw
       camera.rotation.x = player.pitch
       renderer.render(scene, camera)
-      const n = nearestHotspot()
+      const n = aimedHotspot()
       if (n !== nearbyRef.current) {
         nearbyRef.current = n
         setNearby(n)

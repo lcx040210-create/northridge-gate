@@ -1,20 +1,12 @@
-import { useState } from 'react'
 import type { Visitor } from '../data/schema'
-import Portrait from './Portrait'
 
+// 对话面板（右侧）：名字 + 卡帧句 + 台词
 export default function Window({ visitor }: { visitor: Visitor }) {
-  const [frame, setFrame] = useState(0)
   return (
-    <div data-testid="window" style={{ display: 'flex', height: '100%', padding: 24, gap: 24 }}>
-      <div style={{ flex: 1, background: '#000', border: '1px solid #333' }} onClick={() => setFrame((f) => (f + 1) % visitor.freezeFrames.length)}>
-        <Portrait visitor={visitor} frame={frame} />
-        <div style={{ color: '#666', fontSize: 12 }}>点击立绘切换定格帧</div>
-      </div>
-      <div style={{ flex: 1, background: '#111', padding: 16 }}>
-        <h2>{visitor.claimedName}</h2>
-        {visitor.glitchLine && <p data-testid="glitch">{visitor.glitchLine}</p>}
-        <p style={{ color: '#888' }}>（对话与三槽检视由后续任务接入）</p>
-      </div>
+    <div data-testid="window" style={{ background: '#121612', padding: 14, borderRadius: 8, color: '#d8d8d0', border: '1px solid #2a302a' }}>
+      <div style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 8 }}>{visitor.claimedName}</div>
+      {visitor.glitchLine && <p data-testid="glitch" style={{ color: '#e0a0a0', margin: '0 0 8px' }}>「{visitor.glitchLine}」</p>}
+      <p style={{ color: '#8a8a80', fontSize: 13, margin: 0 }}>他透过玻璃看着你，等你开口。</p>
     </div>
   )
 }

@@ -13,6 +13,7 @@ export const v1Human: Visitor = {
     questions: [
       { q: '今晚来做什么？', a: '换班的，白班说让我来顶后半夜。' },
       { q: '窗外在下雨吗？', a: '下大了，来的路上淋透了。' },
+      { q: '家里还有人等你吗？', a: '……我女儿。她说等我回去，给她带杯热牛奶。' },
     ],
   },
   correctVerdict: 'admit',

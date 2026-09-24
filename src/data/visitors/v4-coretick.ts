@@ -20,6 +20,7 @@ export const v4Coretick: Visitor = {
     questions: [
       { q: '今晚天气怎么样？', a: '和昨天一样。' },
       { q: '你替谁的班？', a: '上一班的人请假了，我顶。' },
+      { q: '上一班叫什么？', a: '（停顿，锁骨下嘀嗒了一声）……我不记得了。' },
     ],
   },
   correctVerdict: 'execute',

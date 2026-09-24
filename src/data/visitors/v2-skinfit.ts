@@ -20,6 +20,7 @@ export const v2Skinfit: Visitor = {
     questions: [
       { q: '工号多少？', a: '工号……2207。' },
       { q: '今晚修哪盏灯？', a: '门卫室北边那盏，一直闪。' },
+      { q: '你耳朵后面是什么？', a: '（它顿了一下）……刮胡子，划的。' },
     ],
   },
   correctVerdict: 'execute',

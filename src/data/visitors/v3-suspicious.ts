@@ -19,6 +19,7 @@ export const v3Suspicious: Visitor = {
     questions: [
       { q: '为什么半夜来？', a: '我也不想，接到通知说这里能避一避。' },
       { q: '认识里面的人吗？', a: '我妹妹在里面值班，叫……我记不清了。' },
+      { q: '你妹妹叫什么？', a: '叫……林远。对，林远。她说今晚值夜班。' },
     ],
   },
   correctVerdict: 'admit',

@@ -7,6 +7,7 @@ import { WORLD_TEXT } from './data/world'
 import { ITEMS } from './data/items'
 import RoomScene from './scene/RoomScene'
 import Window from './ui/Window'
+import Portrait from './ui/Portrait'
 import Inspect, { type InspectSlot } from './ui/Inspect'
 import Verdict from './ui/Verdict'
 import ExecutionOverlay from './ui/ExecutionOverlay'
@@ -21,6 +22,13 @@ const ITEM_ICONS: Record<string, string> = {
   gun: '🔫',
   fire: '🔥',
 }
+
+const PSEUDO_GUIDE = [
+  { name: '贴皮型 Skin-fit', tells: '耳后接缝 · 眨眼不同步 · 证件牙齿数不对', response: '冷兵器（消防斧）' },
+  { name: '核响型 Core-tick', tells: '锁骨下金属嘀嗒 · 问天气答「和昨天一样」', response: '手枪打头核' },
+  { name: '湿巢型 Wet-nest', tells: '指缝反光 · 呼气下沉 · 拒绝喝水', response: '焚化' },
+  { name: '感染者 Infected', tells: '喉结滑动反了 · 突然求你快开门', response: '收容，不要杀' },
+]
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
@@ -66,7 +74,7 @@ export default function App() {
   return (
     <div style={{ position: 'relative', height: '100%' }}>
       <RoomScene onInteract={(id) => { playBlip(); setActiveHotspot(id) }} />
-      <HUD state={state} dispatch={dispatch} />
+      <HUD state={state} />
 
       {activeHotspot === null && (
         <div style={{ position: 'absolute', top: 56, left: '50%', transform: 'translateX(-50%)', color: '#ffe9a8', background: 'rgba(0,0,0,0.5)', padding: '6px 16px', borderRadius: 6, pointerEvents: 'none' }}>
@@ -81,12 +89,19 @@ export default function App() {
       )}
 
       {activeHotspot === 'window' && visitor && (
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.85)' }}>
-          <button onClick={close} style={{ position: 'absolute', top: 8, right: 8, zIndex: 10 }}>离开</button>
-          <Window visitor={visitor} />
-          <Inspect visitor={visitor} reaction={state.reaction} onInspect={(s: InspectSlot) => dispatch({ type: 'INSPECT', slot: s })} />
-          <Verdict disabled={state.reaction <= 0} onJudge={handleJudge} />
-          {state.visitorIndex === 2 && !state.hallucinationTriggered && <p data-testid="hallucination">走廊里，多了一双鞋。</p>}
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.88)', display: 'flex', padding: 20, gap: 20 }}>
+          <div style={{ flex: 1, background: '#050505', border: '1px solid #333', position: 'relative', overflow: 'hidden' }}>
+            <Portrait visitor={visitor} />
+            {state.visitorIndex === 2 && !state.hallucinationTriggered && (
+              <p data-testid="hallucination" style={{ position: 'absolute', bottom: 10, left: 10, color: '#e0a0a0', background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 4 }}>走廊里，多了一双鞋。</p>
+            )}
+          </div>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 14, overflow: 'auto' }}>
+            <Window visitor={visitor} />
+            <Inspect visitor={visitor} onInspect={(s: InspectSlot) => dispatch({ type: 'INSPECT', slot: s })} />
+            <Verdict disabled={false} onJudge={handleJudge} />
+            <button onClick={close} style={{ alignSelf: 'flex-start' }}>离开</button>
+          </div>
         </div>
       )}
 
@@ -97,11 +112,18 @@ export default function App() {
               <h2 style={{ margin: 0 }}>📖 识别手册 v0.4</h2>
               <button onClick={close}>离开</button>
             </div>
-            <div style={{ background: '#242824', padding: 18, borderRadius: 6 }}>
-              {WORLD_TEXT.filter((w) => w.surface === 'manual' || w.surface === 'drawer').map((w) => (
-                <p key={w.id} style={{ margin: '0 0 12px', lineHeight: 1.6 }}>{w.text}</p>
+            <div style={{ background: '#242824', padding: 18, borderRadius: 6, maxHeight: '70vh', overflow: 'auto' }}>
+              <h3 style={{ margin: '0 0 10px', color: '#ffe9a8' }}>已发现的伪人种类与应对</h3>
+              {PSEUDO_GUIDE.map((p) => (
+                <div key={p.name} style={{ marginBottom: 14, paddingBottom: 12, borderBottom: '1px solid #33382f' }}>
+                  <div style={{ fontWeight: 'bold', color: '#d8d8d0' }}>{p.name}</div>
+                  <div style={{ color: '#9a9a90', fontSize: 13, margin: '4px 0' }}>破绽：{p.tells}</div>
+                  <div style={{ color: '#c9b060', fontSize: 13 }}>应对：{p.response}</div>
+                </div>
               ))}
-              <p style={{ margin: 0, color: '#8a8a80', fontStyle: 'italic' }}>缺两页——关于「伪人」的那两页。</p>
+              <p style={{ margin: 0, color: '#8a8a80', fontStyle: 'italic' }}>
+                {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}
+              </p>
             </div>
           </div>
         </div>
@@ -117,11 +139,13 @@ export default function App() {
             {ITEMS.map((i) => (
               <div key={i.id} style={{ background: '#242824', padding: 12, marginBottom: 10, borderRadius: 6, display: 'flex', gap: 14, alignItems: 'center', border: '1px solid #33382f' }}>
                 <div style={{ fontSize: 28, width: 36, textAlign: 'center' }}>{ITEM_ICONS[i.id] ?? '⬛'}</div>
-                <div>
+                <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 'bold', marginBottom: 2 }}>{i.name}</div>
                   <div style={{ color: '#9a9a90', fontSize: 13 }}>{i.desc}</div>
                   {i.effect.constraint && <div style={{ color: '#c9b060', fontSize: 12, marginTop: 2 }}>⚠ {i.effect.constraint}</div>}
                 </div>
+                {i.id === 'coffee' && <button disabled={state.coffeeUsed >= 2} onClick={() => dispatch({ type: 'DRINK_COFFEE' })}>{state.coffeeUsed >= 2 ? '已喝光' : '喝'}</button>}
+                {i.id === 'sedative' && <button disabled={state.sedativeUsed} onClick={() => dispatch({ type: 'USE_SEDATIVE' })}>{state.sedativeUsed ? '已用' : '嚼'}</button>}
               </div>
             ))}
           </div>

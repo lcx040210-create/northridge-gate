@@ -68,8 +68,7 @@ export function reducer(state: GameState, action: Action): GameState {
     }
 
     case 'INSPECT': {
-      const cost = action.slot === 'id' ? 0 : 20
-      return { ...state, reaction: Math.max(0, state.reaction - cost) }
+      return state // 检视不再消耗体力
     }
 
     case 'DRINK_COFFEE': {

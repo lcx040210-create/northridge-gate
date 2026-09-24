@@ -20,7 +20,7 @@ export interface VisitorRecord {
   sanAtJudge: number
 }
 
-export type Phase = 'opening' | 'visitor' | 'boss_intro' | 'boss_fight' | 'boss_door_trap' | 'dawn'
+export type Phase = 'opening' | 'visitor' | 'dawn'
 
 export interface GameState {
   phase: Phase
@@ -40,8 +40,5 @@ export interface GameState {
   equippedWeapon: Tool | null
   gunAmmo: number
   sprinklerTriggered: boolean
-  // Boss 战
-  bossHealth: number
   doorUnlocked: boolean
-  bossDefeated: boolean
 }

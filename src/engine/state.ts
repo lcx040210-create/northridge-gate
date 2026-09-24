@@ -21,9 +21,7 @@ export const INITIAL_STATE: GameState = {
   equippedWeapon: null,
   gunAmmo: 12,
   sprinklerTriggered: false,
-  bossHealth: 3,
   doorUnlocked: false,
-  bossDefeated: false,
 }
 
 export type Action =
@@ -37,9 +35,6 @@ export type Action =
   | { type: 'EQUIP_WEAPON'; weapon: Tool }
   | { type: 'USE_WEAPON' }
   | { type: 'TRIGGER_SPRINKLER' }
-  | { type: 'BOSS_TRANSITION' }
-  | { type: 'BOSS_DAMAGE' }
-  | { type: 'BOSS_DEFEATED' }
   | { type: 'OPEN_DOOR' }
 
 export function currentVisitor(state: GameState): Visitor | null {
@@ -138,22 +133,6 @@ export function reducer(state: GameState, action: Action): GameState {
 
     case 'TRIGGER_SPRINKLER':
       return { ...state, sprinklerTriggered: true }
-
-    case 'BOSS_TRANSITION':
-      return { ...state, phase: 'boss_fight' }
-
-    case 'BOSS_DAMAGE': {
-      const newHealth = state.bossHealth - 1
-      return {
-        ...state,
-        bossHealth: newHealth,
-        phase: newHealth <= 0 ? 'boss_door_trap' : 'boss_fight',
-        doorUnlocked: newHealth <= 0,
-      }
-    }
-
-    case 'BOSS_DEFEATED':
-      return { ...state, bossDefeated: true, phase: 'dawn' }
 
     case 'OPEN_DOOR':
       if (!state.doorUnlocked) return state

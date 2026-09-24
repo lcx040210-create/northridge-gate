@@ -35,7 +35,7 @@ export default function App() {
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null)
   const [executionGame, setExecutionGame] = useState<{ tool: Tool; visitor: Visitor } | null>(null)
   const [execution, setExecution] = useState<{ result: ExecutionResult; tool: Tool; visitor: Visitor } | null>(null)
-  const [death, setDeath] = useState<Visitor | null | false | 'door_trap'>(false)
+  const [death, setDeath] = useState<Visitor | null | false>(false)
   const [toast, setToast] = useState<string | null>(null)
   const [showFlame, setShowFlame] = useState(false)
   const [readableItem, setReadableItem] = useState<ReadableItem | null>(null)
@@ -473,7 +473,7 @@ export default function App() {
       {readableItem && <ReadableViewer item={readableItem} onClose={() => setReadableItem(null)} />}
 
       {execution && <ExecutionOverlay result={execution.result} tool={execution.tool} visitor={execution.visitor} onDone={onExecDone} />}
-      {death !== false && <Death visitor={death === 'door_trap' ? null : death} doorTrap={death === 'door_trap'} />}
+      {death !== false && <Death visitor={death} />}
 
       {/* 处决小游戏 */}
       {executionGame && executionGame.tool === 'axe' && (

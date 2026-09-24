@@ -498,7 +498,7 @@ export function dawn(): void {
   for (let i = 0; i < 6; i++) later(2000 + i * 900 + Math.random() * 500, () => tone(3200 + Math.random() * 800, 0.12, 0.05, { to: 4200 }))
 }
 
-// —— 新增音效（武器系统 & Boss 战）——
+// —— 新增音效（武器系统）——
 export function alarmBeep(): void {
   if (!ctx) return
   const at = now()
@@ -555,14 +555,6 @@ export function flameCharge(): void {
   burst(2.0, 0.04, { type: 'bandpass', freq: 400, to: 800, q: 2, at })
 }
 
-export function bossRoar(): void {
-  if (!ctx) return
-  const at = now()
-  // 低频震动 + 混沌噪声
-  tone(30, 1.5, 0.15, { type: 'sawtooth', to: 25, at })
-  tone(60, 1.5, 0.1, { type: 'triangle', to: 50, at })
-  burst(1.5, 0.12, { type: 'lowpass', freq: 300, to: 150, q: 1.5, at })
-}
 
 export function glassBreaking(): void {
   if (!ctx) return

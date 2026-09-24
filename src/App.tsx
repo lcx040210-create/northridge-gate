@@ -11,6 +11,7 @@ import Portrait from './ui/Portrait'
 import Inspect, { type InspectSlot } from './ui/Inspect'
 import Verdict from './ui/Verdict'
 import ExecutionOverlay from './ui/ExecutionOverlay'
+import ExecutionAim from './ui/ExecutionAim'
 import HUD from './ui/HUD'
 import Dawn from './ui/Dawn'
 import { startAmbient, playBlip } from './scene/audio'
@@ -33,7 +34,9 @@ const PSEUDO_GUIDE = [
 export default function App() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null)
+  const [aiming, setAiming] = useState<Tool | null>(null)
   const [execution, setExecution] = useState<ExecutionResult | null>(null)
+  const [death, setDeath] = useState(false)
 
   const visitor = currentVisitor(state)
 
@@ -43,9 +46,22 @@ export default function App() {
 
   const handleJudge = (verdict: VerdictType, tool?: Tool) => {
     if (verdict === 'execute' && tool && visitor) {
-      setExecution(resolveExecution(visitor, tool))
+      setAiming(tool)
+      return
     }
     dispatch({ type: 'JUDGE', verdict, tool })
+  }
+
+  const onAimSuccess = () => {
+    if (!visitor || !aiming) return
+    setExecution(resolveExecution(visitor, aiming))
+    dispatch({ type: 'JUDGE', verdict: 'execute', tool: aiming })
+    setAiming(null)
+  }
+
+  const onAimFail = () => {
+    setAiming(null)
+    setDeath(true)
   }
 
   const close = () => setActiveHotspot(null)
@@ -186,7 +202,15 @@ export default function App() {
         </div>
       )}
 
+      {aiming && visitor && <ExecutionAim visitor={visitor} onSuccess={onAimSuccess} onFail={onAimFail} />}
       {execution && <ExecutionOverlay result={execution} onDone={() => setExecution(null)} />}
+      {death && (
+        <div style={{ position: 'absolute', inset: 0, background: '#3a0000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#e0e0e0', zIndex: 30 }}>
+          <h1 style={{ fontSize: 44, color: '#e05050', marginBottom: 12 }}>你死了</h1>
+          <p style={{ color: '#c0a0a0', marginBottom: 20 }}>它冲进来的时候，你没来得及扣动扳机。</p>
+          <button onClick={() => location.reload()}>重新开始</button>
+        </div>
+      )}
     </div>
   )
 }

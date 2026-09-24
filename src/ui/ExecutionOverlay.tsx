@@ -21,7 +21,7 @@ export default function ExecutionOverlay({ result, onDone }: {
     <div data-testid="exec-overlay" style={{ position: 'absolute', inset: 0, background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       {frame === -1 && <div data-testid="blackout">遮黑</div>}
       {frame >= 0 && <img src={result.frames[frame]} alt={`帧${frame}`} style={{ maxHeight: '60%' }} />}
-      {frame === 3 && <div data-testid="residue">{result.success ? '残渣：' + result.residue : '东西还站着，走廊脚步远去'}</div>}
+      {frame === 3 && result.success && <img src={result.residue} alt="残渣" style={{ maxHeight: '28%', marginTop: 12 }} />}
     </div>
   )
 }

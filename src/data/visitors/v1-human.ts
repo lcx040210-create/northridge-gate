@@ -2,7 +2,7 @@ import type { Visitor } from '../schema'
 
 export const v1Human: Visitor = {
   id: 'v1-human',
-  claimedName: 'Dispatcher · Lin Yuan',
+  claimedName: 'Dispatcher · Daniel Cole',
   role: 'human',
   state: 'clean',
   portrait: '/assets/portraits/v1_human.png',

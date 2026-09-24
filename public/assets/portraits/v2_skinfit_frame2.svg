@@ -1,284 +1,335 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 768" width="512" height="768">
+```svg
 
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0b1512"/>
-      <stop offset="0.35" stop-color="#11211c"/>
-      <stop offset="0.7" stop-color="#0a1411"/>
-      <stop offset="1" stop-color="#040807"/>
+    <radialGradient id="bg" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#1f2b26"/>
+      <stop offset="35%" stop-color="#15201c"/>
+      <stop offset="70%" stop-color="#0c1411"/>
+      <stop offset="100%" stop-color="#050807"/>
+    </radialGradient>
+    <radialGradient id="topLight" cx="50%" cy="0%" r="70%">
+      <stop offset="0%" stop-color="#cfe6d6" stop-opacity="0.45"/>
+      <stop offset="25%" stop-color="#8fb5a0" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#4a6b5a" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="face" cx="50%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#e3e2d4"/>
+      <stop offset="30%" stop-color="#cfd0bf"/>
+      <stop offset="60%" stop-color="#a8ae9c"/>
+      <stop offset="85%" stop-color="#7a8574"/>
+      <stop offset="100%" stop-color="#4c574b"/>
+    </radialGradient>
+    <linearGradient id="forehead" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef0e4" stop-opacity="0.55"/>
+      <stop offset="40%" stop-color="#d8dccb" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#b9bfae" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="topLight" cx="0.5" cy="0" r="0.8">
-      <stop offset="0" stop-color="#c8e6d2" stop-opacity="0.55"/>
-      <stop offset="0.25" stop-color="#7fae95" stop-opacity="0.3"/>
-      <stop offset="0.6" stop-color="#2f5446" stop-opacity="0.1"/>
-      <stop offset="1" stop-color="#0b1512" stop-opacity="0"/>
+    <radialGradient id="socket" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#5a5f52" stop-opacity="0.75"/>
+      <stop offset="40%" stop-color="#6c6a5c" stop-opacity="0.5"/>
+      <stop offset="75%" stop-color="#7d6a62" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#8a8a7a" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="face" cx="0.48" cy="0.38" r="0.62">
-      <stop offset="0" stop-color="#e4e6d8"/>
-      <stop offset="0.3" stop-color="#cfd3c2"/>
-      <stop offset="0.6" stop-color="#a9b19f"/>
-      <stop offset="0.85" stop-color="#7c8878"/>
-      <stop offset="1" stop-color="#4d5a4d"/>
-    </radialGradient>
-    <radialGradient id="forehead" cx="0.5" cy="0.3" r="0.6">
-      <stop offset="0" stop-color="#f1f2e6" stop-opacity="0.75"/>
-      <stop offset="0.45" stop-color="#d6dacb" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#b8c0ae" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="socket" cx="0.5" cy="0.5" r="0.55">
-      <stop offset="0" stop-color="#3b4038" stop-opacity="0.85"/>
-      <stop offset="0.4" stop-color="#5a5f52" stop-opacity="0.6"/>
-      <stop offset="0.75" stop-color="#6e6a5e" stop-opacity="0.3"/>
-      <stop offset="1" stop-color="#8a9180" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="cheek" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#9c8c84" stop-opacity="0.35"/>
-      <stop offset="0.5" stop-color="#8f8a7e" stop-opacity="0.18"/>
-      <stop offset="1" stop-color="#8a9180" stop-opacity="0"/>
+    <radialGradient id="cheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9c6e66" stop-opacity="0.22"/>
+      <stop offset="50%" stop-color="#8a7166" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#8a8a7a" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#1a2620" stop-opacity="0.7"/>
-      <stop offset="0.25" stop-color="#2b3a32" stop-opacity="0.3"/>
-      <stop offset="0.6" stop-color="#2b3a32" stop-opacity="0"/>
-      <stop offset="0.85" stop-color="#15201b" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#0c1511" stop-opacity="0.75"/>
+      <stop offset="0%" stop-color="#0d1512" stop-opacity="0.7"/>
+      <stop offset="30%" stop-color="#1b2621" stop-opacity="0.35"/>
+      <stop offset="65%" stop-color="#1b2621" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#0d1512" stop-opacity="0.55"/>
     </linearGradient>
-    <radialGradient id="eyeW" cx="0.45" cy="0.4" r="0.65">
-      <stop offset="0" stop-color="#eef0e4"/>
-      <stop offset="0.5" stop-color="#d3d6c6"/>
-      <stop offset="0.8" stop-color="#a8ad9a"/>
-      <stop offset="1" stop-color="#6f7466"/>
+    <radialGradient id="eyeW" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#f1f0e6"/>
+      <stop offset="45%" stop-color="#dedbcd"/>
+      <stop offset="80%" stop-color="#b5ae9f"/>
+      <stop offset="100%" stop-color="#8e7c74"/>
     </radialGradient>
-    <radialGradient id="iris" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#0a0c0a"/>
-      <stop offset="0.3" stop-color="#1c241f"/>
-      <stop offset="0.65" stop-color="#4a5c50"/>
-      <stop offset="0.9" stop-color="#2d3830"/>
-      <stop offset="1" stop-color="#141a16"/>
+    <radialGradient id="iris" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0a0d0b"/>
+      <stop offset="28%" stop-color="#1c2620"/>
+      <stop offset="55%" stop-color="#3d5145"/>
+      <stop offset="85%" stop-color="#2a3a31"/>
+      <stop offset="100%" stop-color="#101712"/>
     </radialGradient>
     <linearGradient id="neck" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#5c6758"/>
-      <stop offset="0.3" stop-color="#8e9886"/>
-      <stop offset="0.7" stop-color="#a4ad9a"/>
-      <stop offset="1" stop-color="#6b7666"/>
+      <stop offset="0%" stop-color="#4f5a4e"/>
+      <stop offset="30%" stop-color="#8d9483"/>
+      <stop offset="70%" stop-color="#a3a896"/>
+      <stop offset="100%" stop-color="#5e685b"/>
     </linearGradient>
-    <linearGradient id="suit" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3a403d"/>
-      <stop offset="0.3" stop-color="#2b312e"/>
-      <stop offset="0.6" stop-color="#1e2321"/>
-      <stop offset="0.85" stop-color="#141816"/>
-      <stop offset="1" stop-color="#0b0e0d"/>
+    <linearGradient id="suit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a504c"/>
+      <stop offset="25%" stop-color="#363c39"/>
+      <stop offset="60%" stop-color="#232826"/>
+      <stop offset="100%" stop-color="#101312"/>
     </linearGradient>
     <linearGradient id="helmet" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#c9c19a"/>
-      <stop offset="0.3" stop-color="#9c9474"/>
-      <stop offset="0.65" stop-color="#6b6550"/>
-      <stop offset="1" stop-color="#34322a"/>
+      <stop offset="0%" stop-color="#d3c796"/>
+      <stop offset="30%" stop-color="#a99c68"/>
+      <stop offset="65%" stop-color="#6f6844"/>
+      <stop offset="100%" stop-color="#34331f"/>
     </linearGradient>
     <linearGradient id="lip" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#6e4a48"/>
-      <stop offset="0.5" stop-color="#5a3432"/>
-      <stop offset="1" stop-color="#3a2322"/>
+      <stop offset="0%" stop-color="#6b4a47"/>
+      <stop offset="50%" stop-color="#8a5c56"/>
+      <stop offset="100%" stop-color="#5a3e3b"/>
     </linearGradient>
-    <radialGradient id="vig" cx="0.5" cy="0.45" r="0.75">
-      <stop offset="0" stop-color="#000" stop-opacity="0"/>
-      <stop offset="0.55" stop-color="#000" stop-opacity="0.15"/>
-      <stop offset="0.8" stop-color="#020604" stop-opacity="0.55"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0.9"/>
+    <radialGradient id="vig" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="55%" stop-color="#000" stop-opacity="0.15"/>
+      <stop offset="80%" stop-color="#050a07" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.9"/>
     </radialGradient>
     <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="7" result="noise"/>
-      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.6  0 0 0 0 0.75  0 0 0 0 0.65  0 0 0 0.28 0" result="tint"/>
-      <feComposite in="tint" in2="SourceGraphic" operator="in" result="g"/>
-      <feBlend in="SourceGraphic" in2="g" mode="overlay"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.5  0 0 0 0 0.55  0 0 0 0 0.5  0 0 0 0.35 0" result="g"/>
+      <feComposite in="g" in2="SourceGraphic" operator="in" result="gc"/>
+      <feBlend in="SourceGraphic" in2="gc" mode="overlay"/>
     </filter>
   </defs>
 
   <!-- 背景 -->
   <rect width="512" height="768" fill="url(#bg)"/>
-  <rect width="512" height="768" fill="url(#bg)" filter="url(#grain)" opacity="0.6"/>
 
   <!-- 门框 -->
-  <g opacity="0.9">
-    <rect x="70" y="40" width="372" height="728" fill="none" stroke="#1d2b25" stroke-width="22"/>
-    <rect x="86" y="56" width="340" height="712" fill="none" stroke="#0a110e" stroke-width="6"/>
-    <rect x="59" y="29" width="394" height="14" fill="#26362f"/>
-    <path d="M70 40 L70 768" stroke="#3a4e44" stroke-width="2" opacity="0.6"/>
-    <path d="M442 40 L442 768" stroke="#0c1410" stroke-width="3"/>
-    <path d="M110 120 L118 300 M400 200 L394 360" stroke="#4a1c1a" stroke-width="3" opacity="0.45"/>
-    <path d="M395 60 q-6 40 2 90 q4 20 -2 44" stroke="#5a1e1c" stroke-width="2" fill="none" opacity="0.5"/>
-    <rect x="96" y="70" width="60" height="16" fill="#1a2420"/>
-    <text x="100" y="82" font-family="monospace" font-size="10" fill="#4f6a5c" opacity="0.7">GATE N-07</text>
+  <g opacity="0.85">
+    <rect x="60" y="40" width="392" height="740" fill="none" stroke="#0a110e" stroke-width="22"/>
+    <rect x="74" y="54" width="364" height="720" fill="none" stroke="#2a3a32" stroke-width="3" opacity="0.6"/>
+    <rect x="86" y="66" width="340" height="710" fill="#0e1714" opacity="0.55"/>
+    <path d="M74 54 L74 774" stroke="#3b4f44" stroke-width="2" opacity="0.5"/>
+    <path d="M430 120 L430 180" stroke="#4a1a1a" stroke-width="4" opacity="0.6"/>
+    <path d="M428 180 q2 20 -1 42" stroke="#3a1414" stroke-width="2" fill="none" opacity="0.5"/>
   </g>
 
   <!-- 顶光 -->
-  <ellipse cx="256" cy="40" rx="260" ry="360" fill="url(#topLight)"/>
-  <path d="M190 0 L322 0 L420 500 L92 500 Z" fill="url(#topLight)" opacity="0.35"/>
+  <rect width="512" height="768" fill="url(#topLight)"/>
+  <ellipse cx="256" cy="40" rx="90" ry="10" fill="#dff2e6" opacity="0.35"/>
 
   <!-- 躯干 -->
   <g>
-    <path d="M40 768 L50 640 Q62 560 130 530 L200 505 Q256 530 312 505 L382 530 Q450 560 462 640 L472 768 Z" fill="url(#suit)"/>
-    <path d="M40 768 L50 640 Q62 560 130 530 L200 505 Q256 530 312 505 L382 530 Q450 560 462 640 L472 768 Z" fill="url(#shade)" opacity="0.8"/>
-    <path d="M256 540 L256 768" stroke="#0a0d0c" stroke-width="3"/>
-    <path d="M258 540 L258 768" stroke="#454c48" stroke-width="1" opacity="0.5"/>
-    <rect x="300" y="590" width="80" height="60" rx="4" fill="#1a1f1d" stroke="#0b0e0d" stroke-width="2"/>
-    <path d="M300 602 L380 602" stroke="#3a413d" stroke-width="1.5"/>
-    <rect x="130" y="600" width="70" height="24" rx="2" fill="#2a302d"/>
-    <text x="137" y="617" font-family="monospace" font-size="12" fill="#8a9488" opacity="0.8">M. REED</text>
-    <path d="M150 700 q20 -10 40 4 q10 30 -6 50" fill="#3a1614" opacity="0.5"/>
-    <path d="M90 600 Q110 640 100 720" stroke="#0c0f0e" stroke-width="3" fill="none" opacity="0.7"/>
-    <path d="M420 600 Q402 650 410 720" stroke="#0c0f0e" stroke-width="3" fill="none" opacity="0.7"/>
-    <!-- 衣领 -->
-    <path d="M196 500 L256 560 L232 600 L168 530 Z" fill="#2f3532" stroke="#0e1210" stroke-width="2"/>
-    <path d="M316 500 L256 560 L280 600 L344 530 Z" fill="#262b29" stroke="#0e1210" stroke-width="2"/>
-    <path d="M200 505 L256 558" stroke="#56605a" stroke-width="1.2" opacity="0.6"/>
-    <circle cx="256" cy="574" r="4" fill="#111" stroke="#4a524d" stroke-width="1"/>
+    <path d="M60 768 L70 590 Q84 500 170 470 L218 452 L294 452 L342 470 Q428 500 442 590 L452 768 Z" fill="url(#suit)"/>
+    <path d="M218 452 L256 540 L294 452 L282 450 L256 505 L230 450 Z" fill="#1a1e1c"/>
+    <path d="M210 456 L240 560 L200 600 L180 480 Z" fill="#2c322f" opacity="0.9"/>
+    <path d="M302 456 L272 560 L312 600 L332 480 Z" fill="#2c322f" opacity="0.9"/>
+    <path d="M256 540 L256 768" stroke="#0c0f0e" stroke-width="3"/>
+    <rect x="300" y="610" width="70" height="56" rx="4" fill="#262b29" stroke="#141816" stroke-width="2"/>
+    <rect x="310" y="620" width="36" height="10" fill="#6b6a55" opacity="0.5"/>
+    <path d="M320 640 q10 6 4 18" stroke="#4a1616" stroke-width="3" fill="none" opacity="0.7"/>
+    <path d="M110 560 Q140 520 175 500" stroke="#5a625d" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M402 560 Q372 520 337 500" stroke="#5a625d" stroke-width="2" fill="none" opacity="0.3"/>
+    <path d="M60 768 L70 590 Q84 500 170 470 L218 452 L294 452 L342 470 Q428 500 442 590 L452 768 Z" fill="url(#shade)"/>
   </g>
 
-  <!-- 脖子 -->```svg
-<!-- 中段：五官（假设 viewBox 0 0 400 500，脸中心约 x=200；渐变 ID 如与前段不同请替换：
-     highlightGrad / shadowGrad / eyeSocketGrad / eyeWhiteGrad / irisGrad / pupilGrad / lidGrad / noseGrad / cheekGrad / lipGrad / chinShadowGrad） -->
-
-<!-- 额头高光 -->
-<ellipse cx="200" cy="140" rx="70" ry="28" fill="url(#highlightGrad)" opacity="0.55"/>
-<ellipse cx="190" cy="132" rx="30" ry="10" fill="#fff" opacity="0.18"/>
-
-<!-- 眼窝阴影（左大略低，右小略高） -->
-<ellipse cx="150" cy="222" rx="44" ry="30" fill="url(#eyeSocketGrad)" opacity="0.75"/>
-<ellipse cx="252" cy="210" rx="36" ry="24" fill="url(#eyeSocketGrad)" opacity="0.75"/>
-
-<!-- 左眼：大、略低、睁开 -->
-<g id="leftEye">
-  <path d="M112,224 Q150,194 190,222 Q150,248 112,224 Z" fill="url(#eyeWhiteGrad)"/>
-  <!-- 血丝 -->
-  <g stroke="#b3262a" stroke-width="0.8" fill="none" opacity="0.7" stroke-linecap="round">
-    <path d="M115,224 q8,-2 14,1 q5,2 9,-1"/>
-    <path d="M118,229 q7,1 12,-2"/>
-    <path d="M187,222 q-7,-3 -13,0 q-4,2 -8,0"/>
-    <path d="M184,228 q-6,2 -11,-1 l-3,2"/>
-    <path d="M122,218 q5,-1 8,2"/>
-    <path d="M180,215 q-5,1 -7,4"/>
+  <!-- 脖子 -->
+  <g>
+    <path d="M212 360 Q210 420 204 460 Q256 486 308 460 Q302 420 300 360 Z" fill="url(#neck)"/>
+    <path d="M212 380 Q256 420 300 380 L300 400 Q256 440 212 400 Z" fill="#26302a" opacity="0.55"/>
+    <path d="M238 420 Q244 450 236 470" stroke="#6a7466" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M276 420 Q270 450 278 470" stroke="#6a7466" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M204 452 Q256 474 308 452" stroke="#7a8a7c" stroke-width="1.5" fill="none" opacity="0.4"/>
   </g>
-  <circle cx="152" cy="222" r="15" fill="url(#irisGrad)"/>
-  <circle cx="152" cy="222" r="6.5" fill="url(#pupilGrad)"/>
-  <circle cx="157" cy="216" r="3" fill="#fff" opacity="0.9"/>
-  <circle cx="147" cy="227" r="1.2" fill="#fff" opacity="0.5"/>
-  <!-- 上睫线 -->
-  <path d="M110,224 Q150,190 192,221" fill="none" stroke="#2a1a14" stroke-width="2.4" stroke-linecap="round"/>
-  <!-- 下眼睑阴影 -->
-  <path d="M116,230 Q150,254 188,228 Q150,262 116,230 Z" fill="url(#shadowGrad)" opacity="0.5"/>
-</g>
 
-<!-- 右眼：小、略高、半闭（眨眼不同步） -->
-<g id="rightEye">
-  <path d="M224,210 Q252,194 280,208 Q252,222 224,210 Z" fill="url(#eyeWhiteGrad)"/>
-  <clipPath id="rEyeClip"><path d="M224,210 Q252,194 280,208 Q252,222 224,210 Z"/></clipPath>
-  <g clip-path="url(#rEyeClip)">
-    <circle cx="254" cy="211" r="10" fill="url(#irisGrad)"/>
-    <circle cx="254" cy="211" r="4.5" fill="url(#pupilGrad)"/>
-    <!-- 半垂眼皮 -->
-    <path d="M220,190 L284,190 L284,208 Q252,212 220,210 Z" fill="url(#lidGrad)"/>
+  <!-- 双耳 -->
+  <g></g>```svg
+<!-- 假定 defs 中已有：skinHighlight / shadowSoft / eyeSocket / eyeWhite / iris / lipGrad / lipHighlight / noseHighlight / neckShadow；若 id 不同请替换 -->
+<g id="face-features">
+
+  <!-- 额头高光 -->
+  <ellipse cx="200" cy="120" rx="70" ry="38" fill="url(#skinHighlight)" opacity="0.55"/>
+  <ellipse cx="192" cy="112" rx="34" ry="16" fill="url(#skinHighlight)" opacity="0.4"/>
+
+  <!-- 眉弓阴影 -->
+  <path d="M118 182 Q150 160 188 176 Q150 172 122 192 Z" fill="url(#shadowSoft)" opacity="0.6"/>
+  <path d="M214 170 Q250 152 282 170 Q250 164 218 182 Z" fill="url(#shadowSoft)" opacity="0.6"/>
+  <!-- 眉毛 -->
+  <path d="M122 184 Q152 166 186 178" stroke="#3a2a22" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.85"/>
+  <path d="M218 174 Q248 158 278 168" stroke="#3a2a22" stroke-width="4.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+
+  <!-- 眼窝深阴影（左大低 / 右小高） -->
+  <ellipse cx="155" cy="218" rx="42" ry="32" fill="url(#eyeSocket)" opacity="0.85"/>
+  <ellipse cx="155" cy="222" rx="34" ry="24" fill="url(#shadowSoft)" opacity="0.5"/>
+  <ellipse cx="247" cy="200" rx="30" ry="22" fill="url(#eyeSocket)" opacity="0.85"/>
+  <ellipse cx="247" cy="203" rx="24" ry="16" fill="url(#shadowSoft)" opacity="0.5"/>
+
+  <!-- 左眼：大、略低、睁开、血丝 -->
+  <g id="eye-left">
+    <path d="M122 222 Q155 194 190 222 Q155 246 122 222 Z" fill="url(#eyeWhite)"/>
+    <g stroke="#b3261e" stroke-width="0.8" fill="none" opacity="0.7" stroke-linecap="round">
+      <path d="M126 222 Q133 219 138 223 Q142 220 145 224"/>
+      <path d="M128 226 Q134 228 140 226"/>
+      <path d="M186 221 Q179 217 173 221 Q170 218 166 222"/>
+      <path d="M184 226 Q177 229 170 226 Q168 229 165 228"/>
+      <path d="M132 217 Q137 214 141 216"/>
+    </g>
+    <circle cx="156" cy="221" r="14" fill="url(#iris)"/>
+    <circle cx="156" cy="221" r="6.5" fill="#0b0706"/>
+    <circle cx="151" cy="216" r="3" fill="#fff" opacity="0.9"/>
+    <circle cx="161" cy="226" r="1.2" fill="#fff" opacity="0.5"/>
+    <!-- 上眼睑阴影与睫毛线 -->
+    <path d="M122 222 Q155 194 190 222 Q155 202 122 222 Z" fill="url(#shadowSoft)" opacity="0.55"/>
+    <path d="M122 222 Q155 194 190 222" stroke="#241712" stroke-width="2.4" fill="none"/>
+    <path d="M126 224 Q155 244 186 224" stroke="#6b4a3c" stroke-width="1" fill="none" opacity="0.6"/>
+    <!-- 下眼睑卧蚕 -->
+    <path d="M128 232 Q155 250 184 232" stroke="url(#skinHighlight)" stroke-width="3" fill="none" opacity="0.4"/>
   </g>
-  <path d="M223,210 Q252,213 281,207" fill="none" stroke="#2a1a14" stroke-width="2" stroke-linecap="round"/>
-  <path d="M226,203 Q252,196 278,201" fill="none" stroke="#6b4a3a" stroke-width="1" opacity="0.6"/>
-  <circle cx="258" cy="212" r="1.4" fill="#fff" opacity="0.7"/>
-  <!-- 下眼睑阴影 -->
-  <path d="M228,214 Q252,230 278,212 Q252,238 228,214 Z" fill="url(#shadowGrad)" opacity="0.55"/>
-</g>
 
-<!-- 鼻子 -->
-<g id="nose">
-  <!-- 鼻侧阴影 -->
-  <path d="M188,230 Q182,270 176,300 Q186,306 192,300 Q192,265 196,232 Z" fill="url(#shadowGrad)" opacity="0.55"/>
-  <path d="M214,228 Q220,268 226,298 Q218,304 210,300 Q210,262 206,230 Z" fill="url(#shadowGrad)" opacity="0.35"/>
-  <!-- 鼻梁高光 -->
-  <path d="M200,226 Q198,262 202,296" fill="none" stroke="url(#highlightGrad)" stroke-width="7" stroke-linecap="round" opacity="0.6"/>
-  <!-- 鼻头 -->
-  <ellipse cx="202" cy="306" rx="18" ry="13" fill="url(#noseGrad)"/>
-  <!-- 鼻翼 -->
-  <path d="M178,300 Q170,314 182,320 Q190,322 194,316" fill="url(#noseGrad)" stroke="#8a5a45" stroke-width="1.2"/>
-  <path d="M226,298 Q236,312 224,319 Q216,322 211,316" fill="url(#noseGrad)" stroke="#8a5a45" stroke-width="1.2"/>
-  <!-- 鼻孔 -->
-  <ellipse cx="190" cy="317" rx="5" ry="2.6" fill="#3a2019" opacity="0.8" transform="rotate(15 190 317)"/>
-  <ellipse cx="215" cy="316" rx="5" ry="2.6" fill="#3a2019" opacity="0.8" transform="rotate(-15 215 316)"/>
-  <!-- 鼻尖高光 -->
-  <ellipse cx="204" cy="301" rx="6" ry="4" fill="#fff" opacity="0.45"/>
-</g>
+  <!-- 右眼：小、略高、半闭 -->
+  <g id="eye-right">
+    <path d="M226 202 Q247 188 268 202 Q247 212 226 202 Z" fill="url(#eyeWhite)"/>
+    <clipPath id="clipEyeR"><path d="M226 202 Q247 188 268 202 Q247 212 226 202 Z"/></clipPath>
+    <g clip-path="url(#clipEyeR)">
+      <circle cx="247" cy="203" r="9" fill="url(#iris)"/>
+      <circle cx="247" cy="203" r="4" fill="#0b0706"/>
+      <!-- 下垂的上眼睑（半闭） -->
+      <path d="M222 186 L272 186 L272 201 Q247 196 222 201 Z" fill="#c58f78"/>
+      <path d="M222 197 Q247 192 272 197 L272 202 Q247 197 222 202 Z" fill="url(#shadowSoft)" opacity="0.7"/>
+    </g>
+    <path d="M226 201 Q247 195 268 201" stroke="#241712" stroke-width="2.6" fill="none"/>
+    <path d="M226 202 Q247 212 268 202" stroke="#6b4a3c" stroke-width="0.9" fill="none" opacity="0.6"/>
+    <path d="M228 194 Q247 184 266 194" stroke="#8a5d4c" stroke-width="1.2" fill="none" opacity="0.5"/>
+  </g>
 
-<!-- 颧骨高光 -->
-<ellipse cx="128" cy="270" rx="30" ry="16" fill="url(#cheekGrad)" opacity="0.5" transform="rotate(-20 128 270)"/>
-<ellipse cx="276" cy="262" rx="26" ry="14" fill="url(#cheekGrad)" opacity="0.5" transform="rotate(20 276 262)"/>
+  <!-- 鼻子 -->
+  <g id="nose">
+    <!-- 鼻侧阴影 -->
+    <path d="M190 212 Q180 260 172 292 Q182 300 190 296 Q188 260 196 214 Z" fill="url(#shadowSoft)" opacity="0.55"/>
+    <path d="M212 206 Q222 258 230 290 Q222 298 212 294 Q214 258 206 208 Z" fill="url(#shadowSoft)" opacity="0.35"/>
+    <!-- 鼻梁高光 -->
+    <path d="M199 200 Q196 250 198 286 Q203 290 206 286 Q206 250 203 200 Z" fill="url(#noseHighlight)" opacity="0.8"/>
+    <!-- 鼻翼 -->
+    <path d="M172 292 Q166 304 176 312 Q186 316 192 308" fill="none" stroke="#7a4a3a" stroke-width="2.2" opacity="0.7"/>
+    <path d="M230 290 Q238 302 228 311 Q218 315 212 308" fill="none" stroke="#7a4a3a" stroke-width="2.2" opacity="0.6"/>
+    <ellipse cx="178" cy="302" rx="10" ry="8" fill="url(#skinHighlight)" opacity="0.25"/>
+    <!-- 鼻孔 -->
+    <ellipse cx="189" cy="310" rx="6" ry="3" fill="#3b211a" opacity="0.75" transform="rotate(-15 189 310)"/>
+    <ellipse cx="214" cy="309" rx="6" ry="3" fill="#3b211a" opacity="0.7" transform="rotate(15 214 309)"/>
+    <!-- 鼻底阴影 -->
+    <path d="M180 314 Q202 324 226 314 Q202 330 180 314 Z" fill="url(#shadowSoft)" opacity="0.5"/>
+    <!-- 鼻尖高光 -->
+    <ellipse cx="202" cy="296" rx="11" ry="8" fill="url(#noseHighlight)" opacity="0.7"/>
+    <ellipse cx="200" cy="293" rx="4" ry="3" fill="#fff" opacity="0.45"/>
+  </g>
 
-<!-- 嘴唇（略歪：右侧上扬） -->
-<g id="mouth" transform="rotate(-4 202 360)">
+  <!-- 颧骨高光 -->
+  <ellipse cx="135" cy="262" rx="30" ry="18" fill="url(#skinHighlight)" opacity="0.45" transform="rotate(-20 135 262)"/>
+  <ellipse cx="268" cy="252" rx="26" ry="15" fill="url(#skinHighlight)" opacity="0.4" transform="rotate(20 268 252)"/>
+  <!-- 颧下凹陷 -->
+  <path d="M112 280 Q130 318 160 338 Q130 312 118 278 Z" fill="url(#shadowSoft)" opacity="0.4"/>
+  <path d="M292 272 Q276 312 246 334 Q276 306 286 270 Z" fill="url(#shadowSoft)" opacity="0.35"/>
+
   <!-- 人中 -->
-  <path d="M196,326 Q198,338 194,346 M208,326 Q206,338 210,346" fill="none" stroke="#8a5a45" stroke-width="1" opacity="0.5"/>
-  <!-- 上唇 -->
-  <path d="M162,358 Q180,344 194,348 Q202,342 210,347 Q226,342 244,352 Q222,360 202,358 Q182,362 162,358 Z" fill="url(#lipGrad)"/>
-  <!-- 下唇 -->
-  <path d="M164,359 Q182,364 202,360 Q222,362 243,353 Q232,380 202,382 Q176,380 164,359 Z" fill="url(#lipGrad)"/>
-  <!-- 唇缝 -->
-  <path d="M162,358 Q182,362 202,359 Q222,361 244,352" fill="none" stroke="#4a1a1a" stroke-width="1.8" stroke-linecap="round"/>
-  <!-- 下唇高光 -->
-  <ellipse cx="206" cy="369" rx="14" ry="3.5" fill="#fff" opacity="0.35"/>
-  <!-- 嘴角阴影 -->
-  <circle cx="161" cy="359" r="3" fill="url(#shadowGrad)" opacity="0.6"/>
-  <circle cx="245" cy="352" r="3" fill="url(#shadowGrad)" opacity="0.6"/>
-</g>
+  <path d="M196 322 Q194 334 192 342 M208 322 Q210 334 212 342" stroke="#8a5646" stroke-width="1.2" fill="none" opacity="0.45"/>
+  <path d="M195 324 L209 324 L211 342 L193 342 Z" fill="url(#shadowSoft)" opacity="0.2"/>
 
-<!-- 下巴阴影 -->
-<path d="M170,392 Q202,404 234,390 Q224,408 202,410 Q180,410 170,392 Z" fill="url(#shadowGrad)" opacity="0.45"/>
-<ellipse cx="202" cy="430" rx="40" ry="14" fill="url(#chinShadowGrad)" opacity="0.5"/>
-<ellipse cx="204" cy="418" rx="14" ry="6" fill="url(#highlightGrad)" opacity="0.35"/>```svg
-  <!-- 旧安全帽 -->
+  <!-- 嘴唇 -->
+  <g id="mouth">
+    <!-- 上唇 -->
+    <path d="M160 352 Q178 340 192 342 Q202 346 212 342 Q228 340 244 352 Q220 356 202 356 Q182 356 160 352 Z" fill="url(#lipGrad)"/>
+    <!-- 下唇 -->
+    <path d="M162 353 Q182 358 202 358 Q222 358 242 353 Q232 378 202 382 Q172 378 162 353 Z" fill="url(#lipGrad)"/>
+    <!-- 唇缝 -->
+    <path d="M160 352 Q182 360 202 357 Q222 360 244 352" stroke="#4a1c18" stroke-width="2" fill="none"/>
+    <!-- 上唇阴影 -->
+    <path d="M166 351 Q202 346 238 351 Q202 356 166 351 Z" fill="url(#shadowSoft)" opacity="0.4"/>
+    <!-- 下唇高光 -->
+    <ellipse cx="202" cy="367" rx="18" ry="5" fill="url(#lipHighlight)" opacity="0.7"/>
+    <ellipse cx="196" cy="366" rx="6" ry="1.8" fill="#fff" opacity="0.4"/>
+    <!-- 唇珠高光 -->
+    <ellipse cx="202" cy="347" rx="6" ry="2" fill="url(#lipHighlight)" opacity="0.5"/>
+    <!-- 嘴角阴影 --></g></g>```svg
+  <!-- ===== 旧安全帽 ===== -->
   <g id="helmet-group">
-    <path d="M136 214 C136 118 196 66 256 66 C316 66 376 118 376 214 C376 222 370 226 362 226 L150 226 C142 226 136 222 136 214 Z" fill="url(#helmet)" stroke="#2a2f1e" stroke-width="3"/>
-    <path d="M256 70 C246 110 244 170 248 222" fill="none" stroke="#3a4028" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
-    <path d="M256 70 C266 110 268 170 264 222" fill="none" stroke="#c9c7a0" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
-    <path d="M112 226 C150 214 362 214 400 226 C404 238 396 246 384 246 C330 240 182 240 128 246 C116 246 108 238 112 226 Z" fill="#4a5232" stroke="#23271a" stroke-width="3"/>
-    <path d="M124 238 C190 232 322 232 388 238" fill="none" stroke="#1c2014" stroke-width="2" opacity="0.6"/>
-    <g fill="none" stroke="#d8d4b0" stroke-linecap="round" opacity="0.45">
-      <path d="M176 140 l22 -9" stroke-width="1.6"/>
-      <path d="M184 156 l14 -4 l9 3" stroke-width="1.2"/>
-      <path d="M300 118 l18 12" stroke-width="1.5"/>
-      <path d="M318 162 l-10 16 l6 8" stroke-width="1.3"/>
-      <path d="M210 190 l30 -3" stroke-width="1"/>
-      <path d="M338 196 l12 -6" stroke-width="1.4"/>
-      <path d="M160 232 l18 -2" stroke-width="1.2"/>
-      <path d="M330 234 l22 1" stroke-width="1.2"/>
+    <!-- 帽壳 -->
+    <path d="M150 205 C150 120 200 78 256 78 C312 78 362 120 362 205 Z"
+          fill="url(#helmet)" stroke="#3a3322" stroke-width="3"/>
+    <!-- 中脊 -->
+    <path d="M246 82 C244 120 244 170 246 205 L266 205 C268 170 268 120 266 82 Z"
+          fill="#000" opacity="0.12"/>
+    <path d="M250 84 C249 120 249 170 250 203" stroke="#fff" stroke-width="2" opacity="0.18" fill="none"/>
+    <!-- 高光 -->
+    <path d="M178 170 C180 130 205 102 236 94" stroke="#fff8d8" stroke-width="6"
+          stroke-linecap="round" fill="none" opacity="0.25"/>
+    <!-- 帽檐 -->
+    <path d="M128 208 C170 196 342 196 384 208 C388 216 382 224 372 224 C320 216 192 216 140 224 C130 224 124 216 128 208 Z"
+          fill="#9a8a4c" stroke="#3a3322" stroke-width="3"/>
+    <path d="M140 222 C192 214 320 214 372 222" stroke="#000" stroke-width="3" opacity="0.25" fill="none"/>
+    <!-- 磨损：划痕 -->
+    <g stroke="#2e2a1c" stroke-linecap="round" fill="none" opacity="0.55">
+      <path d="M190 140 l18 -6" stroke-width="1.5"/>
+      <path d="M196 150 l24 -4 l6 3" stroke-width="1.2"/>
+      <path d="M300 120 l14 10" stroke-width="1.5"/>
+      <path d="M318 160 l-10 14 l4 6" stroke-width="1.2"/>
+      <path d="M270 110 l8 -3" stroke-width="1"/>
     </g>
-    <g fill="#1e2216" opacity="0.5">
-      <ellipse cx="228" cy="112" rx="5" ry="3"/>
-      <ellipse cx="292" cy="178" rx="4" ry="2.5"/>
-      <ellipse cx="190" cy="204" rx="3" ry="2"/>
+    <!-- 磨损：掉漆斑 -->
+    <g fill="#5b5236" opacity="0.6">
+      <path d="M212 118 c6 -4 14 -2 15 4 c1 6 -8 9 -13 7 c-5 -2 -6 -8 -2 -11 Z"/>
+      <path d="M330 180 c5 -2 11 1 10 6 c-1 5 -9 6 -12 3 c-2 -3 -1 -7 2 -9 Z"/>
+      <path d="M168 190 c4 -3 10 -1 10 3 c0 4 -6 6 -9 4 Z"/>
+      <path d="M352 212 c6 -1 12 2 10 6 l-12 1 Z"/>
+      <path d="M150 214 c5 -2 10 0 9 3 l-10 2 Z"/>
+    </g>
+    <!-- 污渍 -->
+    <ellipse cx="290" cy="150" rx="22" ry="10" fill="#2a2414" opacity="0.12" transform="rotate(-18 290 150)"/>
+  </g>
+
+  <!-- ===== 右耳后缝合线 ===== -->
+  <g id="stitches" stroke-linecap="round" fill="none">
+    <!-- 缝线底部红肿 -->
+    <path d="M372 238 C384 262 368 284 380 306 C392 328 366 348 350 372 C340 388 336 402 330 418"
+          stroke="#a04a3e" stroke-width="7" opacity="0.25"/>
+    <!-- 主缝线 -->
+    <path d="M372 238 C384 262 368 284 380 306 C392 328 366 348 350 372 C340 388 336 402 330 418"
+          stroke="#6e1e1e" stroke-width="2.4"/>
+    <!-- 缝线小刻度 -->
+    <g stroke="#6e1e1e" stroke-width="1.8">
+      <path d="M368 246 l12 -3"/>
+      <path d="M371 258 l12 1"/>
+      <path d="M368 270 l13 -2"/>
+      <path d="M369 283 l12 2"/>
+      <path d="M373 296 l12 -3"/>
+      <path d="M379 308 l12 3"/>
+      <path d="M378 321 l12 1"/>
+      <path d="M372 334 l11 5"/>
+      <path d="M363 346 l10 6"/>
+      <path d="M354 358 l10 7"/>
+      <path d="M346 371 l10 6"/>
+      <path d="M340 384 l11 5"/>
+      <path d="M335 397 l11 4"/>
+      <path d="M331 410 l11 3"/>
+    </g>
+    <!-- 针孔 -->
+    <g fill="#4a1010" stroke="none">
+      <circle cx="368" cy="246" r="1.1"/><circle cx="380" cy="243" r="1.1"/>
+      <circle cx="368" cy="270" r="1.1"/><circle cx="381" cy="268" r="1.1"/>
+      <circle cx="379" cy="308" r="1.1"/><circle cx="391" cy="311" r="1.1"/>
+      <circle cx="354" cy="358" r="1.1"/><circle cx="364" cy="365" r="1.1"/>
+      <circle cx="335" cy="397" r="1.1"/><circle cx="346" cy="401" r="1.1"/>
     </g>
   </g>
 
-  <!-- 右耳后缝合线 -->
-  <g id="stitches">
-    <path id="scar" d="M352 262 C366 280 358 300 368 318 C378 336 366 356 372 376 C376 392 364 408 356 424" fill="none" stroke="#6e1e1e" stroke-width="4" stroke-linecap="round"/>
-    <path d="M352 262 C366 280 358 300 368 318 C378 336 366 356 372 376 C376 392 364 408 356 424" fill="none" stroke="#a04040" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-    <g stroke="#6e1e1e" stroke-width="2.2" stroke-linecap="round">
-      <line x1="352" y1="270" x2="366" y2="266"/>
-      <line x1="355" y1="284" x2="369" y2="282"/>
-      <line x1="356" y1="298" x2="370" y2="298"/>
-      <line x1="360" y1="312" x2="374" y2="314"/>
-      <line x1="364" y1="326" x2="378" y2="330"/>
-      <line x1="364" y1="340" x2="378" y2="344"/>
-      <line x1="362" y1="354" x2="376" y2="356"/>
-      <line x1="364" y1="368" x2="378" y2="370"/>
-      <line x1="364" y1="382" x2="378" y2="386"/>
-      <line x1="358" y1="396" x2="372" y2="400"/>
-      <line x1="352" y1="410" x2="366" y2="414"/>
-    </g>
-  </g>
+  <!-- ===== 淡绿色罩色 ===== -->
+  <rect width="100%" height="100%" fill="#7fa36a" opacity="0.08" style="mix-blend-mode:multiply"/>
 
-  <!-- 绿色罩色 -->
-  <rect x="0" y="0" width="512" height="512" fill="#3f5a2a" opacity="0.18" style="mix-blend-mode:multiply"/>
+  <!-- ===== grain 颗粒层 ===== -->
+  <filter id="grainEnd" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" stitchTiles="stitch"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer>
+      <feFuncA type="linear" slope="0.5"/>
+    </feComponentTransfer>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#grainEnd)" opacity="0.18" style="mix-blend-mode:overlay"/>
 
-  <!-- 颗粒层 -->
-  <rect x="0" y="0" width="512" height="512" filter="url(#grain)" opacity="0.22"/>
-
-  <!-- 暗角 -->
-  <rect x="0" y="0" width="512" height="512" fill="url(#vig)"/>
+  <!-- ===== 轻微暗角 ===== -->
+  <radialGradient id="vignetteEnd" cx="50%" cy="48%" r="72%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.35"/>
+  </radialGradient>
+  <rect width="100%" height="100%" fill="url(#vignetteEnd)"/>
 </svg>

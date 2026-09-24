@@ -4,6 +4,7 @@ import type { Verdict as VerdictType, Tool, Visitor } from './data/schema'
 import type { ExecutionResult } from './engine/execution'
 import { resolveExecution } from './engine/execution'
 import { WORLD_TEXT } from './data/world'
+import { LORE_TEXTS } from './data/lore'
 import { WEAPONS, CONSUMABLES } from './data/weapons'
 import { MANUAL_ENTRIES } from './data/manual'
 import RoomScene from './scene/RoomScene'
@@ -333,7 +334,10 @@ export default function App() {
               ))}
             </div>
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 8 }}>
-              点击武器装备，按 F 键使用
+              点击武器装备，按 F 键使用<br />
+              <span style={{ color: '#d08030', fontSize: 11, marginTop: 4, display: 'block' }}>
+                {LORE_TEXTS.find((l) => l.surface === 'label')?.text}
+              </span>
             </p>
           </div>
         </div>
@@ -359,7 +363,10 @@ export default function App() {
               </div>
             ))}
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 16 }}>
-              {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}
+              {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}<br />
+              <span style={{ color: '#9a7a60', fontSize: 11, marginTop: 6, display: 'block', fontStyle: 'italic' }}>
+                {LORE_TEXTS.find((l) => l.id === 'sticky-note')?.text}
+              </span>
             </p>
           </div>
         </div>

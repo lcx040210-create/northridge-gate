@@ -43,15 +43,13 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, v))
 }
 
-// 房间障碍物：武器柜、储物柜、桌椅、床、沙发、手册柜
+// 房间障碍物：武器柜、储物柜、桌子、手册柜
+// 注意：沙发和床不设置碰撞，允许玩家自由移动
 const OBSTACLES: Obstacle[] = [
   { x: 4.2, z: 1.2, radius: 1.0 },   // 武器柜（右墙）
   { x: -4.6, z: 1.2, radius: 1.0 },  // 手册柜（左墙）
   { x: 4.6, z: -1.8, radius: 0.8 },  // 储物柜（右墙）
   { x: 0, z: -2.5, radius: 0.9 },    // 桌子
-  { x: -2, z: 2.2, radius: 0.7 },    // 床左侧
-  { x: 2, z: 2.2, radius: 0.7 },     // 床右侧
-  { x: 0, z: 1.8, radius: 1.3 },     // 沙发（后方中央）
 ]
 
 export function updatePlayer(state: PlayerState, input: MoveInput, dt: number, bounds: Bounds): PlayerState {

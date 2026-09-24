@@ -313,6 +313,9 @@ export default function App() {
             {showShoes && (
               <p data-testid="hallucination" style={{ position: 'absolute', bottom: 14, left: 14, color: '#e0a0a0', background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 3 }}>走廊里，多了一双鞋。</p>
             )}
+            <p style={{ position: 'absolute', bottom: 14, right: 14, color: '#8a8a80', background: 'rgba(0,0,0,0.6)', padding: '4px 10px', borderRadius: 3, fontSize: 12 }}>
+              {WORLD_TEXT.find((w) => w.surface === 'windowmark')?.text}
+            </p>
           </div>
           <div className="side">
             <Window visitor={visitor} />
@@ -345,6 +348,10 @@ export default function App() {
                 规则：先检视再判定。证件免费，看眼睛和问话会消耗反应时间。<br />
                 处决时要亲手瞄准弱点，10 秒内不动手，它会冲破玻璃。用错武器，它会逃走。<br />
                 {WORLD_TEXT.find((w) => w.surface === 'manual')?.text} {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}
+                <br />书架上还夹着几份资料：
+                <br />· {WORLD_TEXT.find((w) => w.surface === 'shelf1')?.text}
+                <br />· {WORLD_TEXT.find((w) => w.surface === 'shelf2')?.text}
+                <br />· {WORLD_TEXT.find((w) => w.surface === 'shelf3')?.text}
               </p>
             </div>
           </div>
@@ -392,6 +399,7 @@ export default function App() {
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 8 }}>
               点击武器装备，按 F 键使用
             </p>
+            <p className="desc" style={{ color: '#6a6a60', fontSize: 12, marginTop: 8 }}>{cabinetLabel}</p>
           </div>
         </div>
       )}
@@ -418,6 +426,9 @@ export default function App() {
             <p className="desc" style={{ color: '#8a8a80', fontSize: 12, marginTop: 16 }}>
               {WORLD_TEXT.find((w) => w.surface === 'drawer')?.text}
             </p>
+            <p className="desc" style={{ color: '#6a6a60', fontSize: 12, marginTop: 6 }}>
+              {WORLD_TEXT.find((w) => w.surface === 'supply')?.text}
+            </p>
           </div>
         </div>
       )}
@@ -433,6 +444,9 @@ export default function App() {
               闭眼休息约 40 秒，San +20。<br />
               <span style={{ color: '#e0a0a0' }}>但闭眼期间若有排队者，会必定自动放行 1 人。</span><br />
               <span style={{ color: '#8a8a80' }}>全关仅一次。</span>
+            </p>
+            <p className="desc" style={{ color: '#6a6a60', fontSize: 12, marginBottom: 12 }}>
+              {WORLD_TEXT.find((w) => w.surface === 'sofa')?.text}
             </p>
             <button
               className="btn big"
@@ -453,6 +467,9 @@ export default function App() {
             {!state.doorUnlocked && (
               <p style={{ color: '#9a9a90', margin: '0 0 16px' }}>门上写着 NO EXIT · UNTIL DAWN。必须完成所有检查才能离开。</p>
             )}
+            <p className="desc" style={{ color: '#6a6a60', fontSize: 12, margin: '0 0 16px' }}>
+              {WORLD_TEXT.find((w) => w.surface === 'doorsign')?.text}
+            </p>
             {state.doorUnlocked && (
               <div>
                 <p style={{ color: '#e0a050', margin: '0 0 16px' }}>所有访客已检查完毕。你可以结束值班了。</p>

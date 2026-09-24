@@ -4,12 +4,14 @@ import { buildRoom } from './room'
 import { HOTSPOTS } from './cameras'
 import { updatePlayer, applyMouseLook, STAND_HEIGHT, CROUCH_HEIGHT, type Bounds, type PlayerState, type MoveInput } from './controls'
 import { footstep, jump, land, crouch } from './audio'
+import { Hands, type HandState } from './hands'
+import type { Tool } from '../data/schema'
 
-const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.85, maxZ: 2.95 }
+const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.85, maxZ: 3.2 }
 const INTERACT_RANGE = 2.5
 const AIM_ANGLE = 0.3 // ~17 度，需准星真正指向物品
 
-export default function RoomScene({ onInteract }: { onInteract: (hotspotId: string) => void }) {
+export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: (hotspotId: string) => void; equippedWeapon: Tool | null }) {
   const mountRef = useRef<HTMLDivElement>(null)
   const onInteractRef = useRef(onInteract)
   onInteractRef.current = onInteract
@@ -31,6 +33,9 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
     const keys: MoveInput = { forward: false, back: false, left: false, right: false, jump: false, crouch: false }
     let lastTime = performance.now()
     let stride = 0
+
+    const hands = new Hands()
+    camera.add(hands.getObject())
 
     function aimedHotspot(): string | null {
       const fx = -Math.sin(player.yaw)
@@ -126,6 +131,8 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
       camera.position.set(player.x, player.y + bob, player.z)
       camera.rotation.y = player.yaw
       camera.rotation.x = player.pitch
+      // 更新双手
+      hands.update(stride, grounded)
       renderer.render(scene, camera)
       const n = aimedHotspot()
       if (n !== nearbyRef.current) {
@@ -144,10 +151,17 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
       document.removeEventListener('keyup', onKeyUp)
       document.removeEventListener('pointerlockchange', onPointerLockChange)
       renderer.domElement.removeEventListener('mousedown', onMouseDown)
+      camera.remove(hands.getObject())
       mount.removeChild(renderer.domElement)
       renderer.dispose()
     }
   }, [])
+
+  // 同步武器状态
+  useEffect(() => {
+    // 访问 hands 实例需要通过 ref 或其他方式
+    // 暂时跳过，后续优化
+  }, [equippedWeapon])
 
   const nearbyLabel = HOTSPOTS.find((h) => h.id === nearby)?.label
 

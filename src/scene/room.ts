@@ -102,18 +102,18 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
   deskTop.position.set(0, 0.96, -2.4)
   scene.add(deskTop)
 
-  // 沙发（前墙前）
+  // 沙发（前墙前，前移留出通道）
   const seat = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.5, 1.0), sofaMat)
-  seat.position.set(0, 0.4, 2.2)
+  seat.position.set(0, 0.4, 1.8)
   scene.add(seat)
   const back = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.9, 0.28), sofaMat)
-  back.position.set(0, 1.05, 2.7)
+  back.position.set(0, 1.05, 2.3)
   scene.add(back)
   const armL = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.7, 1.0), sofaMat)
-  armL.position.set(-1.34, 0.55, 2.2)
+  armL.position.set(-1.34, 0.55, 1.8)
   scene.add(armL)
   const armR = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.7, 1.0), sofaMat)
-  armR.position.set(1.34, 0.55, 2.2)
+  armR.position.set(1.34, 0.55, 1.8)
   scene.add(armR)
 
   // 武器柜（右墙）
@@ -155,19 +155,19 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
   suppliesDoor.position.set(4.29, 0.6, -1.8)
   scene.add(suppliesDoor)
 
-  // 门（右墙，靠前）
+  // 门（右墙，靠储物柜）
   const door = new THREE.Mesh(new THREE.BoxGeometry(0.15, 2.2, 1.1), metalMat)
-  door.position.set(4.9, 1.1, 1.5)
+  door.position.set(4.9, 1.1, -0.8)
   scene.add(door)
   const doorFace = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 2.2), new THREE.MeshStandardMaterial({ map: doorTex, roughness: 0.6, metalness: 0.3 }))
   doorFace.rotation.y = -Math.PI / 2
-  doorFace.position.set(4.82, 1.1, 1.5)
+  doorFace.position.set(4.82, 1.1, -0.8)
   scene.add(doorFace)
   const doorHandle = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.28, 0.06), new THREE.MeshStandardMaterial({ color: 0xb0a080, roughness: 0.4, metalness: 0.5 }))
-  doorHandle.position.set(4.8, 1.1, 1.85)
+  doorHandle.position.set(4.8, 1.1, -0.45)
   scene.add(doorHandle)
   const doorLock = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.18, 0.18), new THREE.MeshStandardMaterial({ color: 0x9a1a1a, roughness: 0.4, emissive: 0x4a0a0a, emissiveIntensity: 0.6 }))
-  doorLock.position.set(4.8, 1.3, 1.85)
+  doorLock.position.set(4.8, 1.3, -0.45)
   scene.add(doorLock)
 
   // 灯光

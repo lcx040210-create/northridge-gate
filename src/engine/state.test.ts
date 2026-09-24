@@ -12,10 +12,10 @@ describe('reducer', () => {
     expect(s.visitorIndex).toBe(1)
   })
 
-  it('after all visitors, phase becomes dawn', () => {
+  it('after all visitors, phase becomes boss_intro', () => {
     let s = reducer(INITIAL_STATE, { type: 'START' })
     for (let i = 0; i < 4; i++) s = reducer(s, { type: 'JUDGE', verdict: 'admit' })
-    expect(s.phase).toBe('dawn')
+    expect(s.phase).toBe('boss_intro')
   })
 
   it('INSPECT no longer costs reaction', () => {

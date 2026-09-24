@@ -18,6 +18,12 @@ export const INITIAL_STATE: GameState = {
   records: [],
   autoReleased: null,
   sanTouchedBelow15: false,
+  equippedWeapon: null,
+  gunAmmo: 12,
+  sprinklerTriggered: false,
+  bossHealth: 3,
+  doorUnlocked: false,
+  bossDefeated: false,
 }
 
 export type Action =
@@ -28,6 +34,13 @@ export type Action =
   | { type: 'USE_SEDATIVE' }
   | { type: 'USE_SOFA'; claw: boolean }
   | { type: 'TOGGLE_VENTILATION' }
+  | { type: 'EQUIP_WEAPON'; weapon: Tool }
+  | { type: 'USE_WEAPON' }
+  | { type: 'TRIGGER_SPRINKLER' }
+  | { type: 'BOSS_TRANSITION' }
+  | { type: 'BOSS_DAMAGE' }
+  | { type: 'BOSS_DEFEATED' }
+  | { type: 'OPEN_DOOR' }
 
 export function currentVisitor(state: GameState): Visitor | null {
   return state.phase === 'visitor' ? VISITORS[state.visitorIndex] ?? null : null
@@ -57,12 +70,13 @@ export function reducer(state: GameState, action: Action): GameState {
       const delta = state.sedativeUsed && rawDelta < 0 ? Math.round(rawDelta / 2) : rawDelta
       const san = applySanDelta(state.san, delta)
       const visitorIndex = state.visitorIndex + 1
+      const allDone = visitorIndex >= VISITORS.length
       return {
         ...state,
         san,
         records: [...state.records, record],
         visitorIndex,
-        phase: visitorIndex >= VISITORS.length ? 'dawn' : 'visitor',
+        phase: allDone ? 'boss_intro' : 'visitor',
         sanTouchedBelow15: state.sanTouchedBelow15 || san < 15,
       }
     }
@@ -106,6 +120,40 @@ export function reducer(state: GameState, action: Action): GameState {
 
     case 'TOGGLE_VENTILATION':
       return { ...state, ventilationOn: !state.ventilationOn }
+
+    case 'EQUIP_WEAPON':
+      return { ...state, equippedWeapon: action.weapon }
+
+    case 'USE_WEAPON': {
+      if (!state.equippedWeapon) return state
+      if (state.equippedWeapon === 'gun') {
+        return { ...state, gunAmmo: Math.max(0, state.gunAmmo - 1) }
+      }
+      return state
+    }
+
+    case 'TRIGGER_SPRINKLER':
+      return { ...state, sprinklerTriggered: true }
+
+    case 'BOSS_TRANSITION':
+      return { ...state, phase: 'boss_fight' }
+
+    case 'BOSS_DAMAGE': {
+      const newHealth = state.bossHealth - 1
+      return {
+        ...state,
+        bossHealth: newHealth,
+        phase: newHealth <= 0 ? 'boss_door_trap' : 'boss_fight',
+        doorUnlocked: newHealth <= 0,
+      }
+    }
+
+    case 'BOSS_DEFEATED':
+      return { ...state, bossDefeated: true, phase: 'dawn' }
+
+    case 'OPEN_DOOR':
+      // 开门 = 死亡，由 App 处理
+      return state
 
     default:
       return state

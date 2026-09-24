@@ -15,6 +15,7 @@ import Verdict from './ui/Verdict'
 import ExecutionOverlay from './ui/ExecutionOverlay'
 import ExecutionAim from './ui/ExecutionAim'
 import HUD from './ui/HUD'
+import WeaponHUD from './ui/WeaponHUD'
 import Dawn from './ui/Dawn'
 import Death from './ui/Death'
 import * as sfx from './scene/audio'
@@ -138,8 +139,9 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative', height: '100%' }}>
-      <RoomScene onInteract={open} />
+      <RoomScene onInteract={open} equippedWeapon={state.equippedWeapon} />
       <HUD state={state} />
+      <WeaponHUD state={state} />
 
       {activeHotspot === null && !execution && (
         <>

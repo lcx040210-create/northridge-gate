@@ -498,6 +498,85 @@ export function dawn(): void {
   for (let i = 0; i < 6; i++) later(2000 + i * 900 + Math.random() * 500, () => tone(3200 + Math.random() * 800, 0.12, 0.05, { to: 4200 }))
 }
 
+// —— 新增音效（武器系统 & Boss 战）——
+export function alarmBeep(): void {
+  if (!ctx) return
+  const at = now()
+  for (let i = 0; i < 6; i++) {
+    tone(440, 0.15, 0.08, { type: 'square', at: at + i * 0.5 })
+  }
+}
+
+export function sprinkler(): void {
+  if (!ctx) return
+  const at = now()
+  // 水流声：白噪声高通滤波
+  for (let i = 0; i < 50; i++) {
+    burst(0.08, 0.015, { type: 'highpass', freq: 2000 + Math.random() * 1000, q: 0.3, at: at + i * 0.1 })
+  }
+}
+
+export function scream(): void {
+  if (!ctx) return
+  const at = now()
+  // 尖叫：800Hz → 1200Hz 扫频，带颤音
+  tone(800, 0.8, 0.12, { type: 'sawtooth', to: 1200, at })
+  // 颤音调制
+  const lfo = ctx.createOscillator()
+  lfo.frequency.value = 12
+  const lfoGain = ctx.createGain()
+  lfoGain.gain.value = 50
+  lfo.connect(lfoGain)
+  const osc = ctx.createOscillator()
+  osc.frequency.setValueAtTime(1000, at)
+  lfoGain.connect(osc.frequency)
+  osc.connect(envGain(0.08, 0.02, 0.8, at))
+  osc.start(at)
+  osc.stop(at + 0.82)
+  lfo.start(at)
+  lfo.stop(at + 0.82)
+}
+
+export function wail(): void {
+  if (!ctx) return
+  const at = now()
+  // 哀嚎：低沉200Hz锯齿波，音量波动
+  for (let i = 0; i < 10; i++) {
+    const vol = 0.06 + Math.sin(i * 0.8) * 0.03
+    tone(200 + Math.random() * 30, 0.15, vol, { type: 'sawtooth', at: at + i * 0.15 })
+  }
+}
+
+export function flameCharge(): void {
+  if (!ctx) return
+  const at = now()
+  // 蓄力音：频率上升
+  tone(120, 2.0, 0.06, { type: 'sawtooth', to: 240, at })
+  burst(2.0, 0.04, { type: 'bandpass', freq: 400, to: 800, q: 2, at })
+}
+
+export function bossRoar(): void {
+  if (!ctx) return
+  const at = now()
+  // 低频震动 + 混沌噪声
+  tone(30, 1.5, 0.15, { type: 'sawtooth', to: 25, at })
+  tone(60, 1.5, 0.1, { type: 'triangle', to: 50, at })
+  burst(1.5, 0.12, { type: 'lowpass', freq: 300, to: 150, q: 1.5, at })
+}
+
+export function glassBreaking(): void {
+  if (!ctx) return
+  const at = now()
+  // 玻璃破碎：高频爆裂
+  burst(0.3, 0.15, { type: 'highpass', freq: 3000, q: 0.5, at })
+  for (let i = 0; i < 8; i++) {
+    burst(0.05, 0.08, { type: 'bandpass', freq: 2000 + Math.random() * 2000, q: 3, at: at + i * 0.04 })
+  }
+  // 低频撞击
+  tone(80, 0.2, 0.12, { type: 'sine', to: 40, at })
+}
+
+
 export function stopAll(): void {
   timers.forEach(clearTimeout)
   timers.clear()

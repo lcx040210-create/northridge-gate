@@ -62,21 +62,32 @@ export default function BossFight({ state, onTransition, onDamage, onDefeated, o
     }
   }, [phase])
 
-  // 射击处理
+  // 射击/攻击处理
   useEffect(() => {
     if (phase !== 'boss_fight') return
 
     const handleClick = () => {
-      if (equippedWeapon !== 'gun') {
+      if (!equippedWeapon) return
+
+      if (equippedWeapon === 'gun') {
+        if (gunAmmo <= 0) {
+          sfx.interact()
+          return
+        }
+        sfx.gunshot()
+      } else if (equippedWeapon === 'axe') {
+        sfx.axeSwing()
+        sfx.axeChop()
+        // 斧头 30% 概率击中
+        if (Math.random() > 0.3) return
+      } else if (equippedWeapon === 'fire') {
+        sfx.fireWhoosh()
+        // 焚化罐 40% 概率击中
+        if (Math.random() > 0.4) return
+      } else {
         return
       }
 
-      if (gunAmmo <= 0) {
-        sfx.interact()
-        return
-      }
-
-      sfx.gunshot()
       onDamage()
 
       if (bossHealth - 1 <= 0) {
@@ -115,15 +126,14 @@ export default function BossFight({ state, onTransition, onDamage, onDefeated, o
   if (phase === 'boss_fight') {
     return (
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none' }}>
-        {/* Boss 脸部在窗口 */}
+        {/* Boss 脸部跟随玩家（屏幕上方） */}
         <div style={{
           position: 'absolute',
           left: '50%',
-          top: '20%',
-          width: 1400,
-          height: 1000,
-          marginLeft: -700,
-          marginTop: -500,
+          top: 0,
+          width: 1000,
+          height: 714,
+          marginLeft: -500,
           transform: `scale(${bossScale})`,
           transition: 'transform 0.4s',
           pointerEvents: 'auto',
@@ -143,35 +153,13 @@ export default function BossFight({ state, onTransition, onDamage, onDefeated, o
             style={{
               position: 'absolute',
               left: '50%',
-              top: '20%',
-              width: 800,
-              height: 600,
-              marginLeft: -400,
-              marginTop: -300,
+              top: '10%',
+              width: 600,
+              height: 450,
+              marginLeft: -300,
               opacity: 0.6,
             }}
           />
-        )}
-
-        {/* HUD */}
-        <div style={{ position: 'absolute', top: 24, left: '50%', transform: 'translateX(-50%)', background: 'rgba(0,0,0,0.8)', padding: '12px 24px', borderRadius: 8, pointerEvents: 'none' }}>
-          <div style={{ fontSize: 18, color: '#e8e2cc', marginBottom: 8 }}>
-            Boss 血量: {bossHealth}/3
-          </div>
-          <div style={{ width: 300, height: 20, background: '#2a2a24', borderRadius: 4, overflow: 'hidden' }}>
-            <div style={{
-              width: `${(bossHealth / 3) * 100}%`,
-              height: '100%',
-              background: 'linear-gradient(90deg, #d04030, #c05040)',
-              transition: 'width 0.3s',
-            }} />
-          </div>
-        </div>
-
-        {equippedWeapon !== 'gun' && (
-          <div style={{ position: 'absolute', bottom: 80, left: '50%', transform: 'translateX(-50%)', background: 'rgba(208, 64, 48, 0.9)', padding: '12px 24px', borderRadius: 8, color: '#fff', fontSize: 16, pointerEvents: 'none' }}>
-            ⚠ 必须使用手枪！打开武器柜装备手枪
-          </div>
         )}
       </div>
     )
@@ -199,10 +187,13 @@ export default function BossFight({ state, onTransition, onDamage, onDefeated, o
             <button
               className="btn big"
               onClick={() => {
-                setTimeout(() => onDefeated(), 3000)
+                // 留在原地 10 秒后触发好结局
+                const timer = setTimeout(() => onDefeated(), 10000)
+                // 可以提前结束
+                return () => clearTimeout(timer)
               }}
             >
-              留在原地 (10 秒)
+              留在原地等待
             </button>
           </div>
 

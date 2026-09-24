@@ -154,6 +154,10 @@ export default function App() {
     const result = resolveExecution(executionGame.visitor, executionGame.tool)
     setExecution({ result, tool: executionGame.tool, visitor: executionGame.visitor })
     dispatch({ type: 'JUDGE', verdict: 'execute', tool: executionGame.tool })
+    // 消耗弹药
+    if (executionGame.tool === 'gun') {
+      dispatch({ type: 'USE_WEAPON' })
+    }
     setExecutionGame(null)
     setActiveHotspot(null)
   }
@@ -388,8 +392,25 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 360, textAlign: 'center' }}>
             <img src="/assets/icons/lock.svg" alt="" style={{ width: 56, height: 56, marginBottom: 8 }} />
-            <h2 style={{ margin: '0 0 12px' }}>门被锁住了</h2>
-            <p style={{ color: '#9a9a90', margin: '0 0 16px' }}>门上写着 NO EXIT · UNTIL DAWN。外面永远是夜。你出不去的。</p>
+            <h2 style={{ margin: '0 0 12px' }}>{state.doorUnlocked ? '门开了' : '门被锁住了'}</h2>
+            {!state.doorUnlocked && (
+              <p style={{ color: '#9a9a90', margin: '0 0 16px' }}>门上写着 NO EXIT · UNTIL DAWN。外面永远是夜。你出不去的。</p>
+            )}
+            {state.doorUnlocked && (
+              <div>
+                <p style={{ color: '#e0a050', margin: '0 0 16px' }}>门锁已解除。你可以离开了……吗？</p>
+                <button
+                  className="btn big"
+                  style={{ background: '#d04030', borderColor: '#d04030', marginBottom: 12 }}
+                  onClick={() => {
+                    sfx.glassBreaking()
+                    setTimeout(() => setDeath('door_trap'), 500)
+                  }}
+                >
+                  推开门
+                </button>
+              </div>
+            )}
             <button className="btn" onClick={close}>离开</button>
           </div>
         </div>

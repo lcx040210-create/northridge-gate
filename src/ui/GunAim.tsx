@@ -76,10 +76,8 @@ export default function GunAim({ visitor, gunAmmo, onSuccess, onFail, onOutOfAmm
           // 命中弱点
           cancelAnimationFrame(shakeAnim)
           setTimeout(() => onSuccess(), 300)
-        } else {
-          // 未命中弱点，显示提示但不结束
-          // 后续可增加血条减少等效果
         }
+        // 未命中弱点继续游戏，但消耗弹药
       }
     }
 

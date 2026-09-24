@@ -152,18 +152,18 @@ export async function buildRoom(scene: THREE.Scene): Promise<void> {
   noteInk.visible = false
   scene.add(noteInk)
 
-  // 沙发（前墙前，前移留出通道）
+  // 沙发（前墙前，与前墙之间留出可绕行的通道）
   const seat = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.5, 1.0), sofaMat)
-  seat.position.set(0, 0.4, 1.8)
+  seat.position.set(0, 0.4, 1.4)
   scene.add(seat)
   const back = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.9, 0.28), sofaMat)
-  back.position.set(0, 1.05, 2.3)
+  back.position.set(0, 1.05, 1.9)
   scene.add(back)
   const armL = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.7, 1.0), sofaMat)
-  armL.position.set(-1.34, 0.55, 1.8)
+  armL.position.set(-1.34, 0.55, 1.4)
   scene.add(armL)
   const armR = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.7, 1.0), sofaMat)
-  armR.position.set(1.34, 0.55, 1.8)
+  armR.position.set(1.34, 0.55, 1.4)
   scene.add(armR)
 
   // 武器柜（右墙）

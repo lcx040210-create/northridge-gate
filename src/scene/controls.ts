@@ -31,6 +31,14 @@ export interface Obstacle {
   radius: number
 }
 
+// 矩形障碍（轴对齐）：用于沙发这类贴墙的薄家具
+export interface RectObstacle {
+  minX: number
+  maxX: number
+  minZ: number
+  maxZ: number
+}
+
 export const MOVE_SPEED = 4
 export const CROUCH_SPEED = 2
 export const JUMP_VELOCITY = 5
@@ -43,14 +51,38 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, v))
 }
 
-// 房间障碍物：武器柜、储物柜、桌子、手册柜
-// 注意：沙发和床不设置碰撞，允许玩家自由移动
+// 房间障碍物：武器柜、储物柜、桌子、手册柜（圆形）
 const OBSTACLES: Obstacle[] = [
   { x: 4.2, z: 1.2, radius: 1.0 },   // 武器柜（右墙）
   { x: -4.6, z: 1.2, radius: 1.0 },  // 手册柜（左墙）
   { x: 4.6, z: -1.8, radius: 0.8 },  // 储物柜（右墙）
   { x: 0, z: -2.5, radius: 0.9 },    // 桌子
 ]
+
+// 沙发：矩形碰撞（座位+靠背一体），与前墙之间留出走道，可从两端绕到沙发后
+const SOFA: RectObstacle = { minX: -1.4, maxX: 1.4, minZ: 0.9, maxZ: 2.05 }
+
+// 圆 vs 轴对齐矩形推出
+function pushOutOfRect(x: number, z: number, r: number, rect: RectObstacle): [number, number] {
+  const cx = clamp(x, rect.minX, rect.maxX)
+  const cz = clamp(z, rect.minZ, rect.maxZ)
+  const dx = x - cx
+  const dz = z - cz
+  const d2 = dx * dx + dz * dz
+  if (d2 >= r * r) return [x, z]
+  if (d2 === 0) {
+    // 圆心在矩形内：推向最近边
+    const dl = x - rect.minX, dr = rect.maxX - x, dt = z - rect.minZ, db = rect.maxZ - z
+    const m = Math.min(dl, dr, dt, db)
+    if (m === dl) return [rect.minX - r, z]
+    if (m === dr) return [rect.maxX + r, z]
+    if (m === dt) return [x, rect.minZ - r]
+    return [x, rect.maxZ + r]
+  }
+  const d = Math.sqrt(d2)
+  const push = (r - d) / d
+  return [x + dx * push, z + dz * push]
+}
 
 export function updatePlayer(state: PlayerState, input: MoveInput, dt: number, bounds: Bounds): PlayerState {
   const speed = state.crouching ? CROUCH_SPEED : MOVE_SPEED
@@ -85,6 +117,8 @@ export function updatePlayer(state: PlayerState, input: MoveInput, dt: number, b
       z = obs.z + nz * (obs.radius + PLAYER_RADIUS)
     }
   }
+  // 沙发矩形碰撞（穿不过去，但可从两端绕到沙发后）
+  ;[x, z] = pushOutOfRect(x, z, PLAYER_RADIUS, SOFA)
 
   x = clamp(x, bounds.minX, bounds.maxX)
   z = clamp(z, bounds.minZ, bounds.maxZ)

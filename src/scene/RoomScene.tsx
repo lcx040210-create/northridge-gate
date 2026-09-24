@@ -36,7 +36,7 @@ export default function RoomScene({ onInteract, equippedWeapon, windowMarks }: {
     const camera = new THREE.PerspectiveCamera(70, mount.clientWidth / mount.clientHeight, 0.1, 50)
     camera.rotation.order = 'YXZ'
 
-    let player: PlayerState = { x: 0, y: STAND_HEIGHT, z: 2, vy: 0, yaw: 0, pitch: 0, crouching: false }
+    let player: PlayerState = { x: 0, y: STAND_HEIGHT, z: 0.2, vy: 0, yaw: 0, pitch: 0, crouching: false }
     const keys: MoveInput = { forward: false, back: false, left: false, right: false, jump: false, crouch: false }
     let lastTime = performance.now()
     let stride = 0

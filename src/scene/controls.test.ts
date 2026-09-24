@@ -60,3 +60,26 @@ describe('applyMouseLook', () => {
     expect(down.pitch).toBeLessThan(Math.PI / 2 + 0.1)
   })
 })
+
+describe('sofa collision', () => {
+  it('cannot walk through the sofa from the front', () => {
+    let st = { ...base, z: 0.5 }
+    for (let i = 0; i < 120; i++) st = updatePlayer(st, { ...noInput, forward: true }, 0.05, bounds)
+    // 沙发前缘 z=0.9，玩家半径 0.3 → 最远只能到 0.6
+    expect(st.z).toBeLessThanOrEqual(0.61)
+  })
+
+  it('behind the sofa is freely walkable', () => {
+    let st = { ...base, z: 2.6 }
+    st = updatePlayer(st, { ...noInput, left: true }, 0.5, bounds)
+    expect(st.z).toBeCloseTo(2.6)
+    expect(st.x).toBeLessThan(0)
+  })
+
+  it('can walk around the sofa end', () => {
+    let st = { ...base, x: 1.9, z: 2.5 }
+    st = updatePlayer(st, { ...noInput, left: true }, 0.5, bounds)
+    expect(st.x).toBeLessThan(1.9)
+    expect(st.z).toBeCloseTo(2.5)
+  })
+})

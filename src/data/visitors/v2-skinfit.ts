@@ -2,7 +2,7 @@ import type { Visitor } from '../schema'
 
 export const v2Skinfit: Visitor = {
   id: 'v2-skinfit',
-  claimedName: '维修 · 陈默',
+  claimedName: 'Maintenance · Chen Mo',
   role: 'skinfit',
   state: 'clean',
   portrait: '/assets/portraits/v2_skinfit_frame1.png',

@@ -2,7 +2,7 @@ import type { Visitor } from '../schema'
 
 export const v3Suspicious: Visitor = {
   id: 'v3-suspicious',
-  claimedName: '访客 · 何夕',
+  claimedName: 'Visitor · He Xi',
   role: 'human',
   state: 'clean',
   portrait: '/assets/portraits/v3_suspicious_frame1.png',

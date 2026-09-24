@@ -2,7 +2,7 @@ import type { Visitor } from '../schema'
 
 export const v4Coretick: Visitor = {
   id: 'v4-coretick',
-  claimedName: '替班 · 周齐',
+  claimedName: 'Relief · Zhou Qi',
   role: 'coretick',
   state: 'clean',
   portrait: '/assets/portraits/v4_coretick_frame1.png',

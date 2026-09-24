@@ -82,17 +82,16 @@ export default function App() {
       return
     }
 
-    // 开门逻辑
+    // 门：打开面板（解锁后可推门离开）
     if (id === 'door') {
       if (state.doorUnlocked) {
         sfx.interact()
-        dispatch({ type: 'OPEN_DOOR' })
-        return
       } else {
         sfx.doorLocked()
         say('门锁死了。必须完成所有检查才能离开。')
-        return
       }
+      setActiveHotspot('door')
+      return
     }
 
     // 可阅读物品

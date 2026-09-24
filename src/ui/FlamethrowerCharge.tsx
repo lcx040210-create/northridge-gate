@@ -31,7 +31,7 @@ export default function FlamethrowerCharge({ visitor, onSuccess, onFail, onOverh
 
     const updateCharge = () => {
       if (charging && !overheatRef.current) {
-        chargeRef.current = Math.min(100, chargeRef.current + 1.5)
+        chargeRef.current = chargeRef.current + 1.5
         setCharge(chargeRef.current)
 
         if (chargeRef.current > 100) {

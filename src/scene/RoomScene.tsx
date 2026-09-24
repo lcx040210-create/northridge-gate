@@ -6,18 +6,24 @@ import { updatePlayer, applyMouseLook, STAND_HEIGHT, CROUCH_HEIGHT, type Bounds,
 import { footstep, jump, land, crouch } from './audio'
 import { Hands, type HandState } from './hands'
 import type { Tool } from '../data/schema'
+import { WOUND_MARKS, type WoundMark } from '../data/wounds'
 
 const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.85, maxZ: 2.75 }
 const INTERACT_RANGE = 2.5
 const AIM_ANGLE = 0.3 // ~17 度，需准星真正指向物品
 
-export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: (hotspotId: string) => void; equippedWeapon: Tool | null }) {
+export default function RoomScene({ onInteract, equippedWeapon, windowMarks }: { onInteract: (hotspotId: string) => void; equippedWeapon: Tool | null; windowMarks: WoundMark[] }) {
   const mountRef = useRef<HTMLDivElement>(null)
   const onInteractRef = useRef(onInteract)
   onInteractRef.current = onInteract
   const [locked, setLocked] = useState(false)
   const [nearby, setNearby] = useState<string | null>(null)
   const nearbyRef = useRef<string | null>(null)
+  const marksRef = useRef<THREE.Group | null>(null)
+  const sceneRef = useRef<THREE.Scene | null>(null)
+  // 循环闭包读取最新武器（避免陈旧闭包导致手上不显示武器）
+  const equippedRef = useRef(equippedWeapon)
+  equippedRef.current = equippedWeapon
 
   useEffect(() => {
     const mount = mountRef.current!
@@ -26,6 +32,7 @@ export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: 
     mount.appendChild(renderer.domElement)
 
     const scene = new THREE.Scene()
+    sceneRef.current = scene
     const camera = new THREE.PerspectiveCamera(70, mount.clientWidth / mount.clientHeight, 0.1, 50)
     camera.rotation.order = 'YXZ'
 
@@ -72,8 +79,9 @@ export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: 
       if (document.pointerLockElement !== renderer.domElement) {
         renderer.domElement.requestPointerLock()
       } else {
-        // 鼠标左键：使用武器
-        onInteractRef.current('use_weapon')
+        // 鼠标左键：使用武器（瞄准观察窗时会在玻璃上留痕）
+        const aimed = aimedHotspot()
+        onInteractRef.current(aimed === 'window' ? 'weapon_hit_window' : 'use_weapon')
       }
     }
 
@@ -135,7 +143,7 @@ export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: 
       camera.rotation.y = player.yaw
       camera.rotation.x = player.pitch
       // 更新双手状态
-      const handState: HandState = equippedWeapon === 'axe' ? 'axe' : equippedWeapon === 'gun' ? 'gun' : equippedWeapon === 'fire' ? 'flamethrower' : 'empty'
+      const handState: HandState = equippedRef.current === 'axe' ? 'axe' : equippedRef.current === 'gun' ? 'gun' : equippedRef.current === 'fire' ? 'flamethrower' : 'empty'
       hands.setState(handState)
       hands.update(stride, grounded)
       renderer.render(scene, camera)
@@ -157,16 +165,37 @@ export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: 
       document.removeEventListener('pointerlockchange', onPointerLockChange)
       renderer.domElement.removeEventListener('mousedown', onMouseDown)
       camera.remove(hands.getObject())
+      sceneRef.current = null
       mount.removeChild(renderer.domElement)
       renderer.dispose()
     }
   }, [])
 
-  // 同步武器状态
+  // 观察窗武器痕迹：处决或对窗使用武器后，玻璃上留下溅痕
   useEffect(() => {
-    // 访问 hands 实例需要通过 ref 或其他方式
-    // 暂时跳过，后续优化
-  }, [equippedWeapon])
+    const scene = sceneRef.current
+    if (!scene) return
+    if (marksRef.current) {
+      scene.remove(marksRef.current)
+      marksRef.current = null
+    }
+    if (windowMarks.length === 0) return
+    const g = new THREE.Group()
+    windowMarks.forEach((m) => {
+      const tex = new THREE.TextureLoader().load(WOUND_MARKS[m.tool])
+      tex.colorSpace = THREE.SRGBColorSpace
+      const mesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(2.6, 1.6),
+        new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false })
+      )
+      mesh.scale.set(m.scale, m.scale, 1)
+      mesh.position.set(((m.x - 50) / 100) * 2.6, 1.95 + ((m.y - 50) / 100) * 1.6, -2.94)
+      mesh.rotation.z = (m.rotation * Math.PI) / 180
+      g.add(mesh)
+    })
+    scene.add(g)
+    marksRef.current = g
+  }, [windowMarks])
 
   const nearbyLabel = HOTSPOTS.find((h) => h.id === nearby)?.label
 

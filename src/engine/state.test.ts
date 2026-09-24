@@ -88,3 +88,11 @@ describe('reducer', () => {
     expect(reducer(s0, { type: 'INSPECT', slot: 'question' }).reaction).toBe(100)
   })
 })
+
+it('leaves window marks up to a cap of 8', () => {
+  let st = INITIAL_STATE
+  const mk = (i: number) => ({ tool: 'gun' as const, x: 10 + i, y: 20 + i, rotation: 0, scale: 0.5 })
+  for (let i = 0; i < 10; i++) st = reducer(st, { type: 'MARK_WINDOW', mark: mk(i) })
+  expect(st.windowMarks).toHaveLength(8)
+  expect(st.windowMarks[0].tool).toBe('gun')
+})

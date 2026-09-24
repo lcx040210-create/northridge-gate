@@ -3,6 +3,7 @@ import { VISITORS } from '../data/visitors'
 import { resolveVerdict } from './judge'
 import { applySanDelta } from './san'
 import type { GameState, VisitorRecord } from './types'
+import type { WoundMark } from '../data/wounds'
 
 export const INITIAL_STATE: GameState = {
   phase: 'opening',
@@ -22,6 +23,7 @@ export const INITIAL_STATE: GameState = {
   gunAmmo: 12,
   sprinklerTriggered: false,
   doorUnlocked: false,
+  windowMarks: [],
 }
 
 export type Action =
@@ -35,6 +37,7 @@ export type Action =
   | { type: 'EQUIP_WEAPON'; weapon: Tool }
   | { type: 'USE_WEAPON' }
   | { type: 'TRIGGER_SPRINKLER' }
+  | { type: 'MARK_WINDOW'; mark: WoundMark }
   | { type: 'OPEN_DOOR' }
 
 export function currentVisitor(state: GameState): Visitor | null {
@@ -133,6 +136,12 @@ export function reducer(state: GameState, action: Action): GameState {
 
     case 'TRIGGER_SPRINKLER':
       return { ...state, sprinklerTriggered: true }
+
+    case 'MARK_WINDOW': {
+      // 最多保留 8 处痕迹，玻璃已满是血
+      if (state.windowMarks.length >= 8) return state
+      return { ...state, windowMarks: [...state.windowMarks, action.mark] }
+    }
 
     case 'OPEN_DOOR':
       if (!state.doorUnlocked) return state

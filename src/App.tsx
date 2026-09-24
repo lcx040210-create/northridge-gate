@@ -2,6 +2,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { reducer, INITIAL_STATE, currentVisitor } from './engine/state'
 import type { Verdict as VerdictType, Tool, Visitor } from './data/schema'
 import type { ExecutionResult } from './engine/execution'
+import type { WoundMark } from './data/wounds'
 import { resolveExecution } from './engine/execution'
 import { WORLD_TEXT } from './data/world'
 import { WEAPONS, CONSUMABLES } from './data/weapons'
@@ -72,6 +73,14 @@ export default function App() {
       handleWeaponUse()
       return
     }
+    // 瞄准观察窗使用武器 → 玻璃上留下痕迹
+    if (id === 'weapon_hit_window') {
+      if (state.equippedWeapon) {
+        dispatch({ type: 'MARK_WINDOW', mark: makeMark(state.equippedWeapon, state.windowMarks.length) })
+      }
+      handleWeaponUse()
+      return
+    }
 
     // 开门逻辑
     if (id === 'door') {
@@ -125,6 +134,15 @@ export default function App() {
     if (id === 'supplies') sfx.interact()
     setActiveHotspot(id)
   }
+
+  // 生成一处新的窗户痕迹（位置/旋转/大小随机错开）
+  const makeMark = (tool: Tool, n: number): WoundMark => ({
+    tool,
+    x: 25 + ((n * 37) % 45) + Math.random() * 6,
+    y: 25 + ((n * 23) % 45) + Math.random() * 6,
+    rotation: (Math.random() - 0.5) * 40,
+    scale: 0.42 + Math.random() * 0.16,
+  })
 
   const handleWeaponUse = () => {
     if (!state.equippedWeapon) {
@@ -208,6 +226,8 @@ export default function App() {
     const result = resolveExecution(executionGame.visitor, executionGame.tool)
     setExecution({ result, tool: executionGame.tool, visitor: executionGame.visitor })
     dispatch({ type: 'JUDGE', verdict: 'execute', tool: executionGame.tool })
+    // 处决在玻璃上留下痕迹
+    dispatch({ type: 'MARK_WINDOW', mark: makeMark(executionGame.tool, state.windowMarks.length) })
     // 消耗弹药
     if (executionGame.tool === 'gun') {
       dispatch({ type: 'USE_WEAPON' })
@@ -283,7 +303,7 @@ export default function App() {
 
   return (
     <div style={{ position: 'relative', height: '100%' }}>
-      <RoomScene onInteract={open} equippedWeapon={state.equippedWeapon} />
+      <RoomScene onInteract={open} equippedWeapon={state.equippedWeapon} windowMarks={state.windowMarks} />
       <HUD state={state} />
       <WeaponHUD state={state} />
 

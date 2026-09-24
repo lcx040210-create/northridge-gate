@@ -1,4 +1,5 @@
 import type { Visitor, Verdict, Tool, Outcome } from '../data/schema'
+import type { WoundMark } from '../data/wounds'
 
 export interface Judgment {
   verdict: Verdict
@@ -41,4 +42,6 @@ export interface GameState {
   gunAmmo: number
   sprinklerTriggered: boolean
   doorUnlocked: boolean
+  // 观察窗上的武器痕迹（处决/对窗使用武器后留下）
+  windowMarks: WoundMark[]
 }

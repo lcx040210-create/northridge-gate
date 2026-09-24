@@ -180,3 +180,45 @@ export function dawnArt() {
   b += grainOverlay(W, H, 0.25) + vignette(W, H, 0.8)
   return svg(W, H, d, b)
 }
+
+// Boss 巨型伪人脸（1400×1000）
+export function bossface(hits = 0) {
+  const defs = FILTERS + `<radialGradient id="glow"><stop offset="0%" stop-color="#60c0ff"/><stop offset="100%" stop-color="#204060"/></radialGradient>`
+  let b = `<rect width="1400" height="1000" fill="#0a0a0a"/>`
+  b += `<ellipse cx="700" cy="500" rx="500" ry="550" fill="#c8c0b0" opacity="0.95"/>`
+  b += `<path d="M 250 300 Q 350 280 450 300 Q 550 320 700 330 Q 850 320 950 300 Q 1050 280 1150 300" stroke="#60c0ff" stroke-width="4" fill="none" opacity="0.7" filter="url(#glow)"/>`
+  const eyeY = 400
+  for (const [cx, size] of [[450, 80], [700, 90], [950, 80]]) {
+    b += `<ellipse cx="${cx}" cy="${eyeY}" rx="${size}" ry="${size * 1.2}" fill="#1a1a18"/>`
+    const pupilOffset = hits * 5
+    b += `<ellipse cx="${cx + pupilOffset}" cy="${eyeY}" rx="${size * 0.6}" ry="${size * 0.7}" fill="#ffd060" opacity="0.9"/>`
+    b += `<circle cx="${cx + pupilOffset}" cy="${eyeY}" r="${size * 0.3}" fill="#1a1210"/>`
+  }
+  b += `<path d="M 400 650 Q 500 680 600 690 Q 700 695 800 690 Q 900 680 1000 650" stroke="#1a1210" stroke-width="6" fill="none"/>`
+  b += `<path d="M 400 650 Q 500 720 600 740 Q 700 745 800 740 Q 900 720 1000 650" fill="#2a1810" opacity="0.9"/>`
+  for (let row = 0; row < 3; row++) {
+    for (let i = 0; i < 12; i++) {
+      const x = 420 + i * 50
+      const y = 660 + row * 30
+      b += `<path d="M ${x} ${y} l ${8 + row * 2} ${15 + row * 5} l ${8 + row * 2} ${-15 - row * 5} z" fill="#e8e8e0" opacity="0.95"/>`
+    }
+  }
+  if (hits >= 1) {
+    b += `<circle cx="960" cy="${eyeY}" r="15" fill="#1a1210"/>`
+    b += `<path d="M 960 ${eyeY + 15} Q 958 ${eyeY + 40} 956 ${eyeY + 60}" stroke="#1a1210" stroke-width="4" fill="none"/>`
+  }
+  if (hits >= 2) {
+    b += `<circle cx="700" cy="300" r="12" fill="#1a1210"/>`
+    for (let i = 0; i < 6; i++) {
+      const angle = (i / 6) * Math.PI * 2
+      const x = 700 + Math.cos(angle) * 25
+      const y = 300 + Math.sin(angle) * 25
+      b += `<line x1="700" y1="300" x2="${x}" y2="${y}" stroke="#1a1210" stroke-width="2" opacity="0.6"/>`
+    }
+  }
+  if (hits >= 3) {
+    b += `<circle cx="440" cy="${eyeY}" r="15" fill="#1a1210"/>`
+    b += `<path d="M 440 ${eyeY + 15} Q 442 ${eyeY + 40} 444 ${eyeY + 60}" stroke="#1a1210" stroke-width="4" fill="none"/>`
+  }
+  return svg(1400, 1000, defs, b)
+}

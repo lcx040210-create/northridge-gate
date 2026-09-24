@@ -26,6 +26,11 @@ if (want('scenes')) {
   write(ROOT, 'env/blood_vignette.svg', s.bloodVignette())
   write(ROOT, 'ui/title.svg', s.titleArt())
   write(ROOT, 'ui/dawn.svg', s.dawnArt())
+  // Boss 脸部（4 个状态）
+  write(ROOT, 'boss/face_hit0.svg', s.bossface(0))
+  write(ROOT, 'boss/face_hit1.svg', s.bossface(1))
+  write(ROOT, 'boss/face_hit2.svg', s.bossface(2))
+  write(ROOT, 'boss/face_hit3.svg', s.bossface(3))
   console.log('scenes done')
 }
 

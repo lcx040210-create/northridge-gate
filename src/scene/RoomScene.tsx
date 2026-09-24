@@ -4,7 +4,7 @@ import { buildRoom } from './room'
 import { HOTSPOTS } from './cameras'
 import { updatePlayer, applyMouseLook, STAND_HEIGHT, type Bounds, type PlayerState, type MoveInput } from './controls'
 
-const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -3, maxZ: 3 }
+const BOUNDS: Bounds = { minX: -4.5, maxX: 4.5, minZ: -2.5, maxZ: 2.5 }
 const INTERACT_RANGE = 2.2
 
 export default function RoomScene({ onInteract }: { onInteract: (hotspotId: string) => void }) {
@@ -25,7 +25,7 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
     const camera = new THREE.PerspectiveCamera(70, mount.clientWidth / mount.clientHeight, 0.1, 50)
     camera.rotation.order = 'YXZ'
 
-    let player: PlayerState = { x: 0, y: STAND_HEIGHT, z: 2.5, vy: 0, yaw: Math.PI, pitch: 0, crouching: false }
+    let player: PlayerState = { x: 0, y: STAND_HEIGHT, z: 2, vy: 0, yaw: 0, pitch: 0, crouching: false }
     const keys: MoveInput = { forward: false, back: false, left: false, right: false, jump: false, crouch: false }
     let lastTime = performance.now()
 

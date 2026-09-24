@@ -1,103 +1,106 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
 <defs>
 <filter id="grain" x="0" y="0" width="100%" height="100%">
-<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" stitchTiles="stitch" result="n"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.12  0 0 0 0 0.16  0 0 0 0 0.13  0 0 0 0.55 0"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7" stitchTiles="stitch" result="n"/>
+<feColorMatrix in="n" type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.46  0 0 0 0 0.42  0 0 0 0.55 0" result="g"/>
+<feComposite in="g" in2="SourceGraphic" operator="in"/>
 </filter>
 <filter id="mottle" x="0" y="0" width="100%" height="100%">
-<feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="3" stitchTiles="stitch"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.05  0 0 0 0 0.08  0 0 0 0 0.06  0 0 0 -1.6 1.05"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="3" stitchTiles="stitch" result="m"/>
+<feColorMatrix in="m" type="matrix" values="0 0 0 0 0.50  0 0 0 0 0.55  0 0 0 0 0.49  0 0 0 0.9 -0.3"/>
 </filter>
 <filter id="mold" x="0" y="0" width="100%" height="100%">
-<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="5" seed="11" stitchTiles="stitch"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.16  0 0 0 0 0.07  0 0 0 -3.2 1.25"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4" seed="11" stitchTiles="stitch" result="t"/>
+<feColorMatrix in="t" type="matrix" values="0 0 0 0 0.26  0 0 0 0 0.34  0 0 0 0 0.22  0 0 0 3 -1.55"/>
 </filter>
-<filter id="rust" x="0" y="0" width="100%" height="100%">
-<feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="4" seed="29" stitchTiles="stitch"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.28  0 0 0 0 0.06  0 0 0 0 0.05  0 0 0 -4.5 1.55"/>
-</filter>
-<filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
-<feGaussianBlur stdDeviation="9"/>
-</filter>
-<filter id="softS" x="-50%" y="-50%" width="200%" height="200%">
-<feGaussianBlur stdDeviation="3"/>
-</filter>
-<filter id="rough" x="-20%" y="-20%" width="140%" height="140%">
-<feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="5" result="t"/>
-<feDisplacementMap in="SourceGraphic" in2="t" scale="18" xChannelSelector="R" yChannelSelector="G" result="d"/>
-<feGaussianBlur in="d" stdDeviation="1.2"/>
-</filter>
-<radialGradient id="puddle" cx="50%" cy="50%" r="50%">
-<stop offset="0" stop-color="#0a1411" stop-opacity="0.85"/>
-<stop offset="0.7" stop-color="#0d1a16" stop-opacity="0.6"/>
-<stop offset="1" stop-color="#0d1a16" stop-opacity="0"/>
-</radialGradient>
-<linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#9fc4b2" stop-opacity="0"/>
-<stop offset="0.45" stop-color="#9fc4b2" stop-opacity="0.22"/>
-<stop offset="0.55" stop-color="#cfe6da" stop-opacity="0.12"/>
-<stop offset="1" stop-color="#9fc4b2" stop-opacity="0"/>
-</linearGradient>
+<filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+<filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+<filter id="blur1"><feGaussianBlur stdDeviation="0.6"/></filter>
 <radialGradient id="oil" cx="50%" cy="50%" r="50%">
-<stop offset="0" stop-color="#050807" stop-opacity="0.9"/>
-<stop offset="0.6" stop-color="#0b0f0d" stop-opacity="0.55"/>
-<stop offset="1" stop-color="#0b0f0d" stop-opacity="0"/>
+<stop offset="0" stop-color="#2f3530" stop-opacity="0.55"/>
+<stop offset="0.6" stop-color="#3c443d" stop-opacity="0.35"/>
+<stop offset="1" stop-color="#4a524a" stop-opacity="0"/>
 </radialGradient>
-<radialGradient id="blood" cx="50%" cy="50%" r="50%">
-<stop offset="0" stop-color="#2a0a0a" stop-opacity="0.8"/>
-<stop offset="0.6" stop-color="#3a0e0c" stop-opacity="0.45"/>
-<stop offset="1" stop-color="#3a0e0c" stop-opacity="0"/>
+<radialGradient id="sheen" cx="45%" cy="45%" r="55%">
+<stop offset="0" stop-color="#6a5f7a" stop-opacity="0.18"/>
+<stop offset="0.5" stop-color="#5d7a74" stop-opacity="0.12"/>
+<stop offset="1" stop-color="#7a7a55" stop-opacity="0"/>
 </radialGradient>
+<linearGradient id="water" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#b9c6c0" stop-opacity="0.55"/>
+<stop offset="0.45" stop-color="#7d8c86" stop-opacity="0.35"/>
+<stop offset="1" stop-color="#a8b6b0" stop-opacity="0.5"/>
+</linearGradient>
 <radialGradient id="stain" cx="50%" cy="50%" r="50%">
-<stop offset="0" stop-color="#101613" stop-opacity="0.7"/>
-<stop offset="1" stop-color="#101613" stop-opacity="0"/>
+<stop offset="0" stop-color="#5a5a44" stop-opacity="0.45"/>
+<stop offset="1" stop-color="#5a5a44" stop-opacity="0"/>
 </radialGradient>
-<pattern id="tile" width="512" height="512" patternUnits="userSpaceOnUse">
-<rect width="512" height="512" fill="#2b3531"/>
-<rect width="512" height="512" filter="url(#mottle)"/>
-<rect width="512" height="512" filter="url(#mold)" opacity="0.75"/>
-<rect width="512" height="512" filter="url(#rust)" opacity="0.5"/>
-</pattern>
-<g id="stains">
-<ellipse cx="130" cy="150" rx="70" ry="45" fill="url(#oil)" filter="url(#rough)"/>
-<ellipse cx="160" cy="175" rx="30" ry="18" fill="url(#oil)" filter="url(#rough)"/>
-<ellipse cx="390" cy="360" rx="95" ry="60" fill="url(#puddle)" filter="url(#rough)"/>
-<ellipse cx="380" cy="350" rx="70" ry="30" fill="url(#sheen)" filter="url(#softS)" transform="rotate(-18 380 350)"/>
-<ellipse cx="410" cy="372" rx="30" ry="6" fill="#bcd8ca" opacity="0.08" filter="url(#softS)" transform="rotate(-18 410 372)"/>
-<ellipse cx="300" cy="120" rx="36" ry="24" fill="url(#blood)" filter="url(#rough)"/>
-<ellipse cx="325" cy="140" rx="12" ry="7" fill="url(#blood)" filter="url(#rough)"/>
-<circle cx="345" cy="152" r="3" fill="#2e0b0a" opacity="0.6"/>
-<circle cx="352" cy="162" r="2" fill="#2e0b0a" opacity="0.5"/>
-<ellipse cx="90" cy="410" rx="60" ry="40" fill="url(#stain)" filter="url(#soft)"/>
-<ellipse cx="250" cy="300" rx="45" ry="35" fill="url(#stain)" filter="url(#soft)"/>
-<ellipse cx="470" cy="60" rx="50" ry="35" fill="url(#stain)" filter="url(#soft)"/>
-<ellipse cx="200" cy="460" rx="40" ry="22" fill="url(#oil)" filter="url(#rough)" opacity="0.7"/>
-</g>
-<g id="cracks" fill="none" stroke-linecap="round" stroke-linejoin="round">
-<path d="M0 238 L38 232 L71 246 L108 240 L132 262 L170 258 L205 281 L238 276 L262 300" stroke="#0b100e" stroke-width="2.2" opacity="0.85"/>
-<path d="M262 300 L290 322 L318 318 L350 340 L372 336" stroke="#0b100e" stroke-width="1.6" opacity="0.8"/>
-<path d="M132 262 L128 290 L140 318 L134 345" stroke="#0b100e" stroke-width="1.1" opacity="0.7"/>
-<path d="M205 281 L214 250 L232 232 L236 205" stroke="#0b100e" stroke-width="0.9" opacity="0.6"/>
-<path d="M440 0 L436 30 L452 62 L446 96 L462 128 L458 160" stroke="#0b100e" stroke-width="1.5" opacity="0.75"/>
-<path d="M440 512 L436 488 L448 470" stroke="#0b100e" stroke-width="1.5" opacity="0.75"/>
-<path d="M452 62 L480 74 L512 70" stroke="#0b100e" stroke-width="1" opacity="0.6"/>
-<path d="M0 70 L22 78 L40 72" stroke="#0b100e" stroke-width="1" opacity="0.6"/>
-<path d="M60 0 L66 22 L58 48 L72 70" stroke="#0b100e" stroke-width="0.9" opacity="0.55"/>
-<path d="M60 512 L57 492" stroke="#0b100e" stroke-width="0.9" opacity="0.55"/>
-<path d="M300 420 L322 436 L318 460 L340 480" stroke="#0b100e" stroke-width="1" opacity="0.6"/>
-<path d="M0 238 L38 232 L71 246 L108 240 L132 262 L170 258 L205 281 L238 276 L262 300" stroke="#55665d" stroke-width="0.7" opacity="0.35" transform="translate(1 1)"/>
-<path d="M512 238 L490 236" stroke="#0b100e" stroke-width="2.2" opacity="0.85"/>
-</g>
+<radialGradient id="rust" cx="50%" cy="50%" r="50%">
+<stop offset="0" stop-color="#6e5a3e" stop-opacity="0.4"/>
+<stop offset="1" stop-color="#6e5a3e" stop-opacity="0"/>
+</radialGradient>
 </defs>
-<rect width="512" height="512" fill="url(#tile)"/>
-<g>
-<use href="#stains"/>
-<use href="#stains" x="-512"/>
-<use href="#stains" x="512"/>
-<use href="#stains" y="-512"/>
-<use href="#stains" y="512"/>
+
+<rect width="512" height="512" fill="#8e9a90"/>
+<rect width="512" height="512" filter="url(#mottle)" opacity="0.7"/>
+<rect width="512" height="512" fill="#fff" filter="url(#grain)" opacity="0.6"/>
+<rect width="512" height="512" filter="url(#mold)" opacity="0.55"/>
+
+<g filter="url(#blur8)">
+<ellipse cx="0" cy="0" rx="60" ry="45" fill="url(#stain)"/>
+<ellipse cx="512" cy="0" rx="60" ry="45" fill="url(#stain)"/>
+<ellipse cx="0" cy="512" rx="60" ry="45" fill="url(#stain)"/>
+<ellipse cx="512" cy="512" rx="60" ry="45" fill="url(#stain)"/>
+<ellipse cx="380" cy="120" rx="50" ry="30" fill="url(#rust)"/>
+<ellipse cx="90" cy="300" rx="40" ry="55" fill="url(#stain)"/>
+<ellipse cx="300" cy="440" rx="45" ry="28" fill="url(#rust)"/>
 </g>
-<use href="#cracks"/>
-<rect width="512" height="512" filter="url(#grain)"/>
-<rect width="512" height="512" fill="#0f2a22" opacity="0.18"/>
+
+<g filter="url(#blur4)">
+<ellipse cx="170" cy="150" rx="70" ry="48" fill="url(#oil)" transform="rotate(-18 170 150)"/>
+<ellipse cx="205" cy="175" rx="34" ry="20" fill="url(#oil)"/>
+<ellipse cx="170" cy="150" rx="55" ry="36" fill="url(#sheen)" transform="rotate(-18 170 150)"/>
+<ellipse cx="420" cy="360" rx="40" ry="26" fill="url(#oil)" transform="rotate(25 420 360)"/>
+<ellipse cx="420" cy="360" rx="30" ry="18" fill="url(#sheen)"/>
+<circle cx="130" cy="210" r="8" fill="#39403a" opacity="0.35"/>
+<circle cx="245" cy="120" r="5" fill="#39403a" opacity="0.3"/>
+</g>
+
+<g>
+<path d="M300 250 C330 232 380 238 402 262 C422 284 410 312 378 318 C350 324 340 306 312 310 C286 314 270 296 278 276 C282 264 290 256 300 250 Z" fill="#6f7d77" opacity="0.35" filter="url(#blur1)"/>
+<path d="M300 250 C330 232 380 238 402 262 C422 284 410 312 378 318 C350 324 340 306 312 310 C286 314 270 296 278 276 C282 264 290 256 300 250 Z" fill="url(#water)"/>
+<path d="M312 258 C340 246 370 250 388 264" stroke="#e2ebe6" stroke-width="3" fill="none" opacity="0.5" stroke-linecap="round" filter="url(#blur1)"/>
+<path d="M330 290 C350 286 372 292 390 290" stroke="#dfe8e3" stroke-width="1.5" fill="none" opacity="0.35" stroke-linecap="round"/>
+<ellipse cx="355" cy="272" rx="28" ry="6" fill="#f0f5f2" opacity="0.18" filter="url(#blur1)"/>
+<path d="M60 430 C80 418 112 422 118 440 C122 456 96 464 76 458 C58 452 50 440 60 430 Z" fill="url(#water)" opacity="0.85"/>
+<path d="M68 432 C84 424 104 426 112 436" stroke="#e2ebe6" stroke-width="2" fill="none" opacity="0.45" stroke-linecap="round"/>
+</g>
+
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M0 96 L38 104 L70 98 L112 122 L150 118 L196 140 L232 136 L276 162 L300 190 L322 238" stroke="#4c554e" stroke-width="2.2" opacity="0.75"/>
+<path d="M0 97 L38 105 L70 99 L112 123 L150 119 L196 141" stroke="#b4bfb7" stroke-width="0.8" opacity="0.4" transform="translate(1 1.5)"/>
+<path d="M112 122 L120 160 L108 196 L118 230" stroke="#4c554e" stroke-width="1.3" opacity="0.6"/>
+<path d="M232 136 L246 110 L240 80 L256 44" stroke="#4c554e" stroke-width="1.1" opacity="0.55"/>
+<path d="M378 318 L396 356 L388 392 L412 430 L440 452 L476 460 L512 470" stroke="#4c554e" stroke-width="1.8" opacity="0.7"/>
+<path d="M412 430 L396 470 L402 512" stroke="#4c554e" stroke-width="1.2" opacity="0.55"/>
+<path d="M402 0 L398 30 L410 58 L404 90" stroke="#4c554e" stroke-width="1.2" opacity="0.55"/>
+<path d="M0 470 L22 462 L40 474" stroke="#4c554e" stroke-width="1.8" opacity="0.7"/>
+<path d="M512 96 L488 90 L470 100 L452 92" stroke="#4c554e" stroke-width="2" opacity="0.7"/>
+<path d="M160 330 L190 346 L214 340 L240 362 L236 390" stroke="#4c554e" stroke-width="1" opacity="0.5"/>
+<path d="M190 346 L184 372" stroke="#4c554e" stroke-width="0.8" opacity="0.45"/>
+<path d="M470 200 L480 226 L472 250" stroke="#4c554e" stroke-width="0.9" opacity="0.45"/>
+</g>
+
+<g opacity="0.5">
+<circle cx="60" cy="60" r="2" fill="#4e5a4c"/>
+<circle cx="440" cy="210" r="2.5" fill="#4e5a4c"/>
+<circle cx="250" cy="480" r="1.8" fill="#4e5a4c"/>
+<circle cx="330" cy="60" r="1.5" fill="#4e5a4c"/>
+<circle cx="140" cy="390" r="2.2" fill="#4e5a4c"/>
+<circle cx="480" cy="320" r="1.6" fill="#b8c2ba"/>
+<circle cx="220" cy="250" r="1.4" fill="#b8c2ba"/>
+<circle cx="30" cy="220" r="1.8" fill="#b8c2ba"/>
+</g>
+
+<rect width="512" height="512" fill="#1e2a24" opacity="0.12"/>
 </svg>

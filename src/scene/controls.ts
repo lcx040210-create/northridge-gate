@@ -54,8 +54,9 @@ export function updatePlayer(state: PlayerState, input: MoveInput, dt: number, b
 
   const sin = Math.sin(state.yaw)
   const cos = Math.cos(state.yaw)
-  let x = state.x + (dx * cos - dz * sin) * speed * dt
-  let z = state.z + (dx * sin + dz * cos) * speed * dt
+  // 视角相对移动：yaw 绕 Y 轴旋转，W 始终朝镜头前方
+  let x = state.x + (dx * cos + dz * sin) * speed * dt
+  let z = state.z + (-dx * sin + dz * cos) * speed * dt
   x = clamp(x, bounds.minX, bounds.maxX)
   z = clamp(z, bounds.minZ, bounds.maxZ)
 

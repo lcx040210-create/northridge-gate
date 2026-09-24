@@ -16,6 +16,18 @@ describe('updatePlayer', () => {
     expect(s.z).toBeGreaterThan(0)
   })
 
+  it('W follows view direction: at yaw=PI/2 it moves toward -X', () => {
+    const s = updatePlayer({ ...base, yaw: Math.PI / 2 }, { ...noInput, forward: true }, 1, bounds)
+    expect(s.x).toBeLessThan(0)
+    expect(s.z).toBeCloseTo(0)
+  })
+
+  it('A strafes left of view direction at yaw=0', () => {
+    const s = updatePlayer(base, { ...noInput, left: true }, 1, bounds)
+    expect(s.x).toBeLessThan(0)
+    expect(s.z).toBeCloseTo(0)
+  })
+
   it('jump raises y above stand height then gravity lands back', () => {
     let s = updatePlayer(base, { ...noInput, jump: true }, 0.1, bounds)
     expect(s.vy).toBeGreaterThan(0)

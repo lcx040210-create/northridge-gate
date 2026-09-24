@@ -35,10 +35,19 @@ export default function App() {
 
   if (state.phase === 'opening') {
     return (
-      <div style={{ padding: 48 }}>
-        <p>窗外有一个剪影在等。</p>
-        <p>WASD 移动 · 鼠标视角 · 空格跳跃 · Ctrl 蹲下 · F / 左键交互</p>
-        <button data-testid="start" onClick={() => dispatch({ type: 'START' })}>开始</button>
+      <div style={{ padding: 48, color: '#d8d8d0', background: '#0a0c0a', minHeight: '100vh' }}>
+        <h1>北岭闸口</h1>
+        <p style={{ color: '#9a9a90' }}>替换事件后第 19 夜。你是前哨的夜班安保，透过观察窗判断来者是人、伪人还是感染者。放行、处决、收容——对错到天亮才见分晓。</p>
+        <h3>操作</h3>
+        <ul>
+          <li>WASD 移动</li>
+          <li>鼠标移动视角（进入后点击画面锁定鼠标）</li>
+          <li>空格 跳跃 · Ctrl 蹲下</li>
+          <li>F 或 鼠标左键 与物品交互</li>
+        </ul>
+        <h3>目标</h3>
+        <p>走到观察窗前按 F，检视来访者（眼 / 证 / 问一句），然后放行、处决或收容。</p>
+        <button data-testid="start" onClick={() => dispatch({ type: 'START' })} style={{ fontSize: 18, padding: '10px 28px', cursor: 'pointer' }}>开始值班</button>
       </div>
     )
   }
@@ -49,6 +58,12 @@ export default function App() {
     <div style={{ position: 'relative', height: '100%' }}>
       <RoomScene onInteract={setActiveHotspot} />
       <HUD state={state} dispatch={dispatch} />
+
+      {activeHotspot === null && (
+        <div style={{ position: 'absolute', bottom: 28, left: '50%', transform: 'translateX(-50%)', color: '#c8c8c0', background: 'rgba(0,0,0,0.55)', padding: '6px 16px', borderRadius: 6, pointerEvents: 'none' }}>
+          走到观察窗或物品前，按 F 交互
+        </div>
+      )}
 
       {activeHotspot === 'window' && visitor && (
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.85)' }}>

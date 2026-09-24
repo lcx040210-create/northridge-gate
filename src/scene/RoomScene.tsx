@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { buildRoom } from './room'
 import { HOTSPOTS } from './cameras'
@@ -11,6 +11,9 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
   const mountRef = useRef<HTMLDivElement>(null)
   const onInteractRef = useRef(onInteract)
   onInteractRef.current = onInteract
+  const [locked, setLocked] = useState(false)
+  const [nearby, setNearby] = useState<string | null>(null)
+  const nearbyRef = useRef<string | null>(null)
 
   useEffect(() => {
     const mount = mountRef.current!
@@ -26,15 +29,20 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
     const keys: MoveInput = { forward: false, back: false, left: false, right: false, jump: false, crouch: false }
     let lastTime = performance.now()
 
-    function interact() {
+    function nearestHotspot(): string | null {
       for (const h of HOTSPOTS) {
         const dx = player.x - h.position[0]
         const dz = player.z - h.position[2]
         if (Math.hypot(dx, dz) < INTERACT_RANGE) {
-          onInteractRef.current(h.id)
-          return
+          return h.id
         }
       }
+      return null
+    }
+
+    function interact() {
+      const id = nearestHotspot()
+      if (id) onInteractRef.current(id)
     }
 
     const onMouseMove = (e: MouseEvent) => {
@@ -49,6 +57,10 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
       } else {
         interact()
       }
+    }
+
+    const onPointerLockChange = () => {
+      setLocked(document.pointerLockElement === renderer.domElement)
     }
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -77,6 +89,7 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('keydown', onKeyDown)
     document.addEventListener('keyup', onKeyUp)
+    document.addEventListener('pointerlockchange', onPointerLockChange)
     renderer.domElement.addEventListener('mousedown', onMouseDown)
 
     let raf = 0
@@ -89,8 +102,14 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
       camera.rotation.y = player.yaw
       camera.rotation.x = player.pitch
       renderer.render(scene, camera)
+      const n = nearestHotspot()
+      if (n !== nearbyRef.current) {
+        nearbyRef.current = n
+        setNearby(n)
+      }
       raf = requestAnimationFrame(loop)
     }
+
     buildRoom(scene).then(() => { raf = requestAnimationFrame(loop) }).catch(() => { raf = requestAnimationFrame(loop) })
 
     return () => {
@@ -98,11 +117,31 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
       document.removeEventListener('mousemove', onMouseMove)
       document.removeEventListener('keydown', onKeyDown)
       document.removeEventListener('keyup', onKeyUp)
+      document.removeEventListener('pointerlockchange', onPointerLockChange)
       renderer.domElement.removeEventListener('mousedown', onMouseDown)
       mount.removeChild(renderer.domElement)
       renderer.dispose()
     }
   }, [])
 
-  return <div ref={mountRef} style={{ position: 'absolute', inset: 0, cursor: 'crosshair' }} />
+  const nearbyLabel = HOTSPOTS.find((h) => h.id === nearby)?.label
+
+  return (
+    <div style={{ position: 'absolute', inset: 0 }}>
+      <div ref={mountRef} style={{ position: 'absolute', inset: 0 }} />
+      {locked && (
+        <div style={{ position: 'absolute', top: '50%', left: '50%', width: 6, height: 6, margin: '-3px 0 0 -3px', borderRadius: '50%', background: '#e8e8e0', opacity: 0.75, pointerEvents: 'none' }} />
+      )}
+      {!locked && (
+        <div style={{ position: 'absolute', top: '58%', left: '50%', transform: 'translateX(-50%)', color: '#e8e8e0', background: 'rgba(0,0,0,0.65)', padding: '8px 18px', borderRadius: 6, pointerEvents: 'none' }}>
+          点击画面锁定鼠标
+        </div>
+      )}
+      {locked && nearby && (
+        <div style={{ position: 'absolute', top: '54%', left: '50%', transform: 'translateX(-50%)', color: '#ffe9a8', background: 'rgba(0,0,0,0.65)', padding: '6px 16px', borderRadius: 6, pointerEvents: 'none' }}>
+          按 F 交互：{nearbyLabel}
+        </div>
+      )}
+    </div>
+  )
 }

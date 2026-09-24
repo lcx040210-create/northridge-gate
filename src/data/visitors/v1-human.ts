@@ -5,8 +5,8 @@ export const v1Human: Visitor = {
   claimedName: 'Dispatcher · Daniel Cole',
   role: 'human',
   state: 'clean',
-  portrait: '/assets/portraits/v1_human.png',
-  freezeFrames: ['/assets/portraits/v1_human.png'],
+  portrait: '/assets/portraits/v1_human.svg',
+  freezeFrames: ['/assets/portraits/v1_human.svg'],
   tells: {
     eye: '眼神正常，只是被雨淋得有点烦。',
     id: '证件照片和本人一致，牙齿数对得上。',

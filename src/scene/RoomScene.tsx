@@ -88,7 +88,15 @@ export default function RoomScene({ onInteract, equippedWeapon }: { onInteract: 
         case 'KeyD': keys.right = true; break
         case 'Space': keys.jump = true; e.preventDefault(); break
         case 'ControlLeft': case 'ControlRight': keys.crouch = true; break
-        case 'KeyF': interact(); break
+        case 'KeyF':
+          const hotspot = aimedHotspot()
+          if (hotspot) {
+            interact()
+          } else {
+            // 对空使用武器
+            onInteractRef.current('use_weapon')
+          }
+          break
       }
     }
 

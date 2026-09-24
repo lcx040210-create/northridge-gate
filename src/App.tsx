@@ -17,6 +17,7 @@ import GunAim from './ui/GunAim'
 import FlamethrowerCharge from './ui/FlamethrowerCharge'
 import HUD from './ui/HUD'
 import WeaponHUD from './ui/WeaponHUD'
+import SprinklerEffect from './ui/SprinklerEffect'
 import BossFight from './ui/BossFight'
 import Dawn from './ui/Dawn'
 import Death from './ui/Death'
@@ -30,7 +31,7 @@ export default function App() {
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null)
   const [executionGame, setExecutionGame] = useState<{ tool: Tool; visitor: Visitor } | null>(null)
   const [execution, setExecution] = useState<{ result: ExecutionResult; tool: Tool; visitor: Visitor } | null>(null)
-  const [death, setDeath] = useState<Visitor | null | false>(false)
+  const [death, setDeath] = useState<Visitor | null | false | 'door_trap'>(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef(0)
 
@@ -61,6 +62,10 @@ export default function App() {
   useEffect(() => { if (showShoes) { const t = setTimeout(() => sfx.whisper(), 2000); return () => clearTimeout(t) } }, [showShoes])
 
   const open = (id: string) => {
+    if (id === 'use_weapon') {
+      handleWeaponUse()
+      return
+    }
     sfx.interact()
     if (id === 'window') sfx.intercom(true)
     if (id === 'manual') sfx.pageFlip()
@@ -68,6 +73,59 @@ export default function App() {
     if (id === 'supplies') sfx.interact()
     if (id === 'door') sfx.doorLocked()
     setActiveHotspot(id)
+  }
+
+  const handleWeaponUse = () => {
+    if (!state.equippedWeapon) {
+      say('未装备武器')
+      return
+    }
+
+    if (state.equippedWeapon === 'axe') {
+      sfx.axeSwing()
+      say('你对着空气挥了一斧。')
+    } else if (state.equippedWeapon === 'gun') {
+      if (state.gunAmmo <= 0) {
+        sfx.interact()
+        say('弹匣空了。')
+        return
+      }
+      sfx.gunshot()
+      dispatch({ type: 'USE_WEAPON' })
+      say('枪声在房间里回荡。')
+
+      // 5% 概率触发烟雾报警器
+      if (Math.random() < 0.05 && !state.sprinklerTriggered) {
+        setTimeout(() => {
+          dispatch({ type: 'TRIGGER_SPRINKLER' })
+          sfx.alarmBeep()
+          setTimeout(() => sfx.sprinkler(), 500)
+          say('烟雾报警器被触发了！天花板开始喷水。', 5000)
+        }, 800)
+      }
+    } else if (state.equippedWeapon === 'fire') {
+      sfx.fireIgnite()
+      setTimeout(() => sfx.fireWhoosh(), 200)
+      say('火焰从罐口喷出。')
+
+      // 30% 自燃
+      if (Math.random() < 0.3) {
+        setTimeout(() => {
+          say('你被火焰反噬烧伤了！', 4000)
+          // San -15 通过 reducer 处理
+        }, 1000)
+      }
+
+      // 50% 触发报警器
+      if (Math.random() < 0.5 && !state.sprinklerTriggered) {
+        setTimeout(() => {
+          dispatch({ type: 'TRIGGER_SPRINKLER' })
+          sfx.alarmBeep()
+          setTimeout(() => sfx.sprinkler(), 500)
+          say('烟雾报警器被触发了！天花板开始喷水。', 5000)
+        }, 1500)
+      }
+    }
   }
   const close = () => {
     if (activeHotspot === 'window') sfx.intercom(false)
@@ -170,6 +228,9 @@ export default function App() {
       <RoomScene onInteract={open} equippedWeapon={state.equippedWeapon} />
       <HUD state={state} />
       <WeaponHUD state={state} />
+
+      {/* 烟雾报警器效果 */}
+      {state.sprinklerTriggered && <SprinklerEffect />}
 
       {activeHotspot === null && !execution && (
         <>
@@ -335,7 +396,7 @@ export default function App() {
       )}
 
       {execution && <ExecutionOverlay result={execution.result} tool={execution.tool} visitor={execution.visitor} onDone={onExecDone} />}
-      {death !== false && <Death visitor={death} />}
+      {death !== false && <Death visitor={death === 'door_trap' ? null : death} doorTrap={death === 'door_trap'} />}
 
       {/* 处决小游戏 */}
       {executionGame && executionGame.tool === 'axe' && (
@@ -368,7 +429,8 @@ export default function App() {
           onDefeated={() => dispatch({ type: 'BOSS_DEFEATED' })}
           onDoorOpened={() => {
             // 门陷阱 - 玩家死亡
-            setDeath(null)
+            sfx.glassBreaking()
+            setTimeout(() => setDeath('door_trap'), 500)
           }}
         />
       )}

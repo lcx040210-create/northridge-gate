@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 768" width="512" height="768">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c1712"/>
+      <stop offset="0.5" stop-color="#13241c"/>
+      <stop offset="1" stop-color="#070d0a"/>
+    </linearGradient>
+    <radialGradient id="glassGlow" cx="0.45" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#2c4a3b" stop-opacity="0.55"/>
+      <stop offset="0.6" stop-color="#152a20" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#050907" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a3530"/>
+      <stop offset="0.5" stop-color="#1a2420"/>
+      <stop offset="1" stop-color="#0d1311"/>
+    </linearGradient>
+    <linearGradient id="sill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34403a"/>
+      <stop offset="0.3" stop-color="#1f2925"/>
+      <stop offset="1" stop-color="#0a0f0d"/>
+    </linearGradient>
+    <linearGradient id="streak" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a8c8b4" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#a8c8b4" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#a8c8b4" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="blood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a1210"/>
+      <stop offset="1" stop-color="#1c0806"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.48" r="0.72">
+      <stop offset="0.45" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.92"/>
+    </radialGradient>
+
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.6  0 0 0 0 0.75  0 0 0 0 0.65  0 0 0 0.35 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="grime" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="4" seed="21" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.12  0 0 0 0 0.09  0 0 0 1.6 -0.55"/>
+    </filter>
+    <filter id="smudge" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="4" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="18"/>
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.25" numOctaves="2" seed="12" result="r"/>
+      <feDisplacementMap in="SourceGraphic" in2="r" scale="3"/>
+    </filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+
+    <clipPath id="glassClip">
+      <rect x="86" y="120" width="340" height="440" rx="6"/>
+    </clipPath>
+  </defs>
+
+  <!-- wall -->
+  <rect width="512" height="768" fill="url(#bg)"/>
+  <rect width="512" height="768" filter="url(#grime)" opacity="0.8"/>
+
+  <!-- rivets / wall plates -->
+  <g fill="#0a110e" stroke="#26332d" stroke-width="1">
+    <circle cx="40" cy="80" r="5"/><circle cx="472" cy="80" r="5"/>
+    <circle cx="40" cy="690" r="5"/><circle cx="472" cy="690" r="5"/>
+  </g>
+
+  <!-- frame -->
+  <rect x="62" y="96" width="388" height="490" rx="12" fill="url(#frame)" stroke="#07100c" stroke-width="4"/>
+  <rect x="74" y="108" width="364" height="464" rx="8" fill="#08100c" stroke="#2f3d36" stroke-width="1.5"/>
+  <g fill="#111a16" stroke="#3a4842" stroke-width="1">
+    <circle cx="78" cy="112" r="4"/><circle cx="434" cy="112" r="4"/>
+    <circle cx="78" cy="568" r="4"/><circle cx="434" cy="568" r="4"/>
+    <circle cx="256" cy="104" r="3.5"/>
+  </g>
+
+  <!-- glass -->
+  <g clip-path="url(#glassClip)">
+    <rect x="86" y="120" width="340" height="440" fill="#0b1712"/>
+    <!-- empty dark room beyond -->
+    <rect x="86" y="380" width="340" height="180" fill="#07100c" opacity="0.8"/>
+    <path d="M86 380 L426 372" stroke="#1a2c23" stroke-width="2" opacity="0.6"/>
+    <rect x="300" y="200" width="60" height="180" fill="#050b08" opacity="0.7"/>
+    <rect x="86" y="120" width="340" height="440" fill="url(#glassGlow)"/>
+    <!-- grime layer on glass -->
+    <rect x="86" y="120" width="340" height="440" filter="url(#grime)" opacity="0.9"/>
+    <!-- smudges / wipe marks -->
+    <g filter="url(#smudge)" fill="#6f8e7c" opacity="0.12">
+      <ellipse cx="190" cy="260" rx="70" ry="30" transform="rotate(-18 190 260)"/>
+      <ellipse cx="330" cy="420" rx="55" ry="22" transform="rotate(12 330 420)"/>
+      <ellipse cx="150" cy="470" rx="40" ry="60"/>
+    </g>
+    <!-- handprint-ish smear, faint -->
+    <g filter="url(#smudge)" fill="#8aa898" opacity="0.07">
+      <ellipse cx="270" cy="330" rx="26" ry="32"/>
+      <rect x="248" y="270" width="8" height="40" rx="4"/>
+      <rect x="262" y="262" width="8" height="44" rx="4"/>
+      <rect x="276" y="266" width="8" height="42" rx="4"/>
+    </g>
+    <!-- reflection streaks -->
+    <polygon points="110,120 170,120 90,560 86,560 86,300" fill="url(#streak)"/>
+    <polygon points="300,120 318,120 230,560 214,560" fill="url(#streak)" opacity="0.6"/>
+    <!-- condensation drips -->
+    <g stroke="#9ab8a6" stroke-width="1.2" opacity="0.18" fill="none" filter="url(#soft)">
+      <path d="M140 140 q2 60 -1 120 q-2 40 1 70"/>
+      <path d="M212 128 q-1 40 2 90"/>
+      <path d="M388 150 q3 80 -2 160 q-1 50 2 110"/>
+      <path d="M350 130 q0 30 1 60"/>
+    </g>
+    <!-- dust specks -->
+    <g fill="#b9d0c2" opacity="0.2">
+      <circle cx="120" cy="200" r="1"/><circle cx="240" cy="180" r="1.3"/>
+      <circle cx="310" cy="300" r="0.8"/><circle cx="400" cy="240" r="1.1"/>
+      <circle cx="180" cy="410" r="1"/><circle cx="360" cy="500" r="1.4"/>
+      <circle cx="220" cy="520" r="0.9"/><circle cx="280" cy="450" r="1"/>
+    </g>
+    <!-- hairline crack -->
+    <path d="M426 180 L398 205 L402 222 L376 248 L381 262 L360 280" stroke="#a9c4b4" stroke-width="0.8" fill="none" opacity="0.35"/>
+    <path d="M398 205 L386 196 M376 248 L364 244" stroke="#a9c4b4" stroke-width="0.6" fill="none" opacity="0.25"/>
+  </g>
+  <!-- inner glass edge -->
+  <rect x="86" y="120" width="340" height="440" rx="6" fill="none" stroke="#040806" stroke-width="3"/>
+  <rect x="88" y="122" width="336" height="436" rx="5" fill="none" stroke="#3b5446" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- sill -->
+  <path d="M40 586 L472 586 L488 626 L24 626 Z" fill="url(#sill)" stroke="#060a08" stroke-width="2"/>
+  <rect x="24" y="626" width="464" height="22" fill="#0b110e"/>
+  <path d="M40 587 L472 587" stroke="#4b5b53" stroke-width="1" opacity="0.6"/>
+  <rect x="24" y="586" width="464" height="62" filter="url(#grime)" opacity="0.7"/>
+
+  <!-- axe blade gouge on sill: thin, long, dark -->
+  <g filter="url(#rough)">
+    <path d="M118 600 L352 593 L350 597 L120 606 Z" fill="#030605"/>
+    <path d="M122 606 L350 597" stroke="#56685f" stroke-width="0.8" opacity="0.55"/>
+    <path d="M118 600 L352 593" stroke="#010202" stroke-width="1.2"/>
+    <!-- splinter chips at ends -->
+    <path d="M352 593 L366 590 L356 596 Z" fill="#050807"/>
+    <path d="M118 600 L106 603 L119 604 Z" fill="#050807"/>
+  </g>
+  <!-- secondary gouge on frame edge -->
+  <path d="M70 330 L74 440" stroke="#020403" stroke-width="2" filter="url(#rough)"/>
+  <path d="M72 330 L76 440" stroke="#4a5a52" stroke-width="0.6" opacity="0.4"/>
+
+  <!-- dried blood trail on sill -->
+  <g filter="url(#rough)">
+    <path d="M300 588

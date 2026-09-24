@@ -1,0 +1,348 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 432" width="512" height="768">
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c1a16"/>
+      <stop offset="0.55" stop-color="#08120f"/>
+      <stop offset="1" stop-color="#030605"/>
+    </linearGradient>
+    <radialGradient id="topLight" cx="0.5" cy="0" r="0.75">
+      <stop offset="0" stop-color="#9fd8b8" stop-opacity="0.55"/>
+      <stop offset="0.35" stop-color="#4f8f73" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#0a1612" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="face" cx="0.45" cy="0.35" r="0.7">
+      <stop offset="0" stop-color="#c9d8c4"/>
+      <stop offset="0.5" stop-color="#8fa393"/>
+      <stop offset="1" stop-color="#34463d"/>
+    </radialGradient>
+    <linearGradient id="suit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26332d"/>
+      <stop offset="0.6" stop-color="#141c18"/>
+      <stop offset="1" stop-color="#070a09"/>
+    </linearGradient>
+    <linearGradient id="blood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a0f14"/>
+      <stop offset="0.6" stop-color="#5a070b"/>
+      <stop offset="1" stop-color="#2a0305"/>
+    </linearGradient>
+    <radialGradient id="vig" cx="0.5" cy="0.5" r="0.72">
+      <stop offset="0.55" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.88"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.55  0 0 0 0 0.7  0 0 0 0 0.6  0 0 0 0.35 0" result="tint"/>
+      <feComposite in="tint" in2="SourceGraphic" operator="in" result="mask"/>
+      <feBlend in="SourceGraphic" in2="mask" mode="overlay"/>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect x="0" y="0" width="768" height="432" fill="url(#bg)"/>
+  <rect x="0" y="0" width="768" height="432" fill="url(#topLight)"/>
+  <!-- 墙面瓷砖纹 -->
+  <g stroke="#1b2b25" stroke-width="1" opacity="0.6">
+    <line x1="0" y1="96" x2="768" y2="96"/>
+    <line x1="0" y1="300" x2="768" y2="300"/>
+    <line x1="0" y1="340" x2="768" y2="340"/>
+    <line x1="120" y1="300" x2="120" y2="432"/>
+    <line x1="260" y1="300" x2="260" y2="432"/>
+    <line x1="520" y1="300" x2="520" y2="432"/>
+    <line x1="660" y1="300" x2="660" y2="432"/>
+  </g>
+  <!-- 顶部吊灯 -->
+  <line x1="384" y1="0" x2="384" y2="28" stroke="#0e1512" stroke-width="2"/>
+  <path d="M362 28 L406 28 L396 40 L372 40 Z" fill="#1a2621"/>
+  <ellipse cx="384" cy="42" rx="10" ry="3" fill="#d6f5e2" opacity="0.9"/>
+
+  <!-- 门卫室观察窗（墙体开口） -->
+  <g id="guardWindow">
+    <rect x="170" y="70" width="428" height="236" fill="#050a08"/>
+    <rect x="178" y="78" width="412" height="220" fill="#0f1f19"/>
+    <!-- 窗内室内光 -->
+    <rect x="178" y="78" width="412" height="220" fill="url(#topLight)" opacity="0.8"/>
+    <!-- 室内墙上的值班表与挂钟 -->
+    <rect x="210" y="104" width="54" height="70" fill="#1e2f28" stroke="#2f4a3e"/>
+    <g stroke="#3a5a4b" stroke-width="1">
+      <line x1="216" y1="116" x2="258" y2="116"/>
+      <line x1="216" y1="128" x2="252" y2="128"/>
+      <line x1="216" y1="140" x2="256" y2="140"/>
+      <line x1="216" y1="152" x2="244" y2="152"/>
+    </g>
+    <circle cx="540" cy="118" r="18" fill="#1a2a23" stroke="#3b584b" stroke-width="2"/>
+    <line x1="540" y1="118" x2="540" y2="106" stroke="#7a1015" stroke-width="2"/>
+    <line x1="540" y1="118" x2="549" y2="122" stroke="#9fc2ae" stroke-width="1.5"/>
+    <!-- 窗台 -->
+    <rect x="160" y="298" width="448" height="14" fill="#16221d"/>
+    <rect x="160" y="298" width="448" height="3" fill="#35524a" opacity="0.7"/>
+    <!-- 窗台上的血迹 -->
+    <path d="M300 300 Q330 296 360 301 Q352 312 340 330 Q336 312 322 306 Q312 318 306 322 Q304 308 300 300 Z" fill="url(#blood)" opacity="0.9"/>
+    <path d="M338 312 L337 360" stroke="#5a070b" stroke-width="2"/>
+    <circle cx="337" cy="362" r="2.5" fill="#5a070b"/>
+  </g>
+
+  <!-- 玻璃（破裂、反光） -->
+  <g id="glass">
+    <rect x="178" y="78" width="412" height="220" fill="#8fd1b4" opacity="0.06"/>
+    <polygon points="190,84 300,84 214,210 190,250" fill="#cfeee0" opacity="0.07"/>
+    <polygon points="470,84 520,84 420,298 380,298" fill="#cfeee0" opacity="0.05"/>
+    <!-- 裂纹，中心在右侧 -->
+    <g stroke="#bfe3d2" stroke-width="0.9" fill="none" opacity="0.55">
+      <path d="M470 170 L590 110"/>
+      <path d="M470 170 L590 200"/>
+      <path d="M470 170 L540 298"/>
+      <path d="M470 170 L420 298"/>
+      <path d="M470 170 L380 78"/>
+      <path d="M470 170 L500 78"/>
+      <path d="M470 170 L300 150"/>
+      <path d="M440 150 L452 188 L490 192 L498 150 L470 136 Z"/>
+      <path d="M410 130 L420 205 L520 215 L535 130 L480 115 Z"/>
+    </g>
+    <circle cx="470" cy="170" r="4" fill="#dff5ea" opacity="0.6"/>
+    <!-- 玻璃上的血手印拖痕 -->
+    <path d="M250 190 q6 -18 12 0 q4 -22 10 0 q4 -20 10 0 q5 -14 9 2 q4 20 -8 34 l-4 50 l-14 0 l-2 -48 q-14 -14 -13 -38 z" fill="url(#blood)" opacity="0.75"/>
+    <!-- 玻璃碎片（前景散落） -->
+    <g fill="#bfe3d2" opacity="0.35">
+      <polygon points="560,380 578,372 572,392"/>
+      <polygon points="600,404 614,398 618,414 604,418"/>
+      <polygon points="220,392 232,384 236,398"/>
+      <polygon points="470,418 486,410 482,428"/>
+    </g>
+  </g>
+
+  <!-- 昏暗窗框 -->
+  <g id="windowFrame">
+    <rect x="170" y="70" width="428" height="10" fill="#0d1613"/>
+    <rect x="170" y="70" width="10" height="236" fill="#0d1613"/>
+    <rect x="588" y="70" width="10" height="236" fill="#0d1613"/>
+    <rect x="380" y="78" width="8" height="220" fill="#0b1310"/>
+    <rect x="178" y="186" width="412" height="6" fill="#0b1310"/>
+    <!-- 窗框高光与锈迹 -->
+    <line x1="171" y1="71" x2="597" y2="71" stroke="#3f6254" stroke-width="1" opacity="0.6"/>
+    <line x1="381" y1="80" x2="381" y2="296" stroke="#2f4a3e" stroke-width="1" opacity="0.5"/>
+    <path d="M588 140 q-4 10 0 22 q3 8 0 18" stroke="#4a1a14" stroke-width="3" fill="none" opacity="0.6"/>
+    <!-- 窗口传递槽 -->
+    <rect x="330" y="288" width="108" height="12" fill="#050807" stroke="#26382f"/>
+  </g>
+
+  <!-- 前景：消防斧（斜倚于左下，刃带血） -->
+  <g id="fireAxe">
+    <!-- 斧柄 -->
+    <path d="M52 432 L178 214 L190 220 L66 432 Z" fill="#6b1a12"/>
+    <path d="M56 432 L180 216 L184 218 L60 432 Z" fill="#9a3a24" opacity="0.6"/>
+    <!-- 握把缠带 -->
+    <g stroke="#1a0c0a" stroke-width="3">
+      <line x1="70" y1="398" x2="84" y2="406"/>
+      <line x1="78" y1="384" x2="92" y2="392"/>
+      <line x1="86" y1="370" x2="100" y2="378"/>
+    </g>
+    <!-- 斧头 -->
+    <path d="M168 206 L204 226 L196 240 L160 220 Z" fill="#1c2522"/>
+    <path d="M198 228 Q246 214 262 176 Q232 180 206 214 Z" fill="#8a1a18"/>
+    <path d="M262 176 Q246 214 198 228 L204 222 Q240 208 254 180 Z" fill="#c9d6cf" opacity="0.8"/>
+    <path d="M166 214 L140 196 L148 186 L172 204 Z" fill="#2a3531"/>
+    <!-- 刃上血迹与滴落 -->
+    <path d="M246 196 Q238 212 216 222 Q226 206 246 196 Z" fill="url(#blood)"/></g>```svg
+<!-- 中段：假定已在 <defs> 中定义 fleshGrad / bloodGrad / gutsGrad / coreGrad / axeBladeGrad / axeHandleGrad / shadowGrad，若 id 不同请替换 -->
+<g id="mid-scene">
+
+  <!-- 窗沿 -->
+  <rect x="520" y="820" width="880" height="38" fill="url(#shadowGrad)"/>
+  <rect x="520" y="820" width="880" height="6" fill="#2a1f1c" opacity="0.8"/>
+
+  <!-- 伪人躯干：左半片 -->
+  <path d="M960 300
+           C900 290 820 320 790 390
+           C760 470 770 580 800 680
+           C820 750 860 800 900 820
+           L930 820
+           C915 740 905 650 915 560
+           C925 470 945 380 960 300 Z"
+        fill="url(#fleshGrad)" stroke="#3a1414" stroke-width="3"/>
+
+  <!-- 伪人躯干：右半片 -->
+  <path d="M975 300
+           C1040 290 1120 320 1150 390
+           C1180 470 1170 580 1140 680
+           C1120 750 1080 800 1040 820
+           L1010 820
+           C1025 740 1035 650 1025 560
+           C1015 470 995 380 975 300 Z"
+        fill="url(#fleshGrad)" stroke="#3a1414" stroke-width="3"/>
+
+  <!-- 裂口内壁（湿红肉面） -->
+  <path d="M960 310 C945 400 925 480 918 560 C910 650 918 740 932 815
+           L1008 815 C1022 740 1030 650 1022 560 C1015 480 995 400 975 310 Z"
+        fill="url(#bloodGrad)" opacity="0.95"/>
+
+  <!-- 黑色核心 -->
+  <ellipse cx="970" cy="560" rx="40" ry="95" fill="url(#coreGrad)"/>
+  <ellipse cx="970" cy="560" rx="18" ry="55" fill="#000" opacity="0.9"/>
+  <path d="M955 500 Q970 540 962 600 M985 520 Q978 570 988 620"
+        stroke="#1a0000" stroke-width="3" fill="none" opacity="0.7"/>
+
+  <!-- 肉丝/粘连组织横跨裂口 -->
+  <g stroke="#6b1a1a" stroke-width="3" fill="none" opacity="0.85">
+    <path d="M922 440 Q970 470 1018 445"/>
+    <path d="M918 650 Q968 690 1022 655"/>
+    <path d="M925 720 Q975 745 1015 725"/>
+  </g>
+
+  <!-- 斧头：柄 -->
+  <path d="M1350 120 L1395 140 L1020 470 L990 450 Z" fill="url(#axeHandleGrad)" stroke="#1c120c" stroke-width="2"/>
+  <!-- 斧头：刃（嵌入躯干） -->
+  <path d="M1040 380 C1010 360 960 380 945 420
+           C935 450 950 480 975 490
+           L1060 450 C1070 425 1062 395 1040 380 Z"
+        fill="url(#axeBladeGrad)" stroke="#222" stroke-width="2"/>
+  <path d="M948 425 C955 450 965 470 978 486" stroke="#6a0d0d" stroke-width="5" fill="none"/>
+
+  <!-- 垂落内脏 -->
+  <path d="M935 790 C920 830 950 850 930 890 C915 920 945 940 935 960"
+        stroke="url(#gutsGrad)" stroke-width="26" stroke-linecap="round" fill="none"/>
+  <path d="M1000 800 C1030 840 995 860 1015 900 C1030 930 1005 945 1012 975"
+        stroke="url(#gutsGrad)" stroke-width="20" stroke-linecap="round" fill="none"/>
+  <path d="M965 810 C975 850 960 880 972 920"
+        stroke="#4a2a1e" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.85"/>
+
+  <!-- 窗沿血泊 -->
+  <path d="M840 822 C880 812 1060 812 1110 822 C1090 834 870 836 840 822 Z" fill="url(#bloodGrad)"/>
+
+  <!-- 血流（沿窗沿滴落） -->
+  <g fill="url(#bloodGrad)">
+    <path d="M880 826 Q884 870 878 900 Q874 915 884 915 Q892 905 888 870 Z"/>
+    <path d="M1060 826 Q1064 880 1058 930 Q1056 948 1066 946 Q1072 920 1068 870 Z"/>
+    <path d="M905 330 Q900 380 910 420 L918 420 Q914 370 915 330 Z" opacity="0.8"/>
+    <path d="M1030 340 Q1036 400 1026 460 L1034 460 Q1042 400 1040 340 Z" opacity="0.8"/>
+    <circle cx="884" cy="928" r="6"/>
+    <circle cx="1062" cy="962" r="7"/>
+  </g>
+
+  <!-- 飞溅血点 -->
+  <g fill="#5a0a0a" opacity="0.85">
+    <circle cx="1110" cy="360" r="5"/>
+    <circle cx="1135" cy="335" r="3"/>
+    <circle cx="820" cy="420" r="4"/>
+    <circle cx="1180" cy="410" r="6"/>
+    <ellipse cx="1090" cy="300" rx="7" ry="3" transform="rotate(-30 1090 300)"/>
+  </g>
+
+</g>```svg
+  <!-- ===== 末段：玻璃血雾 / 组织块 / 定格 / 氛围层 ===== -->
+
+  <filter id="fxSplatBlur" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feGaussianBlur in="d" stdDeviation="1.2"/>
+  </filter>
+  <filter id="fxMist" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="14"/>
+  </filter>
+  <filter id="fxTissue" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="turbulence" baseFrequency="0.09" numOctaves="2" seed="3" result="t"/>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="6"/>
+  </filter>
+  <filter id="fxGrain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="11" stitchTiles="stitch" result="g"/>
+    <feColorMatrix in="g" type="matrix"
+      values="0 0 0 0 0.5
+              0 0 0 0 0.45
+              0 0 0 0 0.42
+              0 0 0 0.55 0"/>
+  </filter>
+  <radialGradient id="gVignette" cx="50%" cy="50%" r="72%">
+    <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="85%" stop-color="#050102" stop-opacity="0.65"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.95"/>
+  </radialGradient>
+  <radialGradient id="gRedMist" cx="48%" cy="44%" r="60%">
+    <stop offset="0%" stop-color="#5a0a0e" stop-opacity="0.35"/>
+    <stop offset="60%" stop-color="#2a0406" stop-opacity="0.22"/>
+    <stop offset="100%" stop-color="#120103" stop-opacity="0.5"/>
+  </radialGradient>
+  <radialGradient id="gDrop" cx="40%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#9c1a1f"/>
+    <stop offset="70%" stop-color="#5e0b10"/>
+    <stop offset="100%" stop-color="#2b0306"/>
+  </radialGradient>
+  <radialGradient id="gTissue" cx="35%" cy="30%" r="70%">
+    <stop offset="0%" stop-color="#efe2d6"/>
+    <stop offset="55%" stop-color="#cdb3a4"/>
+    <stop offset="100%" stop-color="#7d5249"/>
+  </radialGradient>
+
+  <!-- 玻璃上的血雾溅射 -->
+  <g id="glassSplatter" filter="url(#fxSplatBlur)" opacity="0.88">
+    <ellipse cx="610" cy="330" rx="120" ry="85" fill="#6b0c11" opacity="0.28" filter="url(#fxMist)"/>
+    <path d="M560 300 q30 -40 70 -12 q42 -20 58 22 q30 18 4 46 q6 40 -40 34 q-26 28 -58 4 q-44 6 -40 -34 q-30 -26 6 -60z"
+          fill="url(#gDrop)" opacity="0.8"/>
+    <!-- 放射状飞溅 -->
+    <g fill="#7a0f14">
+      <path d="M690 300 l90 -38 l-84 50z"/>
+      <path d="M540 350 l-110 36 l108 -22z"/>
+      <path d="M620 260 l18 -110 l-6 112z"/>
+      <path d="M660 380 l70 90 l-80 -84z"/>
+      <path d="M570 380 l-50 100 l62 -96z"/>
+      <path d="M700 330 l140 10 l-138 4z"/>
+    </g>
+    <!-- 细密雾点 -->
+    <g fill="#8e161b">
+      <circle cx="790" cy="258" r="6"/><circle cx="812" cy="250" r="3"/><circle cx="840" cy="340" r="4"/>
+      <circle cx="420" cy="390" r="5"/><circle cx="396" cy="398" r="2.5"/><circle cx="640" cy="140" r="4"/>
+      <circle cx="742" cy="480" r="5"/><circle cx="510" cy="492" r="4"/><circle cx="470" cy="240" r="3"/>
+      <circle cx="760" cy="200" r="2.5"/><circle cx="870" cy="300" r="2"/><circle cx="360" cy="330" r="2.5"/>
+      <circle cx="700" cy="560" r="3"/><circle cx="560" cy="180" r="2"/><circle cx="880" cy="420" r="3.5"/>
+    </g>
+    <!-- 顺玻璃下淌的血痕 -->
+    <g fill="#5a090d" opacity="0.85">
+      <path d="M588 380 q-3 60 2 120 q3 14 8 0 q2 -60 -2 -118z"/>
+      <path d="M650 384 q-2 40 1 88 q3 10 6 0 q0 -46 -3 -86z"/>
+      <path d="M716 350 q-2 70 2 150 q4 16 8 0 q1 -80 -4 -148z"/>
+      <circle cx="594" cy="502" r="6"/><circle cx="654" cy="474" r="4.5"/><circle cx="722" cy="502" r="6.5"/>
+    </g>
+    <!-- 玻璃高光 -->
+    <path d="M300 120 L520 90 L300 420z" fill="#ffffff" opacity="0.04"/>
+  </g>
+
+  <!-- 苍白组织块（悬停于空中，定格） -->
+  <g id="tissueChunks" filter="url(#fxTissue)">
+    <path d="M760 230 q14 -12 30 -2 q12 12 0 26 q-18 10 -32 -2 q-6 -12 2 -22z" fill="url(#gTissue)"/>
+    <path d="M480 280 q10 -16 28 -8 q14 10 4 24 q-14 12 -28 4 q-8 -8 -4 -20z" fill="url(#gTissue)"/>
+    <path d="M820 380 q8 -8 18 -2 q6 8 -2 16 q-10 4 -16 -4z" fill="url(#gTissue)"/>
+    <path d="M440 440 q10 -6 18 2 q4 10 -6 14 q-12 2 -12 -16z" fill="url(#gTissue)"/>
+    <path d="M660 180 q8 -6 14 0 q4 8 -4 12 q-10 2 -10 -12z" fill="url(#gTissue)"/>
+    <!-- 组织块上的血沾 -->
+    <g fill="#6d0d12" opacity="0.75">
+      <circle cx="780" cy="246" r="5"/><circle cx="496" cy="294" r="4"/><circle cx="830" cy="392" r="2.5"/>
+    </g>
+  </g>
+
+  <!-- 定格感：凝固的运动残影线 + 悬停血滴 -->
+  <g id="freezeFrame" opacity="0.5">
+    <g stroke="#a3262b" stroke-width="1.2" stroke-linecap="round" opacity="0.45">
+      <line x1="775" y1="238" x2="735" y2="258"/>
+      <line x1="492" y1="288" x2="535" y2="300"/>
+      <line x1="828" y1="386" x2="790" y2="372"/>
+      <line x1="446" y1="446" x2="486" y2="428"/>
+    </g>
+    <g fill="url(#gDrop)">
+      <ellipse cx="740" cy="160" rx="4" ry="6"/>
+      <ellipse cx="520" cy="200" rx="3" ry="5"/>
+      <ellipse cx="880" cy="250" rx="3.5" ry="5.5"/>
+      <ellipse cx="400" cy="300" rx="3" ry="4.5"/>
+    </g>
+  </g>
+  <!-- 冷调定格压色 -->
+  <rect x="0" y="0" width="1200" height="800" fill="#1a2630" opacity="0.12" style="mix-blend-mode:multiply"/>
+
+  <!-- 暗红血雾层 -->
+  <rect x="0" y="0" width="1200" height="800" fill="url(#gRedMist)" style="mix-blend-mode:multiply"/>
+  <ellipse cx="600" cy="360" rx="420" ry="260" fill="#4a070b" opacity="0.14" filter="url(#fxMist)"/>
+
+  <!-- grain 颗粒 -->
+  <rect x="0" y="0" width="1200" height="800" filter="url(#fxGrain)" opacity="0.22" style="mix-blend-mode:overlay"/>
+
+  <!-- 暗角 -->
+  <rect x="0" y="0" width="1200" height="800" fill="url(#gVignette)"/>
+</svg>

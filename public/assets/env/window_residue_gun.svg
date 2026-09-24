@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 768" width="512" height="768">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#1f3a33"/>
+      <stop offset="55%" stop-color="#10221e"/>
+      <stop offset="100%" stop-color="#050c0a"/>
+    </radialGradient>
+    <radialGradient id="vig" cx="50%" cy="50%" r="70%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.92"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9fd6c0" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#9fd6c0" stop-opacity="0.07"/>
+      <stop offset="52%" stop-color="#c8f0de" stop-opacity="0.12"/>
+      <stop offset="60%" stop-color="#9fd6c0" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="hole" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000"/>
+      <stop offset="45%" stop-color="#050807"/>
+      <stop offset="70%" stop-color="#6f8f84" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#6f8f84" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bloodCore" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2a0806" stop-opacity="0.95"/>
+      <stop offset="70%" stop-color="#3a0d09" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#3a0d09" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.6  0 0 0 0 0.8  0 0 0 0 0.7  0 0 0 0.55 0"/>
+    </filter>
+    <filter id="grime" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="4" seed="3"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.42  0 0 0 0 0.3  0 0 0 1.4 -0.55"/>
+    </filter>
+    <filter id="rough" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="11" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="blur1"><feGaussianBlur stdDeviation="1.2"/></filter>
+    <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+
+  <!-- 窗后空荡的暗处 -->
+  <rect width="512" height="768" fill="url(#bg)"/>
+  <rect x="60" y="120" width="170" height="420" fill="#0a1512" opacity="0.6" filter="url(#blur6)"/>
+  <rect x="300" y="80" width="140" height="520" fill="#0c1916" opacity="0.5" filter="url(#blur6)"/>
+  <rect x="0" y="560" width="512" height="208" fill="#040908" opacity="0.7" filter="url(#blur6)"/>
+  <rect x="200" y="40" width="110" height="14" fill="#8fc7b0" opacity="0.12" filter="url(#blur6)"/>
+
+  <!-- 窗框 -->
+  <rect x="0" y="0" width="512" height="34" fill="#0b1411"/>
+  <rect x="0" y="734" width="512" height="34" fill="#0b1411"/>
+  <rect x="0" y="0" width="30" height="768" fill="#0d1714"/>
+  <rect x="482" y="0" width="30" height="768" fill="#0d1714"/>
+  <g fill="#1d2b27">
+    <circle cx="15" cy="60" r="4"/><circle cx="15" cy="708" r="4"/>
+    <circle cx="497" cy="60" r="4"/><circle cx="497" cy="708" r="4"/>
+  </g>
+
+  <!-- 污垢与反光 -->
+  <rect x="30" y="34" width="452" height="700" filter="url(#grime)" opacity="0.8"/>
+  <rect x="30" y="34" width="452" height="700" fill="url(#sheen)"/>
+  <g stroke="#7da595" stroke-opacity="0.08" stroke-width="14" fill="none" filter="url(#blur6)">
+    <path d="M60 200 Q200 150 330 230"/>
+    <path d="M90 520 Q240 470 420 540"/>
+  </g>
+  <!-- 水渍流痕 -->
+  <g stroke="#5e7a6f" stroke-opacity="0.18" stroke-width="2" fill="none">
+    <path d="M110 40 L112 180 L109 260"/>
+    <path d="M390 40 L392 140"/>
+    <path d="M440 300 L441 460 L438 520"/>
+  </g>
+
+  <!-- 血溅 -->
+  <g filter="url(#rough)">
+    <ellipse cx="300" cy="330" rx="70" ry="55" fill="url(#bloodCore)"/>
+    <g fill="#3b0c08" opacity="0.88">
+      <path d="M300 330 L420 280 L415 290 Z"/>
+      <path d="M300 330 L445 350 L438 358 Z"/>
+      <path d="M300 330 L400 420 L392 424 Z"/>
+      <path d="M300 330 L360 210 L368 214 Z"/>
+      <path d="M300 330 L230 250 L236 246 Z"/>
+      <path d="M300 330 L210 380 L214 388 Z"/>
+      <circle cx="425" cy="282" r="8"/>
+      <circle cx="450" cy="352" r="6"/>
+      <circle cx="404" cy="426" r="7"/>
+      <circle cx="370" cy="206" r="5"/>
+      <circle cx="228" cy="244" r="4"/>
+      <circle cx="206" cy="390" r="5"/>
+      <circle cx="395" cy="250" r="3"/>
+      <circle cx="440" cy="310" r="3"/>
+      <circle cx="455" cy="395" r="4"/>
+      <circle cx="345" cy="440" r="3"/>
+      <circle cx="260" cy="210" r="2.5"/>
+      <circle cx="182" cy="330" r="3"/>
+      <circle cx="470" cy="270" r="2"/>
+    </g>
+    <!-- 下淌血痕 -->
+    <g fill="#2e0906" opacity="0.85">
+      <path d="M318 370 Q322 470 316 560 Q314 572 320 572 Q326 572 324 560 Q328 470 326 370 Z"/>
+      <path d="M270 360 Q272 420 268 470 Q267 478 272 478 Q276 478 275 470 Q279 420 276 360 Z"/>
+      <path d="M352 360 Q355 400 352 430 Q352 437 356 437 Q360 437 359 430 Q361 400 358 360 Z"/>
+    </g>
+  </g>
+
+  <!-- 裂纹 -->
+  <g stroke="#b9d9cc" stroke-opacity="0.55" stroke-width="1" fill="none" stroke-linecap="round">
+    <path d="M300 330 L330 300 L352 292 L381 260 L400 252"/>
+    <path d="M300 330 L338 336 L372 330 L410 344"/>
+    <path d="M300 330 L318 362 L322 398 L341 430"/>
+    <path d="M300 330 L276 356 L262 390 L240 412"/>
+    <path d="M300 330 L268 318 L240 296 L205 290"/>
+    <path d="M300 330 L296 296 L286 270 L290 236"/>
+    <path d="M300 330 L322 300 L326 270" stroke-opacity="0.35"/>
+    <path d="M300 330 L258 336 L226 350" stroke-opacity="0.35"/>
+  </g>
+  <g stroke="#b9d9cc" stroke-opacity="0.3" stroke-width="0.8" fill="none">
+    <circle cx="300" cy="330" r="22"/>
+    <path d="M285 312 Q300 300 318 312 Q330 330 316 348"/>
+    <path d="M281 350 Q270 330 283 312"/>
+  </g>
+  <g stroke="#dff5ea" stroke-opacity="0.7" stroke-width="0.6" fill="none" filter="url(#blur1)">
+    <path d="M330 300 L352 292"/>
+    <path d="M338 336 L372 330"/>
+  </g>
+
+  <!-- 弹孔 -->
+  <circle cx="300" cy="330" r="15" fill="url(#hole)"/>
+  <circle cx="300" cy="330" r="5.5" fill="#000"/>
+  <circle cx="298" cy="328" r="7" fill="none" stroke="#d6efe4" stroke-opacity="0.35" stroke-width="0.8"/>
+
+  <!-- 颗粒与暗角 -->
+  <rect width="512" height="768" filter="url(#grain)" opacity="0.22" style="mix-blend-mode:overlay"/>
+  <rect width="512" height="768" fill="#0f2a22" opacity="0.18"/>
+  <rect width="512" height="768" fill="url(#vig)"/>
+</svg>

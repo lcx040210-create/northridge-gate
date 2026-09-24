@@ -152,3 +152,16 @@ button { font: inherit; }
 .dawn-card .bad { color: #e07060; }
 .dawn-card h2 { color: var(--amber); margin-bottom: 10px; }
 .dawn-card p { line-height: 1.8; color: #d8d0c0; }
+
+/* 结束动画分镜 */
+.dawn-beat { position: absolute; inset: 0; background: #000 center/cover no-repeat; display: flex; align-items: center; justify-content: center; animation: fadeIn 1.2s; }
+.dawn-beat::before { content: ''; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.55); }
+.dawn-lines { position: relative; text-align: center; max-width: 640px; padding: 0 30px; }
+.dawn-lines p { font-family: Georgia, serif; font-size: 24px; line-height: 2; color: #e8dcc0; letter-spacing: 2px; text-shadow: 0 0 12px rgba(0,0,0,0.9); }
+.dawn-teaser { position: relative; text-align: center; max-width: 680px; padding: 40px 50px; border: 1px solid rgba(224,168,96,0.35); background: rgba(8, 8, 10, 0.82); box-shadow: 0 0 60px rgba(224,168,96,0.12), inset 0 0 40px rgba(0,0,0,0.6); }
+.dawn-teaser-tag { font-size: 13px; letter-spacing: 6px; color: var(--amber); margin-bottom: 22px; }
+.dawn-teaser h1 { font-family: Georgia, serif; font-size: 40px; letter-spacing: 8px; color: #f0e0c0; margin-bottom: 26px; text-shadow: 0 0 20px rgba(224,168,96,0.35); }
+.dawn-teaser p { line-height: 2; font-size: 17px; color: #c8c0ac; letter-spacing: 2px; }
+.dawn-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); font-size: 12px; letter-spacing: 4px; color: #8a8a80; animation: blinkHint 2s infinite; }
+
+@keyframes blinkHint { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }

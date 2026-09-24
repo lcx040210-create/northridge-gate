@@ -69,6 +69,8 @@ export default function App() {
   useEffect(() => { if (showShoes) { const t = setTimeout(() => sfx.whisper(), 2000); return () => clearTimeout(t) } }, [showShoes])
 
   const open = (id: string) => {
+    // 处决小游戏 / 结算动画 / 阅读界面打开时，屏蔽房间交互（防止 F 连按误开面板）
+    if (executionGame || execution || readableItem || death !== false) return
     if (id === 'use_weapon') {
       handleWeaponUse()
       return

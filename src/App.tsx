@@ -286,7 +286,8 @@ export default function App() {
             <kbd>W A S D</kbd><span>移动</span>
             <kbd>鼠标</kbd><span>视角（点击画面锁定鼠标）</span>
             <kbd>空格 / Ctrl</kbd><span>跳跃 / 蹲下</span>
-            <kbd>F / 左键</kbd><span>与准星对准的物品交互</span>
+            <kbd>F</kbd><span>与准星对准的物品交互</span>
+            <kbd>左键</kbd><span>使用武器（对准观察窗会留痕）</span>
             <kbd>M</kbd><span>静音</span>
           </div>
           <p style={{ fontSize: 13 }}>观察窗在你正前方。手册柜在左，武器柜在右，沙发和门在身后。建议戴耳机。</p>

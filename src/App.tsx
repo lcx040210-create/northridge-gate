@@ -6,6 +6,7 @@ import { resolveExecution } from './engine/execution'
 import { WORLD_TEXT } from './data/world'
 import { WEAPONS, CONSUMABLES } from './data/weapons'
 import { MANUAL_ENTRIES } from './data/manual'
+import { READABLE_BOOK, READABLE_NOTE, READABLE_POSTERS, type ReadableItem } from './data/readable'
 import RoomScene from './scene/RoomScene'
 import Window from './ui/Window'
 import Portrait from './ui/Portrait'
@@ -19,7 +20,7 @@ import HUD from './ui/HUD'
 import WeaponHUD from './ui/WeaponHUD'
 import SprinklerEffect from './ui/SprinklerEffect'
 import FlameEffect from './ui/FlameEffect'
-import BossFight from './ui/BossFight'
+import ReadableViewer from './ui/ReadableViewer'
 import Dawn from './ui/Dawn'
 import Death from './ui/Death'
 import * as sfx from './scene/audio'
@@ -35,6 +36,7 @@ export default function App() {
   const [death, setDeath] = useState<Visitor | null | false | 'door_trap'>(false)
   const [toast, setToast] = useState<string | null>(null)
   const [showFlame, setShowFlame] = useState(false)
+  const [readableItem, setReadableItem] = useState<ReadableItem | null>(null)
   const toastTimer = useRef(0)
 
   const visitor = currentVisitor(state)
@@ -68,12 +70,52 @@ export default function App() {
       handleWeaponUse()
       return
     }
+
+    // 开门逻辑
+    if (id === 'door') {
+      if (state.doorUnlocked) {
+        sfx.interact()
+        dispatch({ type: 'OPEN_DOOR' })
+        return
+      } else {
+        sfx.doorLocked()
+        say('门锁死了。必须完成所有检查才能离开。')
+        return
+      }
+    }
+
+    // 可阅读物品
+    if (id === 'book') {
+      sfx.pageFlip()
+      setReadableItem(READABLE_BOOK)
+      return
+    }
+    if (id === 'note') {
+      sfx.pageFlip()
+      setReadableItem(READABLE_NOTE)
+      return
+    }
+    if (id === 'poster1') {
+      sfx.interact()
+      setReadableItem(READABLE_POSTERS[0])
+      return
+    }
+    if (id === 'poster2') {
+      sfx.interact()
+      setReadableItem(READABLE_POSTERS[1])
+      return
+    }
+    if (id === 'poster3') {
+      sfx.interact()
+      setReadableItem(READABLE_POSTERS[2])
+      return
+    }
+
     sfx.interact()
     if (id === 'window') sfx.intercom(true)
     if (id === 'manual') sfx.pageFlip()
     if (id === 'weapons') sfx.cabinet()
     if (id === 'supplies') sfx.interact()
-    if (id === 'door') sfx.doorLocked()
     setActiveHotspot(id)
   }
 
@@ -400,29 +442,33 @@ export default function App() {
         <div className="overlay">
           <div className="panel" style={{ width: 360, textAlign: 'center' }}>
             <img src="/assets/icons/lock.svg" alt="" style={{ width: 56, height: 56, marginBottom: 8 }} />
-            <h2 style={{ margin: '0 0 12px' }}>{state.doorUnlocked ? '门开了' : '门被锁住了'}</h2>
+            <h2 style={{ margin: '0 0 12px' }}>{state.doorUnlocked ? '门解锁了' : '门被锁住了'}</h2>
             {!state.doorUnlocked && (
-              <p style={{ color: '#9a9a90', margin: '0 0 16px' }}>门上写着 NO EXIT · UNTIL DAWN。外面永远是夜。你出不去的。</p>
+              <p style={{ color: '#9a9a90', margin: '0 0 16px' }}>门上写着 NO EXIT · UNTIL DAWN。必须完成所有检查才能离开。</p>
             )}
             {state.doorUnlocked && (
               <div>
-                <p style={{ color: '#e0a050', margin: '0 0 16px' }}>门锁已解除。你可以离开了……吗？</p>
+                <p style={{ color: '#e0a050', margin: '0 0 16px' }}>所有访客已检查完毕。你可以结束值班了。</p>
                 <button
                   className="btn big"
-                  style={{ background: '#d04030', borderColor: '#d04030', marginBottom: 12 }}
+                  style={{ background: '#4a8a4a', borderColor: '#4a8a4a', marginBottom: 12 }}
                   onClick={() => {
-                    sfx.glassBreaking()
-                    setTimeout(() => setDeath('door_trap'), 500)
+                    sfx.interact()
+                    dispatch({ type: 'OPEN_DOOR' })
+                    close()
                   }}
                 >
-                  推开门
+                  推开门离开
                 </button>
               </div>
             )}
-            <button className="btn" onClick={close}>离开</button>
+            <button className="btn" onClick={close}>返回</button>
           </div>
         </div>
       )}
+
+      {/* 可阅读物品查看器 */}
+      {readableItem && <ReadableViewer item={readableItem} onClose={() => setReadableItem(null)} />}
 
       {execution && <ExecutionOverlay result={execution.result} tool={execution.tool} visitor={execution.visitor} onDone={onExecDone} />}
       {death !== false && <Death visitor={death === 'door_trap' ? null : death} doorTrap={death === 'door_trap'} />}

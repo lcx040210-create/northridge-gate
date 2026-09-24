@@ -76,7 +76,8 @@ export function reducer(state: GameState, action: Action): GameState {
         san,
         records: [...state.records, record],
         visitorIndex,
-        phase: allDone ? 'boss_intro' : 'visitor',
+        phase: allDone ? 'dawn' : 'visitor',
+        doorUnlocked: allDone, // 四人检查完毕，解锁门
         sanTouchedBelow15: state.sanTouchedBelow15 || san < 15,
       }
     }
@@ -152,8 +153,8 @@ export function reducer(state: GameState, action: Action): GameState {
       return { ...state, bossDefeated: true, phase: 'dawn' }
 
     case 'OPEN_DOOR':
-      // 开门 = 死亡，由 App 处理
-      return state
+      if (!state.doorUnlocked) return state
+      return { ...state, phase: 'dawn' }
 
     default:
       return state

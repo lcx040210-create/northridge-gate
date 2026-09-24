@@ -19,7 +19,6 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
     mount.appendChild(renderer.domElement)
 
     const scene = new THREE.Scene()
-    buildRoom(scene)
     const camera = new THREE.PerspectiveCamera(70, mount.clientWidth / mount.clientHeight, 0.1, 50)
     camera.rotation.order = 'YXZ'
 
@@ -92,7 +91,7 @@ export default function RoomScene({ onInteract }: { onInteract: (hotspotId: stri
       renderer.render(scene, camera)
       raf = requestAnimationFrame(loop)
     }
-    raf = requestAnimationFrame(loop)
+    buildRoom(scene).then(() => { raf = requestAnimationFrame(loop) }).catch(() => { raf = requestAnimationFrame(loop) })
 
     return () => {
       cancelAnimationFrame(raf)

@@ -5,8 +5,8 @@ export const v1Human: Visitor = {
   claimedName: '调度 · 林远',
   role: 'human',
   state: 'clean',
-  portrait: '/assets/portraits/v1_human.svg',
-  freezeFrames: ['/assets/portraits/v1_human.svg'],
+  portrait: '/assets/portraits/v1_human.png',
+  freezeFrames: ['/assets/portraits/v1_human.png'],
   tells: {
     eye: '眼神正常，只是被雨淋得有点烦。',
     id: '证件照片和本人一致，牙齿数对得上。',

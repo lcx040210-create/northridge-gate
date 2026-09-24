@@ -4,8 +4,8 @@ import ExecutionOverlay from './ExecutionOverlay'
 
 const result = {
   success: true,
-  frames: ['/f1.svg', '/f2.svg', '/f3.svg', '/f4.svg'],
-  residue: '/r.svg',
+  frames: ['/f1.png', '/f2.png', '/f3.png', '/f4.png'],
+  residue: '/r.png',
   sanDelta: 0,
   radioDistort: false,
   escaped: false,
